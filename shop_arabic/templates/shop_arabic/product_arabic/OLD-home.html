@@ -1,0 +1,150 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }} {% else %} Products {% endif %}
+{% endblock %}
+
+
+<div class="container-fluid">
+        <div class="row" style="margin-top: 6%">
+  
+          <div class="col-sm-8 blog-main">
+  
+            <div class="blog-post">
+  
+                 <!-- <div class="row">
+                   {% if products %}
+                    {% for product in products %}
+                        <div class="col-md-4">
+                          <div class="thumbnail">
+                              <a href="{{ product.get_absolute_url }}">
+                                  <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                              </a>
+                              <div class="caption">
+                                  <h3 class="text-center">
+                                      <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                  </h3>
+                                  <p class="text-center">Kshs. {{ product.price }}</p>
+                              </div>
+                          </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                </div> -->
+  
+                <div class="row" id="product">
+                    {% for product in categories %}
+                        <div class="col-md-4">
+                          <div class="thumbnail">
+                              <!-- <a href="{{ product.get_absolute_url }}">
+                                  <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                              </a> -->
+                              <div class="caption">
+                                  <h3 class="text-center">
+                                      <a href="{{ product.get_absolute_url }}">{{ product.name|title }}</a>
+                                  </h3>
+                                  <!-- <p class="text-center">{{ product.price }}</p> -->
+                              </div>
+                          </div>
+                        </div>
+                    {% endfor %}
+                </div>
+  
+  
+
+            </div><!-- /.blog-post -->
+  
+          </div><!-- /.blog-main -->
+  
+          <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module">
+              <h4>Categories</h4>
+              <ol class="list-unstyled">
+                <li><a href="{% url 'shop:product_list' %}">All</a></li>
+              {% for c in categories %}
+  
+                <li>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name|title }}</a>
+                </li>
+              {% endfor %}
+              </ol>
+            </div>
+          </div><!-- /.blog-sidebar -->
+  
+        </div><!-- /.row -->
+  
+      </div><!-- /.container -->
+
+      {% block slider %}
+      {% include 'shop/slideshow.html' %}
+      {% endblock %}
+
+{% block content %}
+
+    {% include 'shop/shop-boxes-content.html' %}
+
+<hr><hr>
+    <form method="get" action="{% url 'shop:search' %}">
+
+
+      <div class="form-group col-4">
+        
+        <label for="sel1">Select Brand:</label>
+        <select class="form-control" name="brandSearch">
+          <option  value="none">-----</option>
+          {% if brands %} {% for x in brands %}
+          <option>{{ x.name|title }}</option>
+          {% endfor %}  {% endif %}
+        </select>
+
+        <label for="sel1">Select Model:</label>
+        <select class="form-control" name="modelSearch">
+          <option  value="none">-----</option>
+          {% if models %} {% for x in models|dictsort:"name" %}
+          <option>{{ x.name|title }}</option>
+          {% endfor %}  {% endif %}
+        </select>
+
+        <label for="sel1">Select Engine Capacity:</label>
+        <select class="form-control" name="engineSearch">
+          <option  value="none">-----</option>
+          {% if enginecc %} {% for x in enginecc %}
+          <option>{{ x.eng_capacity|title }}</option>
+          {% endfor %}  {% endif %}
+        </select>
+
+        <label for="sel1">Select Manfacture Date:</label>
+        <select class="form-control" name="manfactureSearch">
+          <option  value="none">-----</option>
+          {% if manYear %} {% for x in manYear %}
+          <option>{{ x.manfacture_year|title }}</option>
+          {% endfor %}  {% endif %}
+        </select>
+
+        <label for="sel1">Select Part Type:</label>
+        <select class="form-control" name="partTypeSearch" required="true">
+          <option  value="none">-----</option>
+          {% if partTypes %} {% for x in partTypes %}
+          <option>{{ x.name|title }}</option>
+          {% endfor %}  {% endif %}
+        </select>
+
+        <label for="usr">product you are looking for:</label>
+        <input type="text" class="form-control" name="productSearch" required="true">
+<hr>
+        <button type="submit" class="w3-btn btn-sm w3-amber w-100"style="font-size:2vmin;">Search</button> 
+      </div>
+    </form>
+    <hr>
+
+    <div class="form-group col-4">
+    <form method="get" action="{% url 'shop:search' %}">
+            <label for="usr">Searching for {% for c in all_types_parts %}
+              {{ c.name|title }},  {% endfor %}
+              :</label>
+        <input type="text" class="form-control" name="productSearchAllTypes" required="true">
+        <button type="submit" class="w3-btn btn-sm w3-amber w-100"style="font-size:2vmin;">Search</button> 
+      </form>
+      </div>
+{% endblock %}
+

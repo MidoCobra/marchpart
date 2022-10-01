@@ -1,0 +1,197 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    {% if blog %}{{ blog.title }} {% endif %}
+   
+{% endblock %}
+
+
+{% block content %}
+
+<meta name="description" content="{{ blog.title }}">
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">{{ blog.title|title }}</a></li>
+		</ul>
+		
+		<div class="row">
+			<!--Left Part Start -->
+            <aside class="col-md-3 col-sm-4 content-aside left_column " id="column-left">
+                {% if allBlogTags %}
+                <div class="module blog-category titleLine">
+                    <h3 class="modtitle">Blog Category</h3>
+                    <div class="modcontent">
+                        <ul class="list-group ">
+                            {% for ab in allBlogTags %}
+                            <li class="list-group-item"> <a href="{{ ab.get_absolute_url }}"class="group-item active">{{ ab.tag|title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                        
+                    </div>
+                </div>
+                {% endif %}
+                <div class="module product-simple">
+                    <h3 class="modtitle">
+                        <span>Latest products</span>
+                    </h3>
+                    <div class="modcontent">
+                        <div class="so-extraslider" >
+                            <!-- Begin extraslider-inner -->
+                            <div class=" extraslider-inner">
+                                <div class="item ">
+                                    {% if latest_products %}
+                                    {% for p in latest_products %}
+                                    <div class="product-layout item-inner style1 ">
+                                        <div class="item-image">
+                                            <div class="item-img-info">
+                                                <a href="{{ p.get_absolute_url }}" target="_self" title="{{ p.name|title }} ">
+                                                    <img src="{{ p.image.url }}" alt="{{ p.name|title }}">
+                                                    </a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="item-title">
+                                                <a href="{{ p.get_absolute_url }}" target="_self" title="{{ p.name|title }}">{{ p.name|title }} </a>
+                                            </div>
+                                            <!-- <div class="rating">
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                            </div> -->
+                                            <div class="content_price price">
+                                                <span class="price-new product-price">EGP {{ p.price }}</span>&nbsp;&nbsp;
+
+                                                <!-- <span class="price-old">$76.00 </span>&nbsp; -->
+
+                                            </div>
+                                        </div>
+                                        <!-- End item-info -->
+                                        <!-- End item-wrap-inner -->
+                                    </div>
+                                    <!-- End item-wrap -->
+                                   {% endfor %}
+                                   {% endif %}
+                                </div>
+                            </div>
+                            <!--End extraslider-inner -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="module banner-left hidden-xs ">
+                    <div class="banner-sidebar banners">
+                      <div>
+                        <a title="Banner Image" href=""> 
+                          <img src="{{ blog.image2.url }}" alt="Banner Image"> 
+                        </a>
+                      </div>
+                    </div>
+                </div>  
+            </aside>
+            <!--Left Part End -->
+			
+			<!--Middle Part Start-->
+			<div id="content" class="col-md-9 col-sm-8">
+				<div class="article-info">
+					<div class="blog-header">
+						<h3>{{ blog.title|title }}</h3>
+					</div>
+					<div class="article-sub-title">
+						<span class="article-author">Post by: <a href=""> {{ blog.author|title }}</a></span>
+						<span class="article-date">Created Date: {{ blog.created_at }}</span>
+						<!-- <span class="article-comment">0  Comments</span> -->
+                    </div>
+                    {% if blog.youtube_link %}
+					<div class="form-group">
+                        <iframe width="900" height="600" src="{{ blog.youtube_link }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    {% else %}
+					<div class="form-group">
+						<a href="" class="image-popup"><img src="{{ blog.image.url }}" alt="{{ blog.title|title }}"></a>
+					</div>
+					{% endif %}
+					<div class="article-description" style="white-space: pre;" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_1_heading }}</b></h2>
+                        {{ blog.paragraph_1|capfirst }}
+					</div>
+					{% if blog.paragraph_2_heading %}
+					<div class="article-description" style="white-space: pre;" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_2_heading }}</b></h2>
+                        {{ blog.paragraph_2|capfirst }}
+					</div>
+                    {% endif %}
+
+                    
+                    {% if blog.paragraph_3_heading %}
+					<div class="article-description" style="white-space: pre;" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_3_heading }}</b></h2>
+                        {{ blog.paragraph_3|capfirst }}
+					</div>
+					{% endif %}
+
+
+                    {% if blog.paragraph_4_heading %}
+					<div class="article-description" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_4_heading }}</b></h2>
+                        {{ blog.paragraph_4|capfirst }}
+					</div>
+					{% endif %}
+
+
+                    {% if blog.paragraph_5_heading %}
+					<div class="article-description" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_5_heading }}</b></h2>
+                        {{ blog.paragraph_5|capfirst }}
+					</div>
+					{% endif %}
+
+
+                    {% if blog.paragraph_6_heading %}
+					<div class="article-description" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_6_heading }}</b></h2>
+                        {{ blog.paragraph_6|capfirst }}
+					</div>
+					{% endif %}
+
+
+                    {% if blog.paragraph_7_heading %}
+					<div class="article-description" style="white-space: pre;">
+                        <h2><b>{{ blog.paragraph_7_heading }}</b></h2>
+                        {{ blog.paragraph_7|capfirst }}
+					</div>
+					{% endif %}
+
+				</div>
+
+			</div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+			
+		</div>
+		<!--Middle Part End-->
+	</div>
+	<!-- //Main Container -->
+	
+    {% endblock %}

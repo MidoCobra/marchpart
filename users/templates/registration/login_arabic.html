@@ -1,0 +1,106 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load widget_tweaks %}
+{% block title %}دخول{% endblock %}
+{% block content %}
+<style>
+	.OnlyBlockHome{
+	display: block;
+}
+.OnlyNoneHome{
+	display: none;
+}
+</style>
+	<!-- Main Container  -->
+	<div class="main-container container" style="margin-bottom: 20px;">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop_arabic:home_arabic' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">الحساب</a></li>
+			<li><a href="#">تسجيل دخول</a></li>
+    </ul>
+    
+    
+    {% if form.errors %}
+    <div class="alert w3-pale-blue">
+      <h4>من فضلك صحح الأخطاء الآتية</h4>
+      <!--Form Messages-->
+      
+      {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}" style="color: rgb(184, 11, 11);">{{ message|safe }}</div>
+      {% endfor %}
+      {% endif %}
+      <!--Form Messages-->
+<ul>
+{% for field in form %}
+{% if field.errors %}
+  {% for error in field.errors %}
+    <li><a href="#{{ field.name }}" class="error">{{ error|escape }}</a></li>
+  {% endfor %}
+{% endif %}
+{% endfor %}
+</ul>
+{% if form.non_field_errors %}
+{{ form.non_field_errors }}
+{% endif %}
+</div>
+{% endif %} 
+		
+		<div class="row">
+			<div id="content" class="col-sm-12">
+				<div class="page-login">
+				
+					<div class="account-border">
+						<div class="row">
+							<div class="col-sm-6 new-customer">
+								<div class="well">
+									<h2><i class="fa fa-file-o" aria-hidden="true"></i>عميل جديد</h2>
+									<p>بتسجيلك حساب لدينا ستتمكن من متابعة مشترياتك و الحصول على مميزات متعدده</p>
+									<br>تسجيل الحساب عن طريق الفيس بوك: <br>
+									<button class="btn btn-primary mb-2">
+									  <a href="{% url 'social:begin' 'facebook' %}">التسجيل بالفيس بوك</a>
+								  </button>
+								
+								
+								</div>
+								<div class="bottom-form">
+									<a href="{% url 'signup_arabic' %}" class="btn btn-default pull-right">استمرار</a>
+								</div>
+							</div>
+							
+              <form method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+
+								<div class="col-sm-6 customer-login">
+									<div class="well">
+										<h2><i class="fa fa-file-text-o" aria-hidden="true"></i>لديك حساب بالفعل</h2>
+										<p><strong>أهلا بك! قم بتسجيل الدخول</strong></p>
+										<div class="form-group">
+                      <label class="control-label " for="input-email">بريدك الإليكترونى</label>
+                      {% render_field form.username class="form-control rounded-0" placeholder="برجاء مراعاة حالات الخط" name="username" %}
+											<!-- <input type="text" name="email" value="" id="input-email" class="form-control" /> -->
+										</div>
+										<div class="form-group">
+											<label class="control-label " for="input-password">كلمة السر</label>
+                      {% render_field form.password class="form-control rounded-0" placeholder="كلمة السر" name="password" type="password" %} 
+                      <!-- <input type="password" name="password" value="" id="input-password" class="form-control" /> -->
+										</div>
+									</div>
+									<div class="bottom-form">
+										<a href="{% url 'password_reset' %}" class="forgot">نسيت كلمة المرور</a>
+										<button type="submit" class="btn btn-default pull-right" />اعتماد</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //Main Container -->
+	
+{% endblock %}
+
+
+

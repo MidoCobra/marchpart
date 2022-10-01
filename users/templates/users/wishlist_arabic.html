@@ -1,0 +1,127 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% block title %}  {{ request.user.username|title }} Wishlist {% endblock %}
+{% block content %}
+<style>
+    .OnlyBlockHome{
+    display: block;
+}
+.OnlyNoneHome{
+    display: none;
+}
+</style>
+
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="#"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">الحسابات</a></li>
+			<li><a href="#">قائمة الرغبات</a></li>
+		</ul>
+		
+		<div class="row">
+			<!--Middle Part Start-->
+			<div id="content" class="col-sm-9">
+				<h2 class="title">رغباتى</h2>
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+                        {% if wishlist %}
+						<thead>
+							<tr>
+								<td class="text-center">صورة المنتج</td>
+                                <td class="text-left">اسم المنتج</td>
+                              
+								<td class="text-left">موديل السيارة</td>
+								<td class="text-right">التوافر</td>
+								<td class="text-right">سعر الوحدة</td>
+								<td class="text-right">إزالة</td>
+							</tr>
+						</thead>
+						<tbody>
+
+                            {% for w in wishlist %}
+							<tr>
+								<td class="text-center">
+									<a  href="{{ w.product.get_absolute_url_arabic }}"><img width="70px" src="{{ w.product.image.url }}" alt="{{ w.product.name_arabic }}" title="{{ w.product.name_arabic|title }}">
+									</a>
+								</td>
+								<td class="text-left"><a href="{{ w.product.get_absolute_url_arabic }}">{{ w.product.name_arabic }}</a>
+								</td>
+                        {% if w.product.model.name_arabic %}		
+                        <td class="text-left">{{ w.product.model.name_arabic }}</td>
+                        {% else %}
+                        <td class="text-left">مناسب لجميع الموديلات</td>
+                        {% endif %}
+								<td class="text-right">متوافر</td>
+								<td class="text-right">
+                                    {% if w.product.sale_price %}
+                                    <div class="price"> <span class="price-new">EGP {{ w.product.sale_price }}</span>    
+                                    <span class="price-old">EGP {{ w.product.price }}</span></div>
+                                    {% else %}
+                                    <div class="price"> <span class="price-new">EGP {{ w.product.price }}</span>   </div>
+                                    {% endif %}
+								
+								</td>
+								<td class="text-right">
+									<!-- <button class="btn btn-primary"
+									title="" data-toggle="tooltip"
+									onclick="cart.add('48');"
+									type="button" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i>
+									</button> -->
+									<a class="btn btn-danger" title="" data-toggle="tooltip" href="{% url 'removeFromWishlist_arabic' w.product.id %}" data-original-title="Remove"><i class="fa fa-times"></i></a>
+								</td>
+                            </tr>
+                            {% endfor %}
+
+                            {% else %}
+                            <tr>
+								<td class="text-center">
+                                    <h2>لم تتم إضافة منتجات</h2>
+                            {% endif %}
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!--Middle Part End-->
+            <!-- <aside class="col-sm-3 hidden-xs content-aside col-md-3" id="column-right">
+                <h2 class="subtitle">Account</h2>
+                <div class="list-group">
+                    <ul class="list-item">
+                        <li><a href="login.html">Login</a>
+                        </li>
+                        <li><a href="register.html">Register</a>
+                        </li>
+                        <li><a href="#">Forgotten Password</a>
+                        </li>
+                        <li><a href="#">My Account</a>
+                        </li>
+                        <li><a href="{% url 'updateAccount' %}">Update My Account</a>
+                        </li>
+                        <li><a href="#">Address Books</a>
+                        </li>
+                      
+                        <li><a href="#">Order History</a>
+                        </li>
+                        <li><a href="#">Downloads</a>
+                        </li>
+                        <li><a href="#">Reward Points</a>
+                        </li>
+                        <li><a href="#">Returns</a>
+                        </li>
+                        <li><a href="#">Transactions</a>
+                        </li>
+                        <li><a href="#">Newsletter</a>
+                        </li>
+                        <li><a href="#">Recurring payments</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside> -->
+            {% include 'users/side_menu_arabic.html' %}
+		</div>
+	</div>
+	<!-- //Main Container -->
+    
+    
+    {% endblock %}

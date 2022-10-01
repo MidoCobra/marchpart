@@ -1,0 +1,361 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load ratings %}
+
+{% block content %}
+    <!-- Main Container  -->
+    <div class="main-container container">
+        <ul class="breadcrumb">
+            <li><a href="{% url  'shop_arabic:home_arabic' %}"><i class="fa fa-home"></i></a></li>
+            <li><a href="#">Tires</a></li>
+        </ul>
+        
+        <div class="row">
+            <!-- advanced Search -->
+            <div class="box-advanced-search">
+                <div class="so_advanced_search" style="background-image: url('/static/image/Budget-Trailer-32.jpg');">
+                    <div class="sas_wrap">
+                        <div class="sas_inner">
+                            <div class="heading-title"><h2 class="fontDroidArabicKufi" style="color: white;">Select Tire Sizes</h2></div>
+                            <div class="sas_inner-box-search">
+                                <form method="GET" action="{% url 'shop:tires' %}">
+              
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                        <select name="rim_size_arabic" id="so_make0" class="form-control" required="true">
+                                         
+                                            <option >Select Rim Size</option>
+                                            {% if tireRim_sizes %} {% for x in tireRim_sizes %}
+                                            
+                                            <option>
+                                                {{ x.rim_size }}
+                                    
+                                            </option>
+
+                                            {% endfor %}  {% endif %}
+                                           
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                        <select name="tire_height_arabic" class="form-control" id="mySelect_arabic" required="true">
+                                            <option>  Select Tire Height</option>
+                                            {% if tires_heights %} {% for x in tires_heights %}
+                                            <option> {{ x.tire_height }}  </option>
+                                            {% endfor %}  {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                        <select name="tire_width_arabic" id="so_year0" class="form-control">
+                                            <option > Select Tire Width</option>
+                                      
+                                        {% if tires_widths %} {% for x in tires_widths %}
+                                        <option>{{ x.tire_width }}</option>
+                                        {% endfor %}  {% endif %}
+                                    </select>
+                                    </div>
+                                    <!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                        <select name="part_brand_arabic" id="so_engine0" class="form-control">
+                                            <option value="">اختر العلامة التجارية </option>
+                                            {% if tires %} {% for x in tires %}
+                                            <option>{% ifchanged %} {{ x.part_brand.name_arabic }} {% endifchanged %} </option>
+                                            {% endfor %}  {% endif %}
+                                        </select>
+                                    </div> -->
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                        <button type="submit" class="w3-button w3-round-large w3-red">Start Searching</button>
+                                    </div>
+                               
+                                </div>  
+                            </form>            
+                            </div>
+                            
+                        </div>   
+                        <!-- <div class="w3-center" style="padding-bottom: 10px;">
+                            <button type="submit" class="w3-button w3-round-large w3-red">ابحث عن الجزء المطلوب</button>
+                        </div> -->
+                    </div>
+                </div> 
+            </div>
+            <!--End Advanced Search-->
+
+     
+            <!--Middle Part Start-->
+            <div id="content" class="col-md-9 col-sm-8" style="padding-bottom: 20px;">
+                <div class="products-category">
+                    <h3 class="title-category "> Cars Tires</h3>
+                    <div class="category-desc">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="banners">
+                                    <div>
+
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Filters -->
+                    <div class="product-filter product-filter-top filters-panel">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-3 col-xs-12 view-mode">   
+                                    <div class="list-view">
+                                        <!-- <button class="btn btn-default grid active" data-view="grid" data-toggle="tooltip"  data-original-title="Grid"><i class="fa fa-th"></i></button>
+                                        <button class="btn btn-default list" data-view="list" data-toggle="tooltip" data-original-title="List"><i class="fa fa-th-list"></i></button> -->
+                                    </div>
+                        
+                            </div>
+                         
+                            <!-- <div class="box-pagination col-md-3 col-sm-4 col-xs-12 text-right">
+                                <ul class="pagination">
+                                    <li class="active"><span>1</span></li>
+                                    <li><a href="">2</a></li><li><a href="">&gt;</a></li>
+                                    <li><a href="">&gt;|</a></li>
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- //end Filters -->
+                    <!--changed listings-->
+                    <div class="products-list row nopadding-xs so-filter-gird">
+                   {% if NoResults %}
+
+                        <div>
+                            <h2 style="color:crimson; font-weight:400; text-align: center; padding-bottom: 50px;">
+                               Sorry, No Items Currently Matches Your Search
+                            </h2>
+                            <hr>
+                            <hr>
+                        </div>
+                   {% endif %}
+
+                   {% if products_paginator %}
+                        {% for product in products_paginator %}
+
+                        <div class="product-layout col-lg-3 col-md-4 col-sm-6 col-xs-12" style=" padding-bottom: 15px;">
+                            <div class="w3-card" style="padding: 3px;">
+                            <div class="product-item-container item--static ">
+                                <div class="left-block">
+                                    <div class="product-image-container second_img">
+                                        <a href="{{ product.get_absolute_url }}" target="_self" title="Volup tatem accu">
+                                            <img src="{{ product.image.url }}" class="img-1 img-responsive" alt="image1" height="270" width="270">
+                                            <!-- <img src="{% static 'image/catalog/demo/product/270/1.jpg' %}" class="img-1 img-responsive" alt="image1"> -->
+                                            <img src="{{ product.image2.url }}" class="img-2 img-responsive" alt="image2" height="270" width="270">
+                                        </a>
+                                    </div>
+                                    <!-- <span class="label-product label-new">New</span> -->
+                                    <!--quickview--> 
+                                    <!-- <div class="so-quickview">
+                                      <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                    </div>                                                      -->
+                                    <!--end quickview-->
+                                </div>
+                                <br>
+                                <div class="right-block">
+                                    <!-- <div class="button-group cartinfo--static">
+                                        
+                                        <a  href="{{ product.get_absolute_url_arabic }}">
+                                        <button type="button" class="addToCart" title="استعرض المنتج">
+                                            <span>استعرض المنتج</span>   
+                                        </button></a>
+                                    </div> -->
+                                   
+                                    <h4 style="min-height: 4em; font-family: 'DroidArabicKufi', serif;"><a href="{{ product.get_absolute_url }}" title="" target="_self">{{ product.name|title }}</a></h4>
+                                    <div class="rating">  
+                                          {% ratings product icon_height=14 icon_width=14 read_only="True" %}
+                                    </div>
+                                    <div class="price">
+                                      <!-- <span class="price">EGP {{ product.price|floatformat }}</span> -->
+
+                                      {% if product.sale_price %}
+                                      <span class="price-new product-price">EGP {{  product.sale_price|floatformat }} </span>&nbsp;&nbsp;
+
+                                      <span class="price-old">EGP {{ product.price|floatformat }} </span>&nbsp;
+                                      {% else %}
+                                      <span class="price-new product-price">EGP {{  product.price|floatformat }} </span>
+                                        {% endif %}
+
+
+
+
+
+                                    </div>
+                                    <!-- <div class="description item-desc">
+                                        <p>{{ product.description_arabic|truncatechars:100 }}</p>
+                                    </div> -->
+                                    <!-- <div class="list-block">
+                                        <button class="addToCart btn-button" type="button" title="Add to Cart" onclick="cart.add('101', '1');"><i class="fa fa-shopping-basket"></i>
+                                        </button>
+                                        <button class="wishlist btn-button" type="button" title="Add to Wish List" onclick="wishlist.add('101');"><i class="fa fa-heart"></i>
+                                        </button>
+                                        <button class="compare btn-button" type="button" title="Compare this Product" onclick="compare.add('101');"><i class="fa fa-refresh"></i>
+                                        </button>
+                                        quickview                                                      
+                                        <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-eye"></i></a>                                                        
+                                        end quickview
+                                    </div> -->
+                                </div>                                            
+                            </div>
+                        </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <!--// End Changed listings-->
+                    
+                    <!-- Filters -->
+                    <!-- <div class="product-filter product-filter-bottom filters-panel">
+                        <div class="row">
+                            <div class="col-sm-6 text-left"></div>
+                            <div class="col-sm-6 text-right">Showing 1 to 12 of 12 (1 Pages)</div>
+                        </div>
+                    </div> -->
+                    <!-- //end Filters -->
+
+
+
+ <!--Pagination-->
+ <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+    {% if products_paginator.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">&laquo; First</a>
+        <a class="page-link" href="?page={{ products_paginator.previous_page_number }}">Back</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Back</a>
+      </li>
+    {% endif %}
+
+    {% if products_paginator.number|add:'-4' > 1 %}
+        <li class="page-item"><a class="page-link" href="?page={{ products_paginator.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in products_paginator.paginator.page_range %}
+        {% if products_paginator.number == i %}
+            <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{ i }}
+            <span class="sr-only">(current)</span>
+          </span>
+        </li>
+        {% elif i > products_paginator.number|add:'-5' and i < products_paginator.number|add:'5' %}
+             <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if products_paginator.paginator.num_pages > products_paginator.number|add:'4' %}
+       <li class="page-item"><a class="page-link" href="?page={{ products_paginator.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if products_paginator.has_next %}
+        <li class="page-item">
+        <a class="page-link" href="?page={{ products_paginator.next_page_number }}">Next</a>
+        <a class="page-link" href="?page={{ products_paginator.paginator.num_pages }}">Last &raquo;</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+<!--end of Pagination-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                </div>
+                
+            </div>
+            
+
+            <!--Middle Part End-->
+
+
+
+            <!-- ************** Right Part Start ******************* -->
+            <aside class="col-sm-4 col-md-3 content-aside" id="column-left">
+                <div class="module product-simple">
+                    <h3 class="modtitle">
+                        <span>  Recently Added</span>
+                    </h3>
+                    <div class="modcontent">
+                        <div id="so_extra_slider_1" class="so-extraslider" >
+                            <!-- Begin extraslider-inner -->
+                            <div class="extraslider-inner">
+            
+                                {% if latest_products_tires %}
+                                {% for x in latest_products_tires %}
+                                <div class="item ">
+                                    <div class="product-layout item-inner style1 ">
+                                        <div class="item-image">
+                                            <div class="item-img-info">
+                                                <a href="{{ x.get_absolute_url }}" target="_self" title="{{ x.name }} ">
+                                                    <img src="{{ x.image.url }}" alt="{{ x.name }}">
+                                                    </a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="item-title"
+                                                <a href="{{ x.get_absolute_url }}" target="_self" title="{{ x.name }}" style="font-size: 13px;"></a>{{ x.name }} </a>
+                                            </div>
+                                            <!-- <div class="rating">
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                            </div> -->
+                                            <div class="content_price price">
+                                                {% if x.sale_price %}
+                                                <span class="price-new product-price">EGP {{  x.sale_price|floatformat }}</span>&nbsp;&nbsp;
+            
+                                                <span class="price-old">EGP {{ x.price|floatformat }}</span>&nbsp;
+                                                {% else %}
+                                                <span class="price-new product-price">EGP {{  x.price|floatformat }}</span>
+                                                  {% endif %}
+            
+                                            </div>
+            
+                                            
+                                        </div>
+                                        <!-- End item-info -->
+                                        <!-- End item-wrap-inner -->
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+            
+            
+                            </div>
+                            <!--End extraslider-inner -->
+                        </div>
+                    </div>
+                </div>
+                        </aside>
+            <!--Right Part End -->
+            
+            
+        </div>
+        <!--Middle Part End-->
+    </div>
+    <!-- //Main Container -->
+
+{% endblock %}

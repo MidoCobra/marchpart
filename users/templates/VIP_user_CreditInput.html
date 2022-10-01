@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.containerCredit {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+<div class=" jumbotron jumbotron-fluid w3-indigo ">
+
+ 
+       
+		
+  <div class="container">
+ <h2 style="font-size:6vmin ">RESERVING <span class="text-warning"><b>{{ tour.tour_title|upper }}</b></span></h2>
+
+
+</div>
+
+ 
+
+
+</div>
+
+
+<div class="w3-padding-64 px-4">
+<div class="container   card"> 
+<!--
+    ++++++++++++++++++++++++++++++++++ Card Form +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-->
+
+    <div class="row card-body">
+        <div class="col-md-6 col-sm-12">
+         
+            <form action="https://sbcheckout.PayFort.com/FortAPI/paymentPage" method="post" id=form1 name=form1>
+            
+      
+               
+                  <h2><b>Payment</b></h2>
+                  <label for="fname">Accepted Cards</label>
+                  <div class="icon-container">
+                    <i class="fa fa-cc-visa" style="color:navy;"></i>
+                    <!-- <i class="fa fa-cc-amex" style="color:blue;"></i> -->
+                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                    <!-- <i class="fa fa-cc-discover" style="color:orange;"></i> -->
+                  </div>
+                  <div class="form-group">
+                  <label>Name on Card</label>
+                  <input name="card_holder_name"class="form-control" placeholder="John More Doe" value="John More Doe">
+                  </div>
+                  <div class="form-group">
+                  <label>Credit card number</label>
+                  <input  name="card_number"
+                   class="form-control"placeholder="1111222233334444" value="4005550000000001">
+</div>
+
+<div class="form-group">
+                <label>Expiry Date</label>
+                
+                   <div class="d-flex">
+                  <input  name="expiry_date"class="form-control mr-2"style="width:60px;" placeholder="YYMM" value="2105">
+                 
+                  
+              
+                    
+                    </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>card security code</label>
+                      <input name="card_security_code"class="form-control" placeholder="352" value="123">
+                   
+</div>
+
+                      <input type="hidden" name="service_command" value="{{ service_command }}">
+                      <input type="hidden" name="access_code" value="{{ access_code }}">
+                        <input type="hidden" name="merchant_identifier" value="{{ merchant_identifier }}">
+                          <input type="hidden" name="merchant_reference" value="{{ merchant_reference }}">
+                      <input type="hidden" name="language" value="{{ language }}">
+                      <input type="hidden" name="signature" value="{{ signature }}">
+                        <input type="hidden" name="return_url" value="{{ return_url }}">
+                      <button  class="btn" type="submit" id="submit2" name="">Continue to checkout</button>
+                   
+              
+      
+            
+            </form>
+         
+        </div>
+      
+        <div class="col-md-6 col-sm-12">
+          
+            <h2><b>Tour:
+             
+                {{ buyer.tour.tour_title|title }}</b> </h2>
+               
+                <h4 class="" style="color:black">For {{ buyer.number_of_persons }} Adult/s 
+                {% if buyer.number_of_children != 0 %} & {{ buyer.number_of_children }} Child/ren {% endif %}
+                </h4>
+            
+          
+            <!-- <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+            <p><a href="#">Product 3</a> <span class="price">$8</span></p>
+            <p><a href="#">Product 4</a> <span class="price">$2</span></p> -->
+            
+            
+            <h4>You Will Pay:</h4><span class="w3-xlarge w3-text-red" ><b>{{ buyer.fees }}</span> {% if buyer.nationality == 'Egyptian' %} EGP
+               {% else %} USD {% endif %} </b></p>
+         
+        </div>
+      </div>
+<!--
+    +++++++++++++++++++++++++++++++++++++++++++++++ End Card Form ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-->
+
+</div></div>
+{% endblock %}

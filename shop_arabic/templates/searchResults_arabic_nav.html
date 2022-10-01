@@ -1,0 +1,289 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+	    .OnlyBlockHome{
+        display: block;
+    }
+    .OnlyNoneHome{
+        display: none;
+    }
+	.fontSize {
+	font: size 1.2rem;
+}
+
+.text {
+  /* width: 60px; */
+  /* overflow: hidden; */
+  white-space: pre-wrap;
+  /* text-overflow: ellipsis; */
+}
+
+@media only screen and (max-width: 800px) {
+.columnWidth{
+	width: 60px;
+}
+}
+</style>
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<div class="w3-right">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop_arabic:home_arabic' %"><i class="fa fa-home"></i></a></li>
+			<li><a href="{% url 'shop_arabic:home_arabic' %}">الرئيسية</a></li>
+			<li><a href="">نتائج البحث ({{counter}}) منتج</a></li>
+		</ul> </div>
+		
+		<div class="row">
+			<!--Middle Part Start-->
+			<div id="content" class="col-sm-12">
+                {% if results or results2 %}
+				<!-- <h2 class="title">نتائج البحث  ({{counter}}) منتج</h2> -->
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td class="text-center w3-hide-small fontSize">رقم القطعة</td>
+								<td class="text-center">صورة</td>
+								<td class="text-left columnWidth fontSize">اسم المنتج</td>
+								<td class="text-right w3-hide-small fontSize">سعر القطعة</td>
+								<td class="text-left w3-hide-small fontSize">الموديل</td>
+								<td class="text-right fontSize">الحالة</td>
+						
+							</tr>
+						</thead>
+						<tbody>
+							{% if results2 %}
+							{% for r in results2 %}
+							<tr>
+								<td class="text-center w3-hide-small fontSize">
+									{{ r.id }}
+								</td>
+								<td class="text-center">
+									<a  href="{{ r.get_absolute_url_arabic }}"><img width="70px" src="{{ r.image.url }}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop">
+									</a>
+								</td>
+								<td class="text-left columnWidth fontSize"><a href="{{ r.get_absolute_url_arabic }}"><p class="text">{{ r.name_arabic|title }}</p></a>
+						
+									<div class="price w3-hide-medium w3-hide-large">
+										{% if r.sale_price %}
+										<span class="price-new"><span style="font-size: 1.2rem;">EGP {{ r.sale_price }}</span></span>
+										<span class="price-old"><span style="font-size: 1.2rem;">{{ r.price }}</span></span>
+										{% else %}
+										<span class="price-new"><span style="font-size: 1.2rem;">EGP {{ r.price }}</span></span>
+										{% endif %}
+									</div>								
+                                </td>
+								<td class="text-rightprice w3-hide-small">
+									<div class="fontSize">
+										{% if r.sale_price %}
+										<span class="price-new">EGP {{ r.sale_price }}</span>
+										<span class="price-old">{{ r.price }}</span>
+										{% else %}
+										<span class="price-new">EGP {{ r.price }}</span>
+										{% endif %}
+									</div>								
+                                </td>
+								<td class="text-left w3-hide-small fontSize">
+									{% if r.model.all %}
+									{% for m in r.model.all %}
+									
+										<a href="{{ m.get_absolute_url_arabic }}">   {{ m.name_arabic }} | </a> 
+									
+									 {% endfor %} 
+									 {% else %}
+									 مناسب لمختلف الموديلات
+									 {% endif %}
+									</td> 
+						
+									{% if r.available %}
+									<td class="text-right fontSize" style="color: blue;">متوافر</td>
+									{% else %}
+									<td class="text-right fontSize" style="color: red;">غير متوافر</td>
+									{% endif %}	
+                                
+		
+                            </tr>
+							{% endfor %}
+							{% endif %}
+							{% if products_paginator %}
+                            {% for r in products_paginator %}
+							<tr>
+								<td class="text-center w3-hide-small fontSize">
+									{{ r.id }}
+								</td>
+								<td class="text-center">
+									<a  href="{{ r.get_absolute_url_arabic }}"><img width="70px" src="{{ r.image.url }}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop">
+									</a>
+								</td>
+								<td class="text-left columnWidth fontSize"><a href="{{ r.get_absolute_url_arabic }}"><p class="text">{{ r.name_arabic|title }}</p></a>
+						
+									<div class="price w3-hide-medium w3-hide-large">
+										{% if r.sale_price %}
+										<span class="price-new"><span style="font-size: 1.2rem;">EGP {{ r.sale_price }}</span></span>
+										<span class="price-old"><span style="font-size: 1.2rem;">{{ r.price }}</span></span>
+										{% else %}
+										<span class="price-new"><span style="font-size: 1.2rem;">EGP {{ r.price }}</span></span>
+										{% endif %}
+									</div>								
+                                </td>
+								<td class="text-rightprice w3-hide-small">
+									<div class="fontSize">
+										{% if r.sale_price %}
+										<span class="price-new">EGP {{ r.sale_price }}</span>
+										<span class="price-old">{{ r.price }}</span>
+										{% else %}
+										<span class="price-new">EGP {{ r.price }}</span>
+										{% endif %}
+									</div>								
+                                </td>
+								<td class="text-left w3-hide-small fontSize">
+									{% if r.model.all %}
+									{% for m in r.model.all %}
+									
+										<a href="{{ m.get_absolute_url_arabic }}">   {{ m.name_arabic }} | </a> 
+									
+									 {% endfor %} 
+									 {% else %}
+									 مناسب لمختلف الموديلات
+									 {% endif %}
+									</td> 
+						
+									{% if r.available %}
+									<td class="text-right fontSize" style="color: blue;">متوافر</td>
+									{% else %}
+									<td class="text-right fontSize" style="color: red;">غير متوافر</td>
+									{% endif %}	
+                                
+		
+                            </tr>
+							{% endfor %}
+
+							{% endif %}
+				
+                        </tbody>
+					</table>
+                </div>
+
+
+ <!--Pagination-->
+ {% if products_paginator %}
+ <nav aria-label="Page navigation example">
+
+
+    <ul class="pagination justify-content-center">
+    {% if products_paginator.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1{% if request.GET.productSearchAllTypes %}&productSearchAllTypes={{ request.GET.productSearchAllTypes }}{% endif %}">&laquo; الأول</a>
+        <a class="page-link" href="?page={{ products_paginator.previous_page_number }}{% if request.GET.productSearchAllTypes %}&productSearchAllTypes={{ request.GET.productSearchAllTypes }}{% endif %}">السابق</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">السابق</a>
+      </li>
+    {% endif %}
+
+    {% if products_paginator.number|add:'-4' > 1 %}
+        <li class="page-item"><a class="page-link" href="?page={{ products_paginator.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in products_paginator.paginator.page_range %}
+        {% if products_paginator.number == i %}
+            <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{ i }}
+            <span class="sr-only">(current)</span>
+          </span>
+        </li>
+        {% elif i > products_paginator.number|add:'-5' and i < products_paginator.number|add:'5' %}
+             <li class="page-item"><a class="page-link" href="?page={{ i }}{% if request.GET.productSearchAllTypes %}&productSearchAllTypes={{ request.GET.productSearchAllTypes }}{% endif %}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if products_paginator.paginator.num_pages > products_paginator.number|add:'4' %}
+       <li class="page-item"><a class="page-link" href="?page={{ products_paginator.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if products_paginator.has_next %}
+        <li class="page-item">
+        <a class="page-link" href="?page={{ products_paginator.next_page_number }}{% if request.GET.productSearchAllTypes %}&productSearchAllTypes={{ request.GET.productSearchAllTypes }}{% endif %}">التالى</a>
+        <a class="page-link" href="?page={{ products_paginator.paginator.num_pages }}{% if request.GET.productSearchAllTypes %}&productSearchAllTypes={{ request.GET.productSearchAllTypes }}{% endif %}">الأخير &raquo;</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">التالى</a>
+      </li>
+    {% endif %}
+  </ul>
+
+</nav>
+{% endif %}
+<!--end of Pagination-->
+
+
+
+
+
+
+
+                {% else %}
+              
+                <h2 style="color: red; font-weight:600;" class="w3-center jumbotron">
+					عذرا! جرب مفردات أخرى فى البحث عن طلبك أو اطلبه بشكل مباشر من هنا  
+			
+					<a href="http://m.me/Marchpart" target="_blank">
+						<img src="{% static 'img/messenger.png' %}" width="50">
+					</a>  
+					<a href="https://wa.me/+201220622224?text=Contact%20on%20a%20WhatsApp" target="_blank">
+						<img src="{% static 'img/whatsApp.png' %}" width="60">
+					</a>
+				</h2>
+          
+                    {% endif %}
+                </div>
+          
+
+			<!--Middle Part End-->
+			<!-- <aside class="col-sm-3 hidden-xs content-aside col-md-3" id="column-right">
+				<h2 class="subtitle">Account</h2>
+				<div class="list-group">
+					<ul class="list-item">
+						<li><a href="login.html">Login</a>
+						</li>
+						<li><a href="register.html">Register</a>
+						</li>
+						<li><a href="#">Forgotten Password</a>
+						</li>
+						<li><a href="#">My Account</a>
+						</li>
+						<li><a href="#">Address Books</a>
+						</li>
+						<li><a href="wishlist.html">Wish List</a>
+						</li>
+						<li><a href="#">Order History</a>
+						</li>
+						<li><a href="#">Downloads</a>
+						</li>
+						<li><a href="#">Reward Points</a>
+						</li>
+						<li><a href="#">Returns</a>
+						</li>
+						<li><a href="#">Transactions</a>
+						</li>
+						<li><a href="#">Newsletter</a>
+						</li>
+						<li><a href="#">Recurring payments</a>
+						</li>
+					</ul>
+				</div>
+			</aside> -->
+		</div>
+	</div>
+	<!-- //Main Container -->
+
+{% endblock %}
+
+
+
+

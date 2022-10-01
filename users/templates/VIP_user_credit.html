@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="padding: 20%;">
+<div class="container" style="background-color: rgba(255, 220, 65, 0.363);">
+{% if response_message_json == '3-D Secure check requested' %}
+<h2 style="color: rgb(47, 95, 255);">
+    Please <a href="{{ Threeds_url_json }}"><span style="color: darkgray;">click here</span></a> to complete the purchase process for paying 
+    {{ buyer.fees }} {% if buyer.nationality == 'Egyptian' %} EGP
+    {% else %} USD {% endif %}</h2>
+    
+    {% elif response_message_json == 'Success' %}
+    <h1>Succeful payment Thanks for your purchsing</h1>
+    
+    {% else %}  
+    
+    
+    
+    <h3 style="color: red;">Please retry your purchase, cause there is an error happened: <br> {{ response_message_json }}</h3>
+    <h4 style="color:forestgreen; text-decoration: underline;"><b>"NOTHING WITHDRAWN FROM YOUR CREDIT CARD"</b></h4>
+    <h4>Kindly Note That It Is Not Allowed To Refresh The Page In A Payment Process.</h4>
+    <h4><a href="" style="color: darkgray;">Click Here</a> to go back to your reservation page</h4>
+    {% endif %}
+    </div></div>
+    {% endblock %}  
+    
+
+
+
+
+    #############################################################
+    returned from payfort:
+    <br>
+    'response_code' : {{response_code}}, <br>
+    'card_number' : {{card_number}}, <br>
+    'card_holder_name' : {{card_holder_name}}, <br>
+    'merchant_identifier' : {{merchant_identifier}}, <br>
+    'threeD_url' : {{ threeD_url }}, <br>
+    'service_command':{{service_command}}, <br>
+    'response_message': {{response_message}}, <br>
+    'token_name':{{token_name}}, <br>
+    'buyer': {{buyer}}, <br>
+    <hr><hr><hr>

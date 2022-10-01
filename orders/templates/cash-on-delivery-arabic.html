@@ -1,0 +1,66 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load static %}
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block content %}
+<style>
+  .hideLanguageTab {
+          display: none;
+      }
+  </style>
+<div class="container container-fluid">
+    <div class="jumbotron jumbotron-fluid">
+
+        <h3 class=" w3-margin" style="background-color: greenyellow; padding: 5px; color: black;">  لقد تم استقبال طلبك بنجاح، تم إرسال بريد إليكترونى بالتفاصيل، و سيتم التواصل معك خلال 24 ساعة لإتمام عملية الشحن   </h3>
+
+        <br>
+        <table class="table table-hover">
+            <thead>
+              <!-- <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+              </tr> -->
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>الإسم</b></td>
+                <td>{{ order.first_name|title }} {{ order.last_name|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>البريد الإليكترونى</b></td>
+                <td>{{ order.email }}</td>      
+              </tr>
+              <tr>
+                <td><b>العنوان</b></td>
+                <td>{{ order.address|capfirst }} | {{ order.city|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>رقم التليفون</b></td>
+                <td>{{ order.phone1 }}</td>      
+              </tr>
+              {% if order_items %}
+              {% for o in order_items %}
+                  <tr>
+                <td><b>القطعة</b></td>
+                <td>{{ o.product.name|capfirst }}   <br>  
+            ({{ o.product.name_arabic|capfirst }}) </td>    
+              </tr>
+              {% endfor %}
+              {% endif %}
+              <tr>
+                <td><b>الإجمالى</b></td>
+                <td>{{ order.fees }} EGP</td>      
+              </tr>
+            </tbody>
+          </table>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

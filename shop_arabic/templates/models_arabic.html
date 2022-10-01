@@ -1,0 +1,45 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name_arabic }} {% else %} موديلات {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content-main-w">
+  <div class="container">
+<center><h1 style="color: crimson;" class="fontDroidArabicKufi"><b>{{brand.name_arabic|upper}}</b></h1></center>
+
+
+
+  <!--end first-->
+  
+  
+  <div class="row-banners">
+    <div class="banners banners1">
+      {% if models %}
+      {% for b in models %}
+      <div class="item item3">
+        <div class="w3-card" style="padding: 5px;">
+          <label style="padding-right: 5px;"><h4 class="fontDroidArabicKufi"><b>{{ b.name_arabic|title }}</b></h4></label>
+            <a href="{{ b.get_absolute_url_arabic }}"><img src="{{ b.image.url }}" alt="banner"></a>
+        </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+        
+    </div>
+</div>
+
+
+
+
+
+  
+  
+  
+  </div></div>
+
+{% endblock %}

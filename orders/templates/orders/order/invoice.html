@@ -1,0 +1,65 @@
+
+
+        <h3 style="background-color: yellow; padding: 5px; color: black;">Hi {{ user.username|title }}, Your payment completed successfuly.</h3>
+
+        <br>
+        <h4 style="color: red;"><b>Invoice Number</b>: {{ invoice }}</h4>
+        <table>
+            <thead>
+              <!-- <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+              </tr> -->
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Name</b></td>
+                <td>{{ first_name|title }} {{ last_name|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>Email</b></td>
+                <td>{{ email }}</td>      
+              </tr>
+              <tr>
+                <td><b>Address</b></td>
+                <td>{{ address|capfirst }} {{ city|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>Phone Number</b></td>
+                <td>{{ phone1 }}</td>      
+              </tr>
+              {% if order_items %}
+              {% for o in order_items %}
+                  <tr>
+                <td><b>Item</b></td>
+                <td>{{ o.product.name|capfirst }}   <br>  
+            ({{ o.product.name_arabic|capfirst }}) </td>    
+              </tr>
+              {% endfor %}
+              {% endif %}
+              <tr>
+                <td><b>Shipping Fees</b></td>
+                {% if shipping != None %}
+                <td>{{ shipping }} EGP</td> 
+                {% else %} 
+                <td><span style="color: rgb(0, 182, 0);">Free Shipping</span> </td>
+                {% endif %}
+              </tr>
+              <tr>
+                <td><b>Total Fees</b></td>
+                <td>{{ fees }} EGP</td>      
+              </tr>
+            </tbody>
+          </table>
+
+    </div>
+    <br>
+
+        <h4><b>March Part Team</b></h4>
+        <h4><b>https://{{domain}}</b></h4>
+   
+</div>
+
+
+

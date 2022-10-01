@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }} {% else %} Products {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content-main-w">
+  <div class="container">
+<center><h1 style="color: crimson;"><b>{{brand.name|upper}}</b></h1></center>
+
+
+
+  <!--end first-->
+  
+  
+  
+  <div class="row-banners">
+    <div class="banners banners1">
+      {% if models %}
+      {% for b in models %}
+       
+        <div class="item item3" style="border-style: solid; border-width: 1px; border-color: crimson; margin: 1px; width: 33%;">
+          <label style="padding-left: 5px;"><h4><b>{{ b.name|title }}</b></h4></label>
+            <a href="{{ b.get_absolute_url }}"><img src="{{ b.image.url }}" alt="banner"></a>
+        </div>
+        
+        {% endfor %}
+        {% endif %}
+        
+        
+    </div>
+</div>
+
+
+
+
+
+  
+  
+  
+  </div></div>
+
+{% endblock %}

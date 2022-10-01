@@ -1,0 +1,26 @@
+<aside class="col-sm-3 hidden-xs content-aside col-md-3" id="column-right">
+    <h2 class="subtitle">حسابك الشخصى</h2>
+    <div class="list-group">
+        <ul class="list-item">
+            <!-- <li><a href="{% url 'userDashboard' request.user.id %}">My Account</a>
+            </li> -->
+            <li><a href="{% url 'userDashboard_arabic' request.user.id %}">تعديل بيانات الحساب</a>
+            </li>
+            <!-- <li><a href="#">العناوين</a>
+            </li> -->
+            <li><a href="{% url 'wishlistView_arabic' request.user.id %}">قائمة الرغبات</a>
+            </li>
+     
+            <!-- <li><a href="#">Reward Points</a>
+            </li> -->
+            <!-- <li><a href="#">Returns</a>
+            </li> -->
+            <!-- <li><a href="#">Transactions</a> -->
+            <!-- </li>
+            <li><a href="#">Newsletter</a>
+            </li> -->
+            <li><a href="{% url 'userInvoices_arabic' %}">الفواتير   </a>
+            </li>
+        </ul>
+    </div>
+</aside>

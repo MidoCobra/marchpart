@@ -1,0 +1,192 @@
+	<!--open small navbar-->
+	<script>
+    $(document).ready(function(){
+    $("#bar").click(function(){
+      $("#small").slideToggle("slow");
+    });
+  });
+  </script>
+  <!--open small navbar-->
+  </head>
+  
+  <body class="bg-light">
+  <!--login nav--->
+  <div class="container-fluid bg-dark w3-border-bottom w3-border-gray">
+  <div class="container">
+    
+    <ul class="nav w3-small py-2">
+        {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link disabled w3-text-light-gray" href="#">Good morning {{ user.username }}</a>
+      </li>
+      <li class="nav-item ml-auto">
+        <a class="nav-link w3-text-pink" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item ml-auto">
+        <a class="nav-link w3-text-pink" href="{% url 'signup' %}?next={{request.path}}">Sign Up</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link w3-text-pink" href="{% url 'login' %}?next={{request.path}}"><i class='fas fa-user'></i> Login</a>
+      </li>
+      {% endif %}
+    </ul>
+    </div></div>
+    
+    <!--end login nav--->   
+    
+    <!--logo & cart nav --->
+    <div class="container-fluid bg-dark hidsmall ">
+  <div class="container">
+  <div class="row">
+  <!--logo-->
+    <div class="col-sm-4"><a href="{% url 'shop:home' %}">
+      <img src="/static/images/logo.jpeg"class="my-3" style="height:100px; margin-right:10px;" alt="..."></a></div>
+    <!--end logo-->
+    
+    <!--contact for help-->
+    <div class="col-sm-4 "><div class="media  my-5 w3-border-right w3-border-gray">
+    <i class='fas fa-mobile-alt w3-text-pink w3-xxlarge mr-3 '></i>
+    <div class="media-body ">
+     <p class="align-middle text-light">To buy or help call 01-2345-6789<br>
+      <small class="w3-small text-secondary">Available 24/7</small></p>
+      
+    </div>
+  </div></div>
+  <!--end contact for help-->
+  
+  
+  <!--cart -->
+    <div class="col-sm-4"><div class="media  my-5 ">
+      <a href="{% url 'cart:cart_detail' %}#cart_detail">
+    <i class='fas fa-shopping-cart w3-text-pink w3-xxlarge mr-3'></i> </a>
+    <div class="media-body">
+     <p class="align-middle text-light">SHOPPING CART عربة التسوق<br>
+      {% with totail_items=cart|length %}
+      {% if cart|length > 0 %}
+      <small class="w3-small text-secondary">Total:<a href="{% url 'cart:cart_detail' %}" class="w3-text-pink">{{ totail_items }} item {{ totail_items|pluralize }}</a>
+         Amount:<a href="#" class="w3-text-white"> ${{ cart.get_total_price }}</a></small></p>
+         {% endif %}
+         {% endwith %}
+    </div>
+  </div></div>
+  <!--cart -->
+    
+  </div></div></div>
+  <!--end logo & cart nav --->
+  
+  <!--nave in large -->
+   <div class="container-fluid bg-dark hidsmall ">
+  <div class="container">
+  <nav class="navbar navbar-expand-sm  rounded-lg navbar-dark w3-small"style="background-color:rgb(77, 77, 77);">
+  
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link mr-2" href="{% url 'shop:home' %}">HOME</a>
+      </li>
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle mr-2" href="#"id="navbardrop" data-toggle="dropdown">CATEGORIES</a>
+      <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'shop:home' %}#products">Various Products</a>
+          {% if categories %}
+          {% for c in categories %}
+              
+          <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug=c.slug %}#products"> {{ c.name|title }} </a>
+          <!-- <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug='lotions' %}">Makup مكياج </a> -->
+          <!-- <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug='perfumes' %}">Body Care مستحضرات عنايه </a> -->
+      <!-- <a class="dropdown-item" href="#">lingerie لانجري</a> -->
+      {% endfor %}
+      {% endif %}
+        </div>
+      
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" href="#">HOW TO BUY</a>
+      </li>
+    <!-- <li class="nav-item">
+        <a class="nav-link mr-2" href="#">FAQ</a>
+      </li> -->
+       <!-- <li class="nav-item">
+        <a class="nav-link" href="#">CONTACT US</a>
+      </li> -->
+    </ul>
+
+
+
+    <!--search in large-->
+    <form method="POST" action="/search/" id="searchBar" class="form-inline ml-auto shadow border border-0">
+      {% csrf_token %} 
+      <div class="input-group border border-0 input-group-sm">
+    <input type="text" name="srh" class="form-control border border-0"
+     style="background-color:rgba(0,0,0,0.2);color:white;"placeholder="Search Products Or Categories">
+        <div class="input-group-append border border-0">
+          <button type="submit" class="w3-small w3-pink input-group-text border-0">Go</button>
+        </div>
+       
+      </div> 
+    </form>
+    <!--end search in large-->
+    </nav>
+    </div></div>
+    <!--end nave in large -->
+    
+    
+    
+    <!--navbar small-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark w3-hide-large  ">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="{% url 'shop:home' %}">
+      <img src="/static/img/glowing2.png" alt="logo" style="width:170px;">
+    </a>
+    
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+      <li id="bar"class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-bars w3-xlarge"></i></a>
+      </li>
+      
+    </ul>
+  </nav>
+  
+  <!--open nave bar in small-->
+  <div class="container w3-small">
+  <div id="small" class="list-group  mx-auto mt-2 "style="background-color:rgb(77, 77, 77); display: none;">
+  <a href="#" class="list-group-item list-group-item-action w3-text-light-gray"style="background-color:rgb(77, 77, 77);">
+
+
+    <!--search in small-->
+  <form class="form-inline ml-auto shadow border border-0 " method="POST" action="/search/" id="searchBar">
+    {% csrf_token %}   
+    <div class="input-group border border-0 input-group-sm w-100">
+    <input type="text" name="srh" class="form-control border border-0" style="background-color:rgba(0,0,0,0.2);color:white;"placeholder="search">
+        <div class="input-group-append border border-0">
+          <button type="submit" class="w3-small w3-pink input-group-text border-0">
+            Go</button>
+        </div>
+       
+      </div> 
+    </form><!--end search in small--></a>
+    
+    
+    
+    <a href="{% url 'shop:home' %}" class="list-group-item list-group-item-action w3-hover-text-white w3-text-light-gray "style="background-color:rgb(77, 77, 77);"><i class='fas fa-home w3-text-pink w3-large mr-3'></i>HOME</a>
+    <li class="list-group-item list-group-item-action w3-text-light-gray dropdown w3-hover-text-white" style="background-color:rgb(77, 77, 77);cursor: pointer;" data-toggle="dropdown"><i class='fas fa-th w3-text-pink w3-large mr-3'></i>CATEGORIES
+     <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'shop:home' %}#products">Various Products</a>
+        {% if categories %}
+        {% for c in categories %}
+            
+        <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug=c.slug %}#products" style="z-index: -3;"> {{ c.name|title }} </a>
+    {% endfor %}
+    {% endif %}
+          <!-- <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug='cosmetics' %}">cosmetics</a>
+          <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug='lotions' %}">MAKEUP</a>
+          <a class="dropdown-item" href="{% url 'shop:all_product_list_by_category' category_slug='perfumes' %}">PERFUME</a>
+      <a class="dropdown-item" href="#">Body Care</a> -->
+        </div></li>
+    <a href="#" class="list-group-item list-group-item-action w3-text-light-gray w3-hover-text-white"style="background-color:rgb(77, 77, 77);"><i class='fab fa-paypal w3-text-pink w3-large mr-3'></i>HOW TO BUY</a>
+    <a href="{% url 'cart:cart_detail' %}#cart_detail" class="list-group-item list-group-item-action w3-text-light-gray w3-hover-text-white"style="background-color:rgb(77, 77, 77);"><i class='fas fa-shopping-cart w3-text-pink w3-large mr-3'></i>SHOPPING CART</a>
+    <a href="#" class="list-group-item list-group-item-action w3-text-light-gray w3-hover-text-white"style="background-color:rgb(77, 77, 77);"> <i class='fas fa-mobile-alt w3-text-pink w3-large mr-3 '></i>To buy or help call 01-2345-6789</a>
+  </div></div>
+  
+  <!--end open nave bar in small-->

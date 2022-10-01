@@ -1,0 +1,196 @@
+<style>
+	.tit {
+  font: 400 1rem 'Roboto', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.top {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  background-color: black;
+  width: 100%;
+}
+
+.slide {
+  list-style-type: none;
+  padding: 0;
+}
+
+.slide__item {
+  position: relative;
+}
+
+.slide-caption {
+  position: absolute;
+  padding:20px;
+  top:50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  font-family: 'Roboto';
+}
+
+.slide-caption__title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.slide-caption__title:before{
+  content: '';
+  width: 20%;
+  border-bottom: 2px solid black;
+  display: block;
+  margin: 0 auto;
+}
+
+.owl-item.active .slide-caption__title{
+  animation: 1s .2s fadeInLeft both;
+}
+
+.owl-item.active .slide-caption__desc{
+  animation: 1s .6s fadeInUp both;
+}
+
+.owl-item.active .btn {
+  animation: 1s .9s flipInX both;
+}
+
+.owl-item.active .w3-button {
+  animation: 1s .9s flipInX both;
+}
+
+.slide-caption__desc {
+  font-size: .8rem;
+  font-weight: 300;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.w3-button {
+ font-size: 16px;
+ font-weight: 300;
+ border: 2px solid black;
+ color: black;
+ padding: .6rem 2rem;
+ display: inline-block;
+ text-decoration: none;
+ margin-top: .5rem;
+}
+.btn {
+ font-size: 16px;
+ font-weight: 300;
+ border: 2px solid black;
+ color: black;
+ padding: .6rem 2rem;
+ display: inline-block;
+ text-decoration: none;
+ margin-top: .5rem;
+}
+
+
+.animated  {
+  -webkit-animation-duration : 1000 ms  ;
+  animation-duration : 1000 ms  ;
+  -webkit-animation-fill-mode : both  ;
+  animation-fill-mode : both  ;
+}  
+/* .owl-animated-out - only for current item */ 
+/* This is very important class. Use z-index if you want move Out item above In item */ 
+.owl-animated-out {
+  z-index : 1 
+   }
+/* .owl-animated-in - only for upcoming item
+/* This is very important class. Use z-index if you want move In item above Out item */ 
+.owl-animated-in {
+  z-index : 0 
+   }
+/* .fadeOut is style taken from Animation.css and this is how it looks in owl.carousel.css:  */ 
+</style>
+
+
+
+  <!--owl animated slider--->
+  <div class="container"> 
+
+<ul class="owl-carousel slide my-5">
+
+  {% if slide_show_home %}
+  {% for slide in slide_show_home %}
+<!--first slide-->
+<li class="slide__item">
+      <img src="{{ slide.slide_image.url }}" />
+      
+      <div class="slide-caption text-light">
+        <h2 class="slide-caption__title "style=" font-size: 4vw;">{{ slide.slide_title }}</h2>
+        <p class="slide-caption__desc w3-hide-small"> {{ slide.slide_short_Descrip_1 }}</p>
+		<p class="slide-caption__desc w3-hide-large w3-small w3-hide-medium"style="margin-bottom:0px;"> {{ slide.slide_short_Descrip_2 }} </p>
+        <a href="{{ slide.product.get_absolute_url }}" class="btn w3-hide-small">{{ slide.slide_short_Descrip_3 }}</a>
+		<a href="{{ slide.product.get_absolute_url }}" class="w3-button w3-tiny w3-hide-large btn-sm  w3-hide-medium">{{ slide.slide_short_Descrip_3 }}</a>
+      </div>
+    </li>
+  {% endfor %}
+  {% endif %}
+	
+	<!--second slide-->
+	<!-- <li class="slide__item">
+      <img src="/static/img/beauty2.png" />
+      
+      <div class="slide-caption">
+        <h2 class="slide-caption__title "style=" font-size: 4vw;">Mussum Ipsum</h2>
+        <p class="slide-caption__desc w3-hide-small"> Mé faiz elementum girarzis, nisi eros vermeio. </p>
+		<p class="slide-caption__desc w3-hide-large w3-small w3-hide-medium"style="margin-bottom:0px;"> Mé faiz elementum girarzis, nisi eros vermeio. </p>
+        <a href="#" class="btn w3-hide-small">Mussum ipsum button</a>
+		<a href="#" class="w3-button w3-tiny w3-hide-large btn-sm  w3-hide-medium">Mussum ipsum button</a>
+      </div>
+    </li>
+	 -->
+	<!--third slide-->
+    <!-- <li class="slide__item">
+      <img src="/static/img/love spell-slide.jpg" />
+      
+      <div class="slide-caption">
+        <h2 class="slide-caption__title ">Mussum Ipsum</h2>
+        <p class="slide-caption__desc"> Mé faiz elementum girarzis, nisi eros vermeio.</p>
+        <a href="#" class="btn">Mussum ipsum button</a>
+      </div>
+    </li> -->
+  
+  <!--forth slide-->
+   <!-- <li class="slide__item">
+      <img src="/static/img/island fling.jpg" />
+      
+      <div class="slide-caption">
+        <h2 class="slide-caption__title "style=" font-size: 4vw;">Mussum Ipsum</h2>
+        <p class="slide-caption__desc w3-hide-small"> Mé faiz elementum girarzis, nisi eros vermeio. </p>
+		<p class="slide-caption__desc w3-hide-large w3-small w3-hide-medium"style="margin-bottom:0px;"> Mé faiz elementum girarzis, nisi eros vermeio. </p>
+        <a href="#" class="btn w3-hide-small">Mussum ipsum button</a>
+		<a href="#" class="w3-button w3-tiny w3-hide-large btn-sm  w3-hide-medium">Mussum ipsum button</a>
+      </div>
+    </li> -->
+	
+	
+</ul></div>
+<!--end slide show-->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.4/owl.carousel.min.js"></script>
+<script>
+(function($){
+  'use strict';
+  
+   $('.owl-carousel').owlCarousel({
+      items: 1, 
+      nav: false,
+	loop:true,
+	autoplay:true,
+    autoplayTimeout:3000,
+	smartSpeed:650,
+    animateIn: 'fadeIn'
+    });  
+})(jQuery);
+</script>

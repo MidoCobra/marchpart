@@ -1,0 +1,57 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }} {% else %} Products {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="content-main-w">
+    <div class="container">
+<h2>Parts Types Available For <b style="color:red;">{{ model.name|title }} </b>Cars</h2><hr><br>
+
+
+
+                <!-- So categories -->
+                <div id="so_categories_51" class="so-categories module theme3 slider-cates5">                    
+                    <div class="modcontent">
+                        <div class="cat-wrap theme3">
+                            {% if category %} {% for c in category %}
+                            <div class="content-box">
+                                <div class="image-cat">
+                                    <a href="{% url 'shop:modelCategoryProducts' model_slug c.slug 0 %}#products">
+                                        <img src="{{ c.image.url }}" alt="image" /></a>                                
+                                </div>                        
+                                <div class="cat-title">
+                                    <a href="{% url 'shop:modelCategoryProducts' model_slug c.slug 0 %}#products">{{ c.name|title }}</a>
+                                </div>                        
+                            </div>
+                            {% endfor %}  {% endif %}
+                            {% if categoryForAllModels %} {% for c in categoryForAllModels %}
+                            <div class="content-box">
+                                <div class="image-cat">
+                                    <a href="{% url 'shop:modelCategoryProducts' model_slug c.slug 1 %}#products">
+                                        <img src="{{ c.image.url }}" alt="image" /></a>                                
+                                </div>                        
+                                <div class="cat-title">
+                                    <a href="{% url 'shop:modelCategoryProducts' model_slug c.slug 1 %}#products">{{ c.name|title }}</a>
+                                </div>                        
+                            </div>
+                            {% endfor %}  {% endif %}
+                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end So categories -->
+
+            </div>
+            </div>
+
+
+
+            
+            
+            {% endblock %}
+            
+            

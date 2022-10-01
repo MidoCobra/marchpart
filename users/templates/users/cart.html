@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<!---header-->
+<div class=" jumbotron jumbotron-fluid w3-indigo ">
+        <div class="container">
+       <h2 style="font-size:4vmin ">DASH BOARD</h2>
+       </div>
+     </div>
+<!---end header---->
+
+
+<!---basic row--->
+<div class="container-fluid bg-light py-4 ">
+<div class="container">
+
+   <div class=" row">
+   
+   <!---right side---->
+      <!---booking revsion section---->
+       <div class="col-lg-3 col-md-4 col-sm-12 sm-padding float-right-lg">
+       <div class="sticky-top mb-4"style="top:60px;z-index:1;">
+       <!---CHANGE FILTER---->	
+       
+       
+       
+
+<ul class="list-group mb-5  ">
+<li class="list-group-item p-0 media d-flex">
+
+
+<img src="{{ request.user.photo.url }}" class="mr-3 "style="height:120px;width:120px;object-fit:cover;"alt="user-photo">
+
+<div class="media-body w3-small pt-3   "style="line-height:1.5">
+                       <!----location--->
+                        <span class=" "><b>{{ request.user.username|title|truncatechars:15 }}</b></span><br>		   
+                      
+                          <!---title--->
+                        <span class="w3-small ">{{ request.user.country|title }}</span> <br><br>
+                        				 
+</div>
+</li>
+
+<!---NAME CONTAIN section----->
+
+ </ul>
+ 
+ <ul class="nav flex-column nav-pills shadow">
+
+ 
+<li class="nav-item border">
+<a class="nav-link" data-toggle="pill" href="#profile">PROFILE</a>
+</li>
+
+
+<li class="nav-item border">
+<a class="nav-link active" data-toggle="pill" href="#cart">
+CART</a>
+</li>
+
+<li class="nav-item border">
+<a class="nav-link" href="{% url 'userDashboard' request.user.id %}">WISH-LIST</a>
+</li>
+
+<li class="nav-item border">
+
+<a class="nav-link" data-toggle="pill" href="#TAILOR">TAILOR-MADE CART</a>
+</li>
+
+<li class="nav-item border">
+<a class="nav-link"  href="#">
+LOGOUT</a>
+</li>
+</ul>
+<br>  
+
+
+
+
+
+     </div>
+
+</div>
+
+
+
+       
+<!---RIGHT-SIDE-----> 	
+     <!---right choice---->		  
+  <div class="col-lg-9 col-md-8 col-sm-12 sm-padding pb-5 float-right-sm">
+  
+
+      
+     
+<!---cart------->
+<div class="tab-pane container " id="cart">
+<h2>{{items_number}} Unpaid Invoices</h2>
+<!---f cart---->
+{% if hotel_tailormade %}
+{% for h in hotel_tailormade %}
+<div class="row bg-white shadow mb-4">
+
+<div class="col-sm-4 p-0">
+<img src="{{ h.hotel.photo_1.url }}" class="w-100 h-100"style="object-fit:cover;"alt="hotel-photo">
+</div>
+
+<div class="col-sm-5 p-0 "style="line-height:1.5">
+<div class="p-4">
+                       <!----location--->
+                        <span class="text-secondary"><i class="fa fa-map-marker w3-text-indigo"></i> Antibes, France</span><br>		   
+                      
+                          <!---title--->
+                        <span class="w3-large "><b>{{ h.hotel|title }}</b></span> 
+                        
+                        
+                         <!----t&p row------>
+ 
+                          <!---stars-->
+                        <br>
+                        <span class="w3-tiny">
+                 
+                       
+                        
+                        <!---revew---->
+                         <span ><b>Invoice Number: {{ h.invoice }}</b> </span>
+                       <br>  <span ><b>Total Fees: {{ h.fees }}$</b> </span>
+                        
+                        
+                        </span>
+                         
+                        
+                         <!---price----->
+                        
+                        
+                         <br>
+                         <span class="w3-tiny">from</span>
+                       <span class="font-weight-bold text-danger w3-small">$830</span>						 
+                       <span class="w3-tiny">per person</span>
+                       
+                       <!---end price----->						  
+                       
+                       <!----end t&p row------>
+                      
+</div>
+</div>
+
+<div class="col-sm-3 p-0">
+        <a href="{% url 'remove_tailor_from_cart' request.user.id h.id %}">
+<button type="button" class="btn btn-danger h-50 w-100 rounded-0">Remove</button></a>
+
+
+<button type="button" class="btn w3-indigo h-50 w-100 rounded-0">Pay Now</button>
+
+
+</div> 
+
+
+
+     
+
+</div>
+{% endfor %}
+{% endif %}
+<!---end cart----->
+
+</div>
+<!---end cart tap----->
+
+
+</div></div>
+<!----end tap co---->
+
+
+</div></div>
+<!----end tap co---->
+   
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+
+
+<div style="padding:80">
+</div>
+
+<h1>Cart items = {{items_number}}</h1>
+
+
+{% if hotel_tailormade %}
+{% for h in hotel_tailormade %}
+
+<ul>
+    <li>user : {{ user.username }}</li>
+    <li>hotel : {{ h.hotel }}</li>
+    <li>fees = <span id="fees">{{ h.fees }}</span> </li>
+    <li>invoice = {{ h.invoice }}</li>
+    <a href="{% url 'remove_tailor_from_cart' request.user.id h.id %}">
+        <button class="w3-right w3-round w3-btn w3-light-grey w3-hover-red w3-margin">Remove item</button></a>
+    <hr>
+</ul>
+
+{% endfor %}
+{% endif %}
+
+<hr style="border-width: 15px; border-color: rgb(43, 218, 81);">
+{% if day_tour %}
+{% for d in day_tour %}
+
+<ul>
+    <li>user : {{ user.username }}</li>
+    <li>tour : {{ d.tour.tour_title }}</li>
+    <li>fees = {{ d.fees }} </li>
+    <li>invoice = {{ d.invoice }}</li>
+    <a href="{% url 'remove_day_tour_from_cart' request.user.id d.id %}">
+        <button class="w3-right w3-round w3-btn w3-light-grey w3-hover-red w3-margin">Remove item</button></a>
+    <hr>
+</ul>
+
+{% endfor %}
+{% endif %}
+<hr style="border-width: 12px; color: darkmagenta;">
+<h1>Total Fees:<span id ="totalFees"></span></h1>
+<hr style="border-width: 12px; color: darkmagenta;">
+
+<script>
+    const f = document.getElementById("fees").textContent;
+
+
+        document.getElementById('totalFees').innerHTML = f;
+</script>

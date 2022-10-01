@@ -1,0 +1,308 @@
+{% extends 'shop/base.html' %}
+{% load ratings %}
+{% load widget_tweaks %}
+{% block title %}
+    Product Detail
+{% endblock %}
+
+{% block slider %}
+<div style="padding-top:40px;"></div>
+{% endblock %}
+
+
+{% block content %}
+
+
+<style>
+
+    .star-ratings-rating-average, 
+    .star-ratings-rating-count,
+    .star-ratings-rating-user {
+        display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+     .hide-small{
+        display:none;
+      }
+    }
+    
+    @media screen and (min-width: 768px) {
+     .hide-large{
+        display:none;
+      }
+    }
+    </style>
+    
+
+<!---start from here-->
+<ul class="list-group ">
+    <!---title-->
+    <li class="list-group-item bg-dark text-white"><span class="float-left">{{ product.name|title }}</span>
+
+  <!-- <h5>Share {{ product.name }} With Friends</h5> -->
+<div class="fb-share-button w3-right" data-href="{% url 'shop:product_detail' id='product.id' slug='product.slug' %}" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a> With Friends</div>
+
+
+    <!-- <span class="float-right w3-text-pink">Share &#160;<a href="# "class="w3-hover-text-light-gray">
+    </a>&#160; <a href="#"class="w3-hover-text-light-gray"><i class='fab fa-facebook-f'></i></a></span> -->
+  </li>
+    <!--end tittle-->
+    
+    
+
+  
+    <li class="list-group-item border border-0">
+    
+    <div class="row w3-small">
+    <!--img for product-->
+    <div class="col-lg-6 col-md-12 col-sm-12 "><img src="{{ product.image.url }}" class="rounded w-100 " alt="product"></div>
+    <!--end img for product-->
+    
+    <!--details-->
+    <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="">
+      
+      <h4><b>NEW! Bombshell Wild Flower Velvet Body Cream</b>       </h4>
+      {% ratings product read_only='True' icon_height=18 icon_width=18 %}
+
+    <p class="text-muted">A windswept bouquet of untamed florals now in a rich cream. With shea and cocoa butters, this velvety 
+    formula infuses skin with 24-hour moisture while
+    amplifying the staying power of your signature fragrance, Bombshell Wild Flower.</p></div><br>
+    
+    <!--price and avelabilty row-->
+    <div class="row">
+    <!--avelabilty-->
+    <div class="col-lg-6 col-md-12 col-sm-12">
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item w3-small "><b>Availability:</b>{% if product.available == True %} In stock & ready to ship
+      {% else %} Not Available {% endif %} </li>
+
+
+    <!-- <li class="list-group-item "><b>Delivery:</b>Free & fast</li> -->
+</div>
+<!--avelabilty-->
+
+<!--price-->
+
+
+<div class="col-lg-6 col-md-12 col-sm-12">
+  <h3><b>Rate Product:   {% ratings product icon_height=18 icon_width=18 %}</b></h3>
+    <ul class="list-group text-muted">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Price
+      <span class=" w3-xlarge">
+        {% if product.sale_price %}
+        <span style="text-decoration:line-through; color: bisque;">${{ product.price }}</span> &nbsp; ${{ product.sale_price }}
+        {% else %}
+        ${{ product.price }}
+        {% endif %}
+      
+      </span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <form action="{% url 'cart:ajax_add_cart' product.id %}" method="post" id="add_to_cart">
+            {% csrf_token %}
+            <!-- {{ form.as_p }} -->
+            <label>Qty:</label>
+            {% render_field form.quantity class=" w3-round w3-pale-red" type='select' %}
+            
+            <div class="closeAlert"></div>
+            <button type="submit" class="btn w3-pink w3-tiny"> 
+              Add To Cart
+             </button>
+
+        </form>
+      <!-- <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  ">Cart <i class='fas fa-shopping-cart'></i></a> -->
+      <!-- <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  float-right">Wish list <i class='fas fa-heart text-danger '></i></a> -->
+    </li>
+    
+  </ul>
+    </div>
+    <!--end price-->
+    
+    </div>
+  </div>
+  <!--end details-->
+   
+    </div></li>
+
+
+
+    
+    <!---discreption and Related Items-->
+    <li class="list-group-item border border-0">
+    
+    <div class="row">
+    <!--description--->
+    <div class="col-lg-8 col-md-12 col-sm-12"><ul class="list-group mt-3">
+    <li class="list-group-item w3-pale-red ">Description</li>
+    <li class="list-group-item w3-small text-muted">
+        {{ product.description|safe|linebreaksbr }}
+    <br><br>
+    <ul>
+    <li>Velvet-like cream for soft, all-over fragrance</li>
+    <li>Fragrance type: Floral</li>
+    <li>Notes: Desert Wildflower, Star Lotus, and Neon Rose</li>
+    </ul>
+    </li>
+  </ul></div>
+  <!--end description--->
+  
+  
+
+
+
+  
+    <!--RELATED ITEMs-->
+    <div class="col-lg-4 col-md-12 col-sm-12">  
+    <div class="list-group mt-3 w3-small">
+    <!--tittle-->
+    <a href="#" class="list-group-item list-group-item-action w3-pale-red">Related Items</a>
+    <!--end tittle-->
+
+    {% if similar_products %}{% for s in similar_products %}
+    <!--first item-->
+    <a href="{{ s.get_absolute_url }}" class="list-group-item list-group-item-action text-muted ">
+    <div class="media">
+    <img src="{{ s.image.url }}" class="align-self-center mr-3" style="width:30%;">
+    <div class="media-body">    
+      <p>{{ s.name }}<br>
+      Price <b>${{ s.price }}</b></p>
+    </div>
+  </div>
+  </a>
+  <!--end first item-->
+  {% endfor %}{% endif %}
+
+
+  </div></div>
+  <!--END RELATED ITEM-->
+  </div>
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+  <!---end here---->
+
+
+
+  <script>
+    
+    
+    $(document).ready(function(){
+    
+    
+    // ***********************for adding tour to cart
+        $('#add_to_cart').on('submit', function(event){
+      event.preventDefault();
+      console.log("icon clicked!")  // sanity check
+      add_item();
+    });
+    function add_item(){
+      $(".closeAlert").empty(); // this line for not repeating the same alert every time the button clicked
+        console.log("create post is working!") // sanity check
+        $.ajax({
+            url : "{% url 'cart:ajax_add_cart' product.id %}", // the endpoint
+            type : "POST", // http method
+            data : { 
+              update : $('#update').val(),
+              quantity : $('#quantity').val(),
+              // the_rate : $('#post-rate').val(),
+               }, // data sent with the post request
+    
+            // handle a successful response
+            // i used if else statement that after completein the ajax request succefully it may return the response data
+            //null from my views.py so it will alert fail massage because this means that review did not saved
+            success : 
+            function(json) {
+                // $().prepend(alert("Item Added To Your Cart"));
+                // $('#check_cart').prepend("<a href='{% url 'cart:cart_detail' %}'>Check Your Cart</a>");
+                $('.closeAlert').prepend("<a href='{% url 'cart:cart_detail' %}'>Check Your Cart</a>");
+                
+              },
+       
+    
+    
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    }; // end of add tour to cart ***********************************
+
+          // Next code is for csrf :
+          $(function() {
+    // This function gets cookie with a given name
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    
+    /*
+    The functions below will create a header with csrftoken
+    */
+    
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    
+    });//End of csrf token
+
+      }); //end document.ready
+      </script>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,563 @@
+{% extends 'shop/base.html' %}
+{% load widget_tweaks %}
+{% block title %}  {{ request.user.username|title }} {% endblock %}
+{% block content %}
+<style>
+	.OnlyBlockHome{
+	display: block;
+}
+.OnlyNoneHome{
+	display: none;
+}
+</style>
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Account</a></li>
+			<li><a href="#">My Account</a></li>
+		</ul>
+		
+		<div class="row">
+			<!--Middle Part Start-->
+			<div class="col-sm-9" id="content">
+				<h2 class="title">My Account</h2>
+				<p class="lead">Hello, <strong>{{ request.user.username|title }}!</strong> - To update your account information.</p>
+		
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="row">
+						<div class="col-sm-6">
+							<fieldset id="personal-details">
+								<legend>Update Details</legend>
+								<div class="form-group required">
+									<label for="input-firstname" class="control-label">city</label>
+									{% render_field form.city name="city"  class="form-control rounded-0" type='text' placeholder="Your City"  %}
+									<!-- <input type="text" class="form-control" id="input-firstname" placeholder="First Name" value="" name="firstname"> -->
+								</div>
+								<div class="form-group required">
+									<label for="input-email" class="control-label">Province</label>
+									{% render_field form.province name="province"  class="form-control rounded-0" type='text' placeholder="Your Province"  %}
+									<!-- <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email"> -->
+								</div>
+								<div class="form-group required">
+									<label for="input-email" class="control-label">Country</label>
+									{% render_field form.country name="country"  class="form-control rounded-0" type='text' placeholder="Your Country"  %}
+									<!-- <input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email"> -->
+								</div>
+								<div class="form-group required">
+									<label for="input-telephone" class="control-label">Telephone</label>
+									{% render_field form.mobile name="mobile"  class="form-control rounded-0" type='text' placeholder="Mobile Number"  %}
+									<!-- <input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" value="" name="telephone"> -->
+								</div>
+								
+							</fieldset>
+							<br>
+						</div>
+						<div class="col-sm-6">
+							<!-- <fieldset>
+								<legend>Change Password</legend>
+								<div class="form-group required">
+									<label for="input-password" class="control-label">Old Password</label>
+									<input type="password" class="form-control"  placeholder="Old Password" value="" name="old-password">
+								</div>
+								<div class="form-group required">
+									<label for="input-password" class="control-label">New Password</label>
+									<input type="password" class="form-control"  placeholder="New Password" value="" name="new-password">
+								</div>
+								<div class="form-group required">
+									<label for="input-confirm" class="control-label">New Password Confirm</label>
+									<input type="password" class="form-control" id="input-confirm" placeholder="New Password Confirm" value="" name="new-confirm">
+								</div>
+							</fieldset> -->
+							<fieldset>
+								<legend>Newsletter</legend>
+								<div class="form-group">
+									<label class="col-md-2 col-sm-3 col-xs-3 control-label">Subscribe</label>
+									<div class="col-md-10 col-sm-9 col-xs-9">
+										<label class="radio-inline">
+											{% render_field form.newsLetter name="newsletter" type='checkbox' %}
+											<!-- <input type="radio" value="1" name="newsletter"> Yes -->
+										</label>
+										<!-- <label class="radio-inline">
+											<input type="radio" checked="checked" value="0" name="newsletter"> No
+										</label> -->
+									</div>
+								</div>
+							</fieldset>
+						</div>
+			
+					</div>
+					<!-- <div class="row">
+						<div class="col-sm-6">
+							<fieldset id="address">
+								<legend>Payment Address</legend>
+								<div class="form-group">
+									<label for="input-company" class="control-label">Company</label>
+
+									<input type="text" class="form-control"  placeholder="Company" value="" name="company">
+
+								</div>
+								<div class="form-group required">
+									<label for="input-address-1" class="control-label">Address 1</label>
+									<input type="text" class="form-control"  placeholder="Address 1" value="" name="address_1">
+								</div>
+								<div class="form-group required">
+									<label for="input-city" class="control-label">City</label>
+									<input type="text" class="form-control" placeholder="City" value="" name="city">
+								</div>
+								<div class="form-group required">
+									<label for="input-postcode" class="control-label">Post Code</label>
+									<input type="text" class="form-control"  placeholder="Post Code" value="" name="postcode">
+								</div>
+								<div class="form-group required">
+									<label for="input-country" class="control-label">Country</label>
+									<select class="form-control" name="country_id">
+										<option value=""> --- Please Select --- </option>
+										<option value="244">Aaland Islands</option>
+										<option value="1">Afghanistan</option>
+										<option value="2">Albania</option>
+										<option value="3">Algeria</option>
+										<option value="4">American Samoa</option>
+										<option value="5">Andorra</option>
+										<option value="6">Angola</option>
+										<option value="7">Anguilla</option>
+										<option value="8">Antarctica</option>
+										<option value="9">Antigua and Barbuda</option>
+										<option value="10">Argentina</option>
+										<option value="11">Armenia</option>
+										<option value="12">Aruba</option>
+								   
+									</select>
+								</div>
+								<div class="form-group required">
+									<label for="input-zone" class="control-label">Region / State</label>
+									<select class="form-control" name="zone_id">
+										<option value=""> --- Please Select --- </option>
+										<option value="3513">Aberdeen</option>
+										<option value="3514">Aberdeenshire</option>
+										<option value="3515">Anglesey</option>
+										<option value="3516">Angus</option>
+										<option value="3517">Argyll and Bute</option>
+										<option value="3518">Bedfordshire</option>
+										<option value="3519">Berkshire</option>
+								 
+									</select>
+								</div>
+							</fieldset>
+						</div>
+						<div class="col-sm-6">
+							<fieldset id="shipping-address">
+								<legend>Shipping Address</legend>
+								<div class="form-group">
+									<label for="input-company" class="control-label">Company</label>
+									<input type="text" class="form-control" id="input-company" placeholder="Company" value="" name="company">
+								</div>
+								<div class="form-group required">
+									<label for="input-address-1" class="control-label">Address 1</label>
+									<input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="" name="address_1">
+								</div>
+								<div class="form-group required">
+									<label for="input-city" class="control-label">City</label>
+									<input type="text" class="form-control" id="input-city" placeholder="City" value="" name="city">
+								</div>
+								<div class="form-group required">
+									<label for="input-postcode" class="control-label">Post Code</label>
+									<input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="" name="postcode">
+								</div>
+								<div class="form-group required">
+									<label for="input-country" class="control-label">Country</label>
+									<select class="form-control" id="input-country" name="country_id">
+										<option value=""> --- Please Select --- </option>
+										<option value="244">Aaland Islands</option>
+										<option value="1">Afghanistan</option>
+										<option value="2">Albania</option>
+										<option value="3">Algeria</option>
+										<option value="4">American Samoa</option>
+										<option value="5">Andorra</option>
+										<option value="6">Angola</option>
+										<option value="7">Anguilla</option>
+										<option value="8">Antarctica</option>
+										<option value="9">Antigua and Barbuda</option>
+										<option value="10">Argentina</option>
+										<option value="11">Armenia</option>
+										<option value="12">Aruba</option>
+									
+									</select>
+								</div>
+								<div class="form-group required">
+									<label for="input-zone" class="control-label">Region / State</label>
+									<select class="form-control" id="input-zone" name="zone_id">
+										<option value=""> --- Please Select --- </option>
+										<option value="3513">Aberdeen</option>
+										<option value="3514">Aberdeenshire</option>
+										<option value="3515">Anglesey</option>
+										<option value="3516">Angus</option>
+										<option value="3517">Argyll and Bute</option>
+										<option value="3518">Bedfordshire</option>
+										<option value="3519">Berkshire</option>
+									   
+									</select>
+								</div>
+							</fieldset>
+						</div>
+					</div> -->
+
+
+
+					<div class="buttons clearfix" style="margin-top: 10px;">
+						<div class="pull-right">
+							<input type="submit" class="btn btn-md btn-primary" value="Save Changes">
+						</div>
+					</div>
+				</form>
+			</div>
+			<!--Middle Part End-->
+			<!--Right Part Start -->
+{% include 'users/side_menu.html' %}
+			<!--Right Part End -->
+		</div>
+	</div>
+	<!-- //Main Container -->
+	
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+  ===============================================================================================================
+-->
+
+
+
+
+
+
+
+<!---header-->
+<div class="jumbotron jumbotron-fluid w3-indigo">
+           <div class="container">
+          <h2 style="font-size:3.5vmax" class="w3-center">DASHBOARD</h2>
+		  </div>
+		</div>
+  <!---end header---->
+  
+
+ <!---basic row--->
+  <div class="container-fluid bg-light py-4 ">
+  <div class="container">
+
+      <div class=" row">
+	  
+	  <!---right side---->
+		 <!---booking revsion section---->
+          <div class="col-lg-3 col-md-4 col-sm-12 sm-padding float-right-lg">
+		  <div class="sticky-top mb-4"style="top:60px;z-index:1;">
+		  <!---CHANGE FILTER---->	
+		  
+		  
+		  
+  
+  <ul class="list-group mb-5  ">
+  <li class="list-group-item p-1 media d-flex">
+  
+
+  
+  <div class="media-body w3-large pt-3 w3-center"style="line-height:1.5">	
+						   <span class=" "><b>{{ request.user.username|title|truncatechars:50 }}</b></span><br>		   
+						   <span class="w3-small ">{{ request.user.country|title }}</span> <br>			  				 
+  </div>
+   </li>
+   
+   <!---NAME CONTAIN section----->
+  
+	</ul>
+	
+	<ul class="nav nav-pills flex-column shadow">
+
+<li class="nav-item border w3-center">
+ <a class="nav-link active" data-toggle="pill" href="#wishlist"><h3><b>Wishlist</b></h3></a>
+</li>
+
+<li class="nav-item border w3-center">
+ <a class="nav-link" data-toggle="pill" href="#unpaid"><h3><b>Unpaid Invoices</b></h3></a>
+</li>
+<li class="nav-item border w3-center">
+ <a class="nav-link" data-toggle="pill" href="#paid"><h3><b>paid Invoices</b></h3></a>
+</li>
+
+<!-- <li class="nav-item border w3-center">
+  <a class="nav-link" data-toggle="pill" href="{% url 'logout' %}" onclick="return confirm('Are You Sure You Want To Logout?');">
+    <h3><b>Logout</b></h3></a>
+</li> -->
+ </ul>
+ <br>  
+        </div>
+  </div>
+  
+  
+          
+<!---RIGHT-SIDE-----> 	
+		<!---right choice---->		  
+	 <div class="col-lg-9 col-md-8 col-sm-12 sm-padding pb-5 float-right-sm">
+	
+     		 <!---up date profile----> 
+
+		 
+		
+<!---cart------->
+  <!---end cart tap----->
+  <div class="tab-content"> 
+  <!---wishlist------->
+<div class="tab-pane container active" id="wishlist">
+ <!--%%%%%%%%%%%%%%%%% Testing Face Book Data  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+ <!--%%%%%%%%%%%%%%%%% Testing Face Book Data  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+ {% for ass in backends.associated %}
+{% if ass.provider == 'facebook' %}
+  <div class="col-md-6 text-center">
+      <img src="{{ass.extra_data.picture.data.url}}" alt="" width="150" height="150" style="border-radius: 50%">
+  </div>
+  <div class="col-md-6 social-container my-2">                 <p> Signed in via:  {{ ass.provider }} </p>
+      <p> Name:  {{ ass.extra_data.name }} </p>
+      <p> Provider url: <a href="{{ass.extra_data.profile_url}}">link</a></p>
+      <p> Provider Email: {{ ass.extra_data.email }}</p>
+
+
+  </div>
+{% endif %}
+{% if ass.provider == 'linkedin-oauth2' %}
+<div class="col-md-6 text-center">
+    <img src="{{ass.extra_data.picture_url}}" alt="" width="150" height="150" style="border-radius: 50%">
+</div>
+<div class="col-md-6 social-container my-2">                 <p> Signed in via:  Linkedin </p>
+    <p> Name:  {{ ass.extra_data.name }} </p>
+    <p> Provider url: <a href="{{ass.extra_data.profile_url}}">link</a></p>
+</div>
+{% endif %}
+{% endfor %}
+ <!--%%%%%%%%%%%%%%%%% End Testing Face Book Data  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+ <!---f wishlist---->
+ {% if daytours_selected %}
+ {% for dt in daytours_selected %}
+  <div class="row bg-white shadow mb-4">
+  
+  <div class="col-sm-4 p-0">
+  <img src="{{ dt.tour.photo1.url }}" class="w-100 h-100"style="object-fit:cover;"alt="user-photo">
+  </div>
+  
+  <div class="col-sm-5 p-0 "style="line-height:1.5">
+  <div class="p-4">
+						  <!----location--->
+						   <span class="text-secondary"><i class="fa fa-map-marker w3-text-indigo"></i> {{ dt.tour.city|title }}, {{ dt.tour.country|title }}</span><br>		   
+						 
+							 <!---title--->
+						   <span class="w3-large "><b>{{ dt.tour.tour_title|title }}</b></span> 
+				   
+							<!----t&p row------>
+		  			   
+						     <!---stars-->
+						   <br>
+						   <span class="w3-tiny">
+						   <i class='fas fa-star w3-small text-warning'></i> <i class='fas fa-star  w3-small text-warning'></i> 
+						   <i class='fas fa-star w3-small text-warning'></i> 
+						   <i class='fas fa-star w3-small text-warning'></i> 
+						   <i class='far fa-star w3-small text-warning'></i>
+						  
+					   <!---revew---->
+						    <span >140 Reviews</span></span>
+		   
+						    <!---price----->
+
+						    <br>
+							<span class="w3-tiny">from</span>
+						  <span class="font-weight-bold text-danger w3-small">$830</span>						 
+						  <span class="w3-tiny">per person</span>
+						  
+						  <!---end price----->						  
+						  
+						  <!----end t&p row------>
+						 
+  </div>
+  </div>
+  
+  <div class="col-sm-3 p-0">
+    <a href="{% url 'deletedaytourselections' dt.tour.id %}">
+  <button type="button" class="btn btn-danger h-50 w-100 rounded-0">Remove Tour</button></a>
+ <a href="{{ dt.tour.get_absolute_url }}">
+  <button type="button" class="btn w3-teal h-50 w-100 rounded-0">Book Tour</button> </a>
+   </div> 
+
+  
+  </div>
+  {% endfor %}
+{% endif %}
+{% if tourPackage_selected %}
+{% for dt in tourPackage_selected %}
+  <div class="row bg-white shadow mb-4">
+  
+  <div class="col-sm-4 p-0">
+  <img src="{{ dt.tour.photo_1.url }}" class="w-100 h-100"style="object-fit:cover;"alt="user-photo">
+  </div>
+  
+  <div class="col-sm-5 p-0 "style="line-height:1.5">
+  <div class="p-4">
+						  <!----location--->
+               <span class="text-secondary"><i class="fa fa-map-marker w3-text-indigo"></i>
+                {% if dt.tour.city.all %} 
+                {% for t in dt.tour.city.all %}
+                {{ t.name|title }},
+                {% endfor %}{% endif %} /
+                {% if dt.tour.country.all %} 
+                {% for t in dt.tour.country.all %}
+                {{ t.name|title }}
+                {% endfor %}{% endif %}
+              
+              </span><br>		   
+						 
+							 <!---title--->
+						   <span class="w3-large "><b>{{ dt.tour.tour_title|title }}</b></span> 
+				   
+							<!----t&p row------>
+		  			   
+						     <!---stars-->
+						   <br>
+						   <span class="w3-tiny">
+						   <i class='fas fa-star w3-small text-warning'></i> <i class='fas fa-star  w3-small text-warning'></i> 
+						   <i class='fas fa-star w3-small text-warning'></i> 
+						   <i class='fas fa-star w3-small text-warning'></i> 
+						   <i class='far fa-star w3-small text-warning'></i>
+						  
+					   <!---revew---->
+						    <span >140 Reviews</span></span>
+		   
+						    <!---price----->
+
+						    <br>
+							<span class="w3-tiny">from</span>
+						  <span class="font-weight-bold text-danger w3-small">$830</span>						 
+						  <span class="w3-tiny">per person</span>
+						  
+						  <!---end price----->						  
+						  
+						  <!----end t&p row------>
+						 
+  </div>
+  </div>
+  
+  <div class="col-sm-3 p-0">
+    <a href="{% url 'deletetourPackageselections' dt.tour.id %}">
+  <button type="button" class="btn btn-danger h-50 w-100 rounded-0">Remove Tour</button> </a>
+  <a href="{{ dt.tour.get_absolute_url }}">
+   <button type="button" class="btn w3-teal h-50 w-100 rounded-0">Book Tour</button></a>
+   </div> 
+
+  
+  </div>
+  {% endfor %}
+{% endif %}
+  <!---end wishlist----->
+  
+</div>
+<!---end wishlist tap----->
+
+<!--
+  ***************** UnPaid Invoices ****************
+-->
+<div class="tab-pane container" id="unpaid">
+  {% if unPaid_day_tours %}
+    {% for u in unPaid_day_tours %}
+{{ u.tour|title }} <br>
+{{ u.invoice }} <br>
+{{ u.fees }} <br>
+<a href="{% url 'dayTourCreditInput' u.id %}">
+<button class="btn btn-primary" >Pay Now</button> </a>
+<hr>
+
+    {% endfor %}
+    {% endif %}
+  </div>
+<!--
+  end unpaid
+-->
+  <!-- ***************** Paid Invoices **************** -->
+
+<div class="tab-pane container" id="paid">
+  <h1>Paid</h1>
+  {% if paid_day_tours %}
+    {% for u in paid_day_tours %}
+{{ u.tour|title }} <br>
+{{ u.invoice }} <br>
+{{ u.fees }} <br>
+<a href="{% url 'dayTourCreditInput' u.id %}">
+<button class="btn btn-primary" >Pay Now</button> </a>
+<hr>
+
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  <!--
+  ***************** End Paid Invoices ****************
+-->
+  
+  </div>
+  </div>
+  <!----end tap co---->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </div></div>
+  <!----end tap co---->
+  		 </div>
+		 </div>
+		 </div>
+  
+  
+
+
+
+     <!-- <script>
+      function confirmLogout() {
+  if (confirm("Press a button!")) {
+
+  } else {
+    consol.log("You pressed Cancel!");      }
+      </script>				   -->
+<!--
+  Test tabpar bootstrap
+-->
+
+
+

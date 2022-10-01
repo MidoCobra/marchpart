@@ -1,0 +1,137 @@
+ <style>
+
+	
+  @media screen and (max-width: 992px) {
+   .hidsmall{
+      display:none;
+    }
+  }
+  
+   
+    
+
+@media screen and (max-width: 768px) {
+ .hide-small{
+    display:none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+ .hide-large{
+    display:none;
+  }
+}
+	</style> 
+ <!--start container---> 
+<div class="container  my-5">
+
+<!--basic row---> 
+<div class="row ">
+<!--left-side in large -->
+  <div class="col-lg-3 col-md-4 col-sm-12 hide-small">
+   <!--CART SUMMARY in large+medium -->
+   <div class="list-group text-light rounded-lg  w3-hide-small mb-4 w3-center">
+   <!--tittle-->
+  <li class="list-group-item  "style="background-color:rgba(0,0,0,0.8);">
+   Cart Summary
+  </li>
+  <!--tittle-->
+
+  {% for item in cart %}
+  <!--first item-->
+   <a href="#" class="list-group-item list-group-item-action text-muted">
+  <div class="media">
+  <img src="{{ item.product.image.url }}" class="align-self-center mr-3" style="width:30%;">
+  <div class="media-body">    
+    <p>{{ item.quantity }}x {{ item.product.name }}<br>
+	Price <b>EGP{{ item.total_price }}</b></p>
+  </div>
+</div>
+</a>
+<!--end first item-->
+{% endfor %}
+
+
+
+<!--totat costs-->
+<li class="list-group-item text-muted"><p>
+<!--products price-->
+<!-- <span class="float-left"><b>Products Total</b></span><span class="float-right">${{ cart.get_total_price }}</span></p><br> -->
+<!--end products price-->
+
+<!--sapping cost-->
+ <!-- <p><span class="float-left"><b>Shipping & Handling</b> </span>
+<span class="float-right">$10</span></p> -->
+<!--sapping cost-->
+
+<!--total-->
+ <p><span class="float-left align-bottom w3-large"><b>Subtotal :</b> </span><span class="float-right w3-large w3-text-black">ُEGP {{ cart.get_total_price }}</span></p>
+ <!--total-->
+ </li>
+ <!--end total cost-->
+</div>
+<!--end CART SUMMARY in large+medium -->
+  
+  <!--CUSTOMER SUPPORT in large -->
+  <ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item  w3-red">CUSTOMER SUPPORT</li>
+  <li class="list-group-item  w3-small text-secondary"><a href="#">Email: contact@marchpart.com</a></li>
+  <!-- <li class="list-group-item  w3-small text-secondary"><a href="#">FAQs</a></li> -->
+  <li class="list-group-item  w3-small text-secondary">Tel: (+20) 000000000</li>
+  </ul>
+  <!--CUSTOMER SUPPORT in large -->
+  
+  <!--paypal photo in large-->
+  <!-- <ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item "><img src="/static/img/Paypal-Logo.png" class="w-100" alt="Cinque Terre"></li>
+  </ul> -->
+  <!--end paypal photo in large-->
+  
+</div>
+<!--end left-side in large -->
+
+
+  <div class="col-lg-9 col-md-8 col-sm-12">
+  <!--CART SUMMARY in small -->
+   <div class="list-group text-light rounded-lg hide-large mb-4  w3-center">
+   <!--tittle-->
+  <li class="list-group-item"style="background-color:rgba(0,0,0,0.8);">
+  CART SUMMARY
+  </li>
+  <!--tittle-->
+  {% for item in cart %}
+  <!--first-item-->
+  <a href="#" class="list-group-item list-group-item-action text-muted">
+    <div class="media">
+    <img src="{{ item.product.image.url }}" class="align-self-center mr-3" style="width:30%;">
+    <div class="media-body">    
+      <p>{{ item.quantity }}x {{ item.product.name }}<br>
+    Price <b>EGP{{ item.total_price }}</b></p>
+    </div>
+  </div>
+  </a>
+<!--end first-item-->
+{% endfor %}
+
+
+
+<!--totat costs-->
+<li class="list-group-item text-muted"><p>
+<!--products price-->
+<!-- <span class="float-left">product total</span><span class="float-right">EGP{{ cart.get_total_price }}</span></p><br> -->
+<!--end products price-->
+
+<!--sapping cost-->
+ <!-- <p><span class="float-left">shipping & handling </span>
+<span class="float-right">$10</span></p> -->
+<!--sapping cost-->
+<br> 
+<hr>
+<!--total-->
+ <p style="font-size: large;"><b>subtotal: </b><span class="float-right w3-large">EGP {{ cart.get_total_price }}</span></p>
+ <!--total-->
+ </li>
+ <!--end total cost-->
+</div>
+<!--end CART SUMMARY in small -->
+  

@@ -1,0 +1,29 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block content %}
+<style>
+    .hideLanguageTab {
+            display: none;
+        }
+    </style>
+<div class="container container-fluid">
+    <div class="jumbotron jumbotron-fluid">
+
+        <h3 class=" w3-margin" style="background-color: red; padding: 5px; color: white;">
+            Hi {% if request.user.is_authenticated %} {{ user.username|title }},{% endif %} Your payment process Failed. Nothing is withdrawn from your credit.</h3>
+            <br>
+<hr><br>
+<h5><b>Reason: </b> {{  data_message }}  </h5>
+      
+    </div>
+</div>
+
+
+
+
+{% endblock %}
