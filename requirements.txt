@@ -43,7 +43,6 @@ odfpy==1.4.1
 openpyxl==3.0.5
 pathspec==0.8.0
 Pillow==7.2.0
-pkg-resources==0.0.0
 psycopg2==2.8.5
 pycparser==2.20
 pyexcel==0.6.6
