@@ -1,0 +1,16 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Reset password link was sent
+From: contact@marchpart.com
+To: mohamed_abdelhay_ahmed@yahoo.com
+Reply-To: contact@marchpart.com
+Date: Fri, 12 Mar 2021 07:44:45 -0000
+Message-ID: 
+ <161553508553.1423.13850540514617709057@DESKTOP-0SLA954.localdomain>
+
+You can reset your password by clicking on this link:
+
+https://127.0.0.1:8000/api/auth/reset-password/?user_id=2&timestamp=1615535085&signature=PrroAahQRJmNMfnldpM4LxJrCZ0
+
+-------------------------------------------------------------------------------

@@ -1,0 +1,198 @@
+facebook failure login url responsed:
+https://www.marchpart.com/social-auth/complete/facebook/
+?error_code=1349048
+&error_message=Can%27t+Load+URL%3A+The+domain+of+this+URL+isn%27t+included+in+the+app%27s+domains.+To+be+able+to+load+this+URL%2C+add+all+domains+and+subdomains+of+your+app+to+the+App+Domains+field+in+your+app+settings.#_=_
+
+
+
+
+Mobile App Requirements:
+
+search--field advanced (done)
+orders (done)
+
+contact-us (Done)
+blogs (Done)
+models response by id for models and brands .. change this  (Done)
+
+
+
+2230
+2220
+350
+595+260 = 13450
+200
+1000
+
+total 19100-15000 = 4100
+
+400 elec
+200 gas
+210 indigo
+60 etisalat
+total = 870
+
+4100 - 870 = 3230
+
+
+
+The API key for orders-secure is: 3FKxS5OI.1pS783nGBfUARlhjDxHDsOfTW5aPSeGh. Please store it somewhere safe: you will not be able to see it again.
+
+
+
+
+
+<iframe src="https://accept.paymob.com/api/acceptance/iframes/65707?payment_token={{payment_key}}" width="100%" height="100%"></iframe>
+
+
+<form action ="{% url 'orders:WalletVodafone' payment_key %}" method="post">
+  {% csrf_token %}
+   <div class="form-group">
+    <label>Please Enter Your Wallet Phone Number:</label>
+    <input type="text" class="form-control" name="mobile" placeholder="رقم محمول الحافظة الخاصة بك">
+    <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+
+</form>
+
+
+
+
+zethromax, or zethrocin 
+vitamin c 1000 ... pravotin recommended
+panadol .. paracitamol
+
+acicateen llbalgham
+
+محمود عصام حسن  سليمان
+
+
+ip = models.GenericIPAddressField(blank=True, null=True)
+
+
+
+"Authorization: Token e4da7ad85b139af164054aba3ca1c18078704fe8"
+
+
+
+
+
+face book email duplicate response url:
+https://www.marchpart.com/social-auth/complete/facebook/?granted_scopes=email%2Cpublic_profile&denied_scopes&code=AQC6ThpKlqEDg57OqfVG8Mgyx7qXvkSyV6CaRX-Z1aWbwZz8nujQVHxPGMTgNwobLaMoPtTNlsegm0f8hiZ8_Www-iPHnjhAv_Zs8MZ-nZKGk5x6AVQUDwPdIPtd4Kikf4ftJEWvLhpW9E_exnW4UdhGpxKizebPxdIOrHue3gkOmJuSLwbUYeyS0htPxg7eNoE0BDi3afzEyWmDRoLbDX4wjwNEpn04UsS52wxDZgLN5oN2CARa8Fe85JyoKYgCZFis-D5CA7d2swUfdSYcE1zVVZQMmJX48CZDJCiO8WKG-I7Sg1HXtM8MRJct682d4qgg5RbZOZpjJzsJBLOR3AJI&state=Hx1F5J5E8BnP1j57A7YJib9cVbPK0y0n#_=_
+
+
+
+
+
+upload 26-11-2020:
+
+shop: (, , ,  , , footer) done
+
+shop_arabic: (, , ,  , , footer)
+orders: (create arabic, )
+
+
+
+Rememnber :  Expiring sessions for cart 
+
+
+_______________________________________________________________________________
+_______________________________________________________________________________
+
+Facebook Login Link:
+https://www.facebook.com/login.php?skip_api_login=1&api_key=1247940662205410&kid_directed_site=0&app_id=1247940662205410&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fv3.2%2Fdialog%2Foauth%3Fclient_id%3D1247940662205410%26redirect_uri%3Dhttps%253A%252F%252Fmarchpart.com%252Fsocial-auth%252Fcomplete%252Ffacebook%252F%26state%3DLXsRL5840D4k688yrf1fMTfQzhzHgoAN%26return_scopes%3Dtrue%26scope%3Demail%26ret%3Dlogin%26fbapp_pres%3D0%26logger_id%3D0348b742-499b-4fe1-9033-375e7d365776%26tp%3Dunspecified&cancel_url=https%3A%2F%2Fmarchpart.com%2Fsocial-auth%2Fcomplete%2Ffacebook%2F%3Ferror%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied%26state%3DLXsRL5840D4k688yrf1fMTfQzhzHgoAN%23_%3D_&display=page&locale=en_GB&pl_dbl=0
+
+
+
+2aa5e75cc6362e917cb943fb009d8ea528504e59
+
+
+
+localhost: e4da7ad85b139af164054aba3ca1c18078704fe8
+
+
+
+_______________________________________________________________________________
+_______________________________________________________________________________
+
+To get the authentication token and find specific user:
+
+from rest_framework.authtoken.models import Token
+
+try:
+    Token.objects.get(key="token").user
+except Token.DoesNotExist:
+    pass
+
+
+        ## Will use this if facebook account have no email registered with
+    # def save(self, *args, **kwargs):
+    #     if self.email == (''):
+    #         self.email == ('nomailexists' +  create_new_ref_number() + '@marchpart.com')
+    #     if CustomUser.objects.filter(email=self.email).exists():
+    #         return JsonResponse(status=200, detail={'status':'false','message':'A registeration with the same email already exists'})
+    #     # else:
+    #     #     super(CustomUser, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        # if self.email == (''):
+        #     self.email == ('nomailexists' +  create_new_ref_number() + '@marchpart.com')
+        if CustomUser.objects.filter(email=self.email).exists():
+            return JsonResponse(status=200, data={'status':'false','message':'A registeration with the same email already exists'})
+
+
+
+curl --header "X-MyHeader: 123" --data "test=test" http://127.0.0.1:8000/api/update_log/
+
+
+C:\>http  http://localhost:8000/api/all-brands/
+HTTP/1.1 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Length: 1779
+Content-Type: application/json
+Date: Sat, 27 Mar 2021 11:33:25 GMT
+Server: WSGIServer/0.2 CPython/3.6.9
+Vary: Accept
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+[
+    {
+        "id": 4,
+        "image": "/media/media/p90385570-highres-the-new-bmw-communic-1583423938_Y5IRRZY.jpg",
+        "name": "BMW",
+        "name_arabic": "يى ام دابليو",
+        "slug": "bmw"
+    },
+    
+
+{
+    "count": 14,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 4,
+            "image": "http://localhost:8000/media/media/p90385570-highres-the-new-bmw-communic-1583423938_Y5IRRZY.jpg",
+            "name": "BMW",
+            "name_arabic": "يى ام دابليو",
+            "slug": "bmw"
+        },
+
+X-Frame-Options: DENY
+
+{
+    "results": [
+        {
+            "id": 4,
+            "image": "/media/media/p90385570-highres-the-new-bmw-communic-1583423938_Y5IRRZY.jpg",
+            "name": "BMW",
+            "name_arabic": "يى ام دابليو",
+            "slug": "bmw"
+        },
+
+        _______________________________________________________________________________
+        _______________________________________________________________________________
+        
+        
+        
+    Cannot resolve keyword 'token' into field. Choices are: agreement, auth_token, city, country, date_joined, email, first_name, groups, id, is_active, is_staff, is_superuser, is_vip, last_login, last_name, logentry, mobile, name, newsLetter, oauth2_provider_accesstoken, oauth2_provider_application, oauth2_provider_grant, oauth2_provider_refreshtoken, order, password, photo, profile, province, social_auth, user_permissions, username, userrating, vip_date_from, wishlist_______________________________________________________________________________

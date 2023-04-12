@@ -1,0 +1,15 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Please verify your account
+From: no-reply@marchpart.com
+To: mm@mr.com
+Reply-To: no-reply@marchpart.com
+Date: Sun, 11 Oct 2020 13:12:32 -0000
+Message-ID: <160242195200.676.9636529290210028089@DESKTOP-0SLA954.localdomain>
+
+Please verify your account by clicking on this link:
+
+https://127.0.0.1:8000/api/auth/users/activate/?user_id=83&timestamp=1602421951&signature=-IskaMiO-wPPjnT2djAhL9IjHbE
+
+-------------------------------------------------------------------------------

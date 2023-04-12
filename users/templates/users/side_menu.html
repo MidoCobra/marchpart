@@ -1,0 +1,27 @@
+<aside class="col-sm-3 hidden-xs content-aside col-md-3" id="column-right">
+    <h2 class="subtitle">Account</h2>
+    <div class="list-group">
+        <ul class="list-item">
+            <!-- <li><a href="{% url 'userDashboard' request.user.id %}">My Account</a>
+            </li> -->
+            <li><a href="{% url 'userDashboard' request.user.id %}">Update My Account</a>
+            </li>
+            <!-- <li><a href="#">Address Books</a>
+            </li> -->
+            <li><a href="{% url 'wishlistView' request.user.id %}">Wish List</a>
+            </li>
+            <!-- <li><a href="#">Reward Points</a>
+            </li> -->
+            <!-- <li><a href="#">Returns</a>
+            </li> -->
+            <!-- <li><a href="#">Transactions</a> -->
+            <!-- </li>
+            <li><a href="#">Newsletter</a>
+            </li> -->
+            <li><a href="{% url 'userInvoices' %}">Invoices</a>
+            </li>
+            <!-- <li><a href="">Delete Your Account</a>
+            </li> -->
+        </ul>
+    </div>
+</aside>

@@ -1,0 +1,440 @@
+{% extends 'shop/base.html' %}
+{% load ratings %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+Your Shopping Cart| Checkout
+{% endblock %}
+{% block content %}
+
+<style>
+  .hideLanguageTab {
+          display: none;
+      }
+  @media screen and (max-width: 992px) {
+   .hidsmall{
+      display:none;
+    }
+  }
+  
+   
+    
+
+@media screen and (max-width: 768px) {
+ .hide-small{
+    display:none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+ .hide-large{
+    display:none;
+  }
+}
+	</style> 
+ <!--start container---> 
+<div class="container  my-5">
+
+<!--basic row---> 
+<div class="row" style="padding-top:3%;">
+<!--left-side in large -->
+  <div class="col-lg-3 col-md-4 col-sm-12 hide-small">
+   <!--CART SUMMARY in large+medium -->
+   <div class="list-group text-light rounded-lg  w3-hide-small mb-4 w3-center">
+   <!--tittle-->
+  <li class="list-group-item  "style="background-color:rgba(0,0,0,0.8);">
+   Cart Summary
+  </li>
+  <!--tittle-->
+
+  {% for item in cart %}
+  <!--first item-->
+   <a href="#" class="list-group-item list-group-item-action text-muted">
+  <div class="media">
+  <img src="{{ item.product.image.url }}" class="align-self-center mr-3" style="width:30%;">
+  <div class="media-body">    
+    <p>{{ item.quantity }}x {{ item.product.name }}<br>
+	Price <b>EGP{{ item.total_price }}</b></p>
+  </div>
+</div>
+</a>
+<!--end first item-->
+{% endfor %}
+
+
+
+<!--totat costs-->
+<li class="list-group-item text-muted"><p>
+<!--products price-->
+<!-- <span class="float-left"><b>Products Total</b></span><span class="float-right">${{ cart.get_total_price }}</span></p><br> -->
+<!--end products price-->
+
+<!--sapping cost-->
+ <!-- <p><span class="float-left"><b>Shipping & Handling</b> </span>
+<span class="float-right">$10</span></p> -->
+<!--sapping cost-->
+
+<!--total-->
+ <p><span class="float-left align-bottom w3-large"><b>Subtotal :</b> </span><span class="float-right w3-large w3-text-black">EGP {{ cart.get_total_price }}</span></p>
+ {% if net_fees %}
+ <p><span class="float-left align-bottom w3-large"><b>Applied Coupon ({{coupon}}) :</b> </span><span class="float-right w3-large w3-text-black">EGP {{ net_fees }}</span></p>
+ {% endif %}
+ <!--total-->
+ </li>
+ <!--end total cost-->
+</div>
+<!--end CART SUMMARY in large+medium -->
+  
+  <!--CUSTOMER SUPPORT in large -->
+  <ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item  w3-red">CUSTOMER SUPPORT</li>
+  <li class="list-group-item  w3-small text-secondary"><a href="#">Email: contact@marchpart.com</a></li>
+  <!-- <li class="list-group-item  w3-small text-secondary"><a href="#">FAQs</a></li> -->
+  <li class="list-group-item  w3-small text-secondary">Tel: {{contact_information.phone2}}</li>
+  </ul>
+  <!--CUSTOMER SUPPORT in large -->
+  
+  <!--paypal photo in large-->
+  <!-- <ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item "><img src="/static/img/Paypal-Logo.png" class="w-100" alt="Cinque Terre"></li>
+  </ul> -->
+  <!--end paypal photo in large-->
+  
+</div>
+<!--end left-side in large -->
+
+
+  <div class="col-lg-9 col-md-8 col-sm-12">
+  <!--CART SUMMARY in small -->
+   <div class="list-group text-light rounded-lg hide-large mb-4  w3-center">
+   <!--tittle-->
+  <li class="list-group-item"style="background-color:rgba(0,0,0,0.8);">
+  CART SUMMARY
+  </li>
+  <!--tittle-->
+  {% for item in cart %}
+  <!--first-item-->
+  <a href="#" class="list-group-item list-group-item-action text-muted">
+    <div class="media">
+    <img src="{{ item.product.image.url }}" class="align-self-center mr-3" style="width:30%;">
+    <div class="media-body">    
+      <p>{{ item.quantity }}x {{ item.product.name }}<br>
+    Price <b>EGP{{ item.total_price }}</b></p>
+    </div>
+  </div>
+  </a>
+<!--end first-item-->
+{% endfor %}
+
+
+
+<!--totat costs-->
+<li class="list-group-item text-muted"><p>
+<!--products price-->
+<!-- <span class="float-left">product total</span><span class="float-right">EGP{{ cart.get_total_price }}</span></p><br> -->
+<!--end products price-->
+
+<!--sapping cost-->
+ <!-- <p><span class="float-left">shipping & handling </span>
+<span class="float-right">$10</span></p> -->
+<!--sapping cost-->
+<br> 
+<hr>
+<!--total-->
+ <p style="font-size: large;"><b>subtotal: </b><span class="float-right w3-large">EGP {{ cart.get_total_price }}</span></p>
+ {% if net_fees %}
+ <p><span class="float-right w3-large"><b>Applied Coupon ({{coupon}}) :</b> </span><span class="float-right w3-large w3-text-black">EGP {{ net_fees }}</span></p>
+ {% endif %}
+ <!--total-->
+ </li>
+ <!--end total cost-->
+</div>
+<!--end CART SUMMARY in small -->
+  
+
+
+
+
+
+
+<!---start from here-->
+<ul class="list-group mb-3">
+    <!--title-->
+      <li class="list-group-item bg-dark text-white"><span class="float-left">Shipping Address</span></li>
+      <!--end title-->
+
+      {% if messages %}
+      <div class="w3-margin">
+      <ul class="messages w3-red w3-text-white">
+          {% for message in messages %}
+          <li class="w3-margin">{{ message }}</li>
+          {% endfor %}
+      </ul>
+  </div>
+      {% endif %}
+    <!--forms for buy-->
+    <form action="" method="POST">  
+        {% csrf_token %}
+     <li class="list-group-item border border-0">
+    <div class="row w3-small w3-small">
+    
+    <!--First Name-->
+    <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="usr">First Name:</label>
+        {% render_field form.first_name id="usr" class="form-control" placeholder="First Name" type='text' %}
+        <!-- <input type="text" class="form-control" id="usr" placeholder="First Name" name="name"> -->
+      </div>
+      </div>
+      <!--end First Name-->
+    
+    <!--Last Name-->
+    <div class="col-lg-6 col-md-12 col-sm-12"><div class="form-group">
+        <label for="usr">Last Name:</label>
+        {% render_field form.last_name id="usr" class="form-control" placeholder="Last Name" type='text' %}
+        <!-- <input type="text" class="form-control" id="usr" placeholder="Last Name" name="name"> -->
+      </div>
+  </div>
+  <!--end Last Name-->
+  
+  <!--sddress-->
+  <div class="col-lg-12"><div class="form-group">
+        <label for="usr">Address:</label>
+        {% render_field form.address id="address" class="form-control" placeholder="Address" type='address' %}
+        <!-- <input type="address" class="form-control" id="address" placeholder="Address" name="address"> -->
+      </div>
+  </div>
+  <!--end sddress-->
+  
+  <!--city-->
+  <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="form-group">
+        <!-- <label for="usr">City:</label> -->
+        <!-- {% render_field form.city id="city" class="form-control" placeholder="city" type='city' %} -->
+        <!-- <input type="city" class="form-control" id="city" placeholder="city" name="name"> -->
+        <label for="sel1">Select City:</label>
+        <select class="form-control" value="{{ form.city }}">
+          <option  value="none">-----</option>
+          {% if shippings %} {% for x in shippings %}
+          <option value="{{ x.shipping_city }}">{{ x.shipping_city|title }} ... {{ x.shipping_cost }} EGP</option>
+          {% endfor %}  {% endif %}
+        </select>
+      </div>
+      </div>
+      <!--end city-->
+      
+      <!--state-->
+      <!-- <div class="col-lg-3 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="usr">State:</label>
+        <input type="State" class="form-control" id="State" placeholder="State" name="name">
+      </div>
+      </div> -->
+      <!--end state-->
+      
+      <!--Zip Code-->
+      <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="form-group">
+        <label for="usr">Postal Code:</label>
+        {% render_field form.postal_code id="Postal" class="form-control" placeholder="Postal Code" type='text' %}
+        <!-- <input type="text" class="form-control" id="usr" placeholder="" name="name"> -->
+      </div>
+      </div>
+      <!--end Zip Code-->
+      
+      <!--Country-->
+      <div class="col-sm-12 ">
+      <div class="form-group ">
+        <label for="usr">Country:</label>
+        {% render_field form.country id="country" class="form-control" type='text' disabled="true" %}
+
+        <!-- <input type="Country" class="form-control " id="Country" placeholder="Country" name="Country"> -->
+        <div class="input-group-append">
+
+    </div>
+  </div>
+    </div>
+    <!--end Country-->
+    
+    <!--Phone-->
+    <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="usr">Phone:</label>
+        {% render_field form.phone1 id="phone1" class="form-control" placeholder="Phone" type='text' required=True %}
+        <!-- <input type="phone" class="form-control" id="city" placeholder="phone" name="phone"> -->
+      </div>
+      </div>
+       <!--end Phone-->
+      
+       <!--Other Phone-->
+      <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="usr">Other Phone:</label>
+        {% render_field form.phone2 id="phone2" class="form-control" placeholder="Other Phone" type='text' %}
+        <!-- <input type="number" class="form-control" id="city" placeholder="Other Phone" name="name"> -->
+      </div>
+      </div>
+      <!--end Other Phone-->
+      </div>
+      </li>
+      
+      <!--check box-->
+      <!-- <li class="list-group-item border-0">
+      <div class="form-check ">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input" value="">Yes my BILLING and SHIPPING address are the same 
+    </label></div>
+  </li> -->
+  <!--end check box-->
+  
+  <!--Contact Information-->
+  <li class="list-group-item border-0 w3-small">
+  <!--title-->
+  <h6><b>Contact Information</b></h6>
+  <!--end title-->
+  Your Email address is required we can send you confirmation of
+   your order any information you provide will be handled according to our privacy policy 
+  </li>
+  
+  
+  
+  <li class="list-group-item border-0 w3-small">
+  <!--email row-->
+  <div class="row">
+  <!--Email-->
+   <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        {% render_field form.email id="EMAIL_1" class="form-control" placeholder="Email" type='email' %}
+        <!-- <input type="email" class="form-control" id="city" placeholder="email" name="email"> -->
+      </div>
+      </div>
+      <!--end Email-->
+      
+      <!--Re-Type Address-->
+      <div class="col-lg-6 col-md-12 col-sm-12 ">
+    <div class="form-group">
+        <label for="email">Re-Type Email:</label>
+        {% render_field form.email id="EMAIL_2" class="form-control" placeholder="Confirm Email" type='email' onChange="return checkEmail()" %}
+       <p id="email_err" style="color: red;"></p>
+        <!-- <input type="email" class="form-control" id="city" placeholder="email" name="email"> -->
+      </div>
+      </div>
+      <!--Re-Type Address-->
+  </div>
+  <!--end email row-->
+  </li>
+  <!--end Contact Information-->
+   
+    <!--end forms for buy-->
+    {% render_field form.promo_code value=coupon hidden=true %}
+    <div class="g-recaptcha form-group w3-margin" data-sitekey="6LfE570ZAAAAAHtB83TiCPq3nfuusnwExnVs8scu"></div>
+    </ul>
+  
+  <style>
+
+button {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    background-color: white;
+    border: none;
+}
+
+    #cash {
+    background-image: url( '{% static "image/CASH ON DELIVERY.png" %}' );
+    background-size: 210px 55px;
+    background-position: 100%;
+    height: 55px;  
+    width: 210px;
+}
+
+    #wallet {
+    background-image: url( '{% static "image/E-WALLET.png" %}' );
+    background-size: 210px 55px;
+    background-position: 100%;
+    height: 55px;  
+    width: 210px;
+}
+
+    #credit {
+    background-image: url( '{% static "image/Credit card.png" %}' );
+    background-size: 210px 55px;
+    background-position: 100%;
+    height: 55px;  
+    width: 210px;
+}
+
+    #change {
+    background-image: url( '{% static "image/CHANGE ORDER.png" %}' );
+    background-size: 210px 55px;
+    background-position: 100%;
+    height: 55px;  
+    width: 210px;
+}
+  </style>
+  
+  <!--cash button-->
+  <!-- <button type="" class="btn w3-yellow float-right shadow w3-margin" name="cashOnDelivery" value="cashOnDelivery">Cash On Delivery</button> -->
+  <button type="" name="cashOnDelivery" value="cashOnDelivery" id="cash"> </button>
+  
+  <!--end Continue button-->
+  
+  <!--credit button-->
+  <!-- <button type="" class="btn w3-green float-right shadow w3-margin">Pay By Credit Card</button> -->
+  <button type="" id="credit"> </button>
+
+  <!--end Continue button-->
+  
+  <!--wallet button-->
+  <!-- <button type="submit" class="btn w3-green float-right shadow w3-margin" name="wallet" value="wallet">Pay By Mobile Wallet</button> -->
+  <button type="submit" name="wallet" value="wallet" id="wallet"> </button>
+
+  <!--end Continue button-->
+    <!--Back button-->
+    <a href="{% url 'cart:cart_detail' %}#cart_detail">
+      <!-- <button type="button" class="btn w3-red float-left shadow w3-margin">Edit My Purchase</button> -->
+      <button type="button" id="change"></button>
+      </a>
+      <!--end Back button-->
+
+</form>
+  <!---end here---->
+
+<br>
+<br>
+
+
+
+
+</div>
+</div>
+</div>
+
+<script>
+  function checkEmail() {
+	const EMAIL_1 = document.getElementById('EMAIL_1');
+	const EMAIL_2 = document.getElementById('EMAIL_2');
+	if (EMAIL_1.value != EMAIL_2.value) {
+		// alert('Two emails don\'t match!');
+		document.getElementById('email_err').innerHTML = "Two emails don't match!";
+		return false;
+	}
+	if (EMAIL_1.value == EMAIL_2.value) {
+		document.getElementById('email_err').innerHTML = '';
+	}
+}
+</script>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+{% include 'orders/order/bottom-left-side-checkout.html' %}

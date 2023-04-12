@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+{% load widget_tweaks %}
+{% block title %}  {{ request.user.username|title }} {% endblock %}
+{% block content %}
+
+
+
+
+
+<div class="container">
+    <div class="jumbotron">
+        <h4 style="color: #ff0000;"><b>Delete Your Account (This Action Is None Reversable )</b></h4>
+
+        <form method="post">
+            {% csrf_token %}
+            <label>Confirm</label>
+            {% render_field form.delete %}
+<br>
+            <button class="btn btn-danger w3-round">Submit</button>
+
+        </form>
+
+    
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

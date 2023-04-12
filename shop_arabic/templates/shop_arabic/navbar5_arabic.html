@@ -1,0 +1,497 @@
+{% load static %}
+<style>
+    .OnlyBlockHome{
+        display: none;
+    }
+
+    .fontSize {
+        font-size: 1.2rem;
+    }
+</style>
+    <!-- Header Container  -->
+    <header id="header" class="typeheader-5"  style="position: fixed;top: 0;width: 100%; z-index:5;">
+        
+        
+        <!-- Header Top -->
+        <div class="header-top hidden-compact"> 
+            <div class="container">
+                <div class="row">
+                    <div class="header-top-left col-lg-3 col-md-4 hidden-sm hidden-xs">           
+                        <!-- <div class="telephone ">
+                            <a href="tel:+201220622224"> 1220622224(20+)</a> <i class="fa fa-phone"></i> الخط الساخن 
+                        </div> -->
+                        <!-- <a href="https://play.google.com/store/apps/details?id=com.marchpart.marchpart"> 
+                            <img src="{% static 'image/android.png' %}" style="width: 50px;"> </a>  
+                            <a href=""> <img src="{% static 'image/apple.png' %}" style="width: 50px;"> </a> -->
+                    
+                    </div>
+                    <div class="header-top-right col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                        <ul class="top-link list-inline lang-curr">
+                       
+                            <li class="language">
+                                <div class="btn-group languages-block hideLanguageTab" style="padding-top: 13px;">
+                                        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                            <img src="/static/image/catalog/flags/arEgy.png" alt="العربية" title="العربية">
+                                            <span class="eng">العربية</span>
+                                            <span class="fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="OnlyBlockHome"><a href="{% url 'shop:home' %}"><img class="image_flag" src="/static/image/catalog/flags/uk.png" alt="English" title="English" /> English </a></li>
+                                            <li class="OnlyNoneHome"><a href="{{ english_language }}"><img class="image_flag" src="/static/image/catalog/flags/uk.png" alt="English" title="English" /> English </a></li>
+                                            <!-- <li> <a href="html_with_RTL/index.html"> <img class="image_flag" src="/static/image/catalog/flags/ar.png" alt="Arabic" title="Arabic" /> Arabic </a> </li> -->
+                                        </ul>
+                                   
+                                </div>
+                                
+                            </li>
+                            <li>
+                                <div style="padding-top: 15px;font-size: 16px;">
+                                    <a href="https://play.google.com/store/apps/details?id=com.marchpart.marchpart">
+                                <i class="fab fa-google-play" style="color: white;"><span class="w3-hide-small w3-hide-medium">&nbsp;Play Store</span></i>
+                            </a>    
+                            </div>
+                            </li>
+                            <li>
+                                <div style="padding-top: 15px; font-size: 16px;">
+                                    <a href="https://apps.apple.com/eg/app/march-part-%D9%85%D8%A7%D8%B1%D8%B4-%D8%A8%D8%A7%D8%B1%D8%AA/id1554151707">
+                                    <i class="fab fa-apple" style="color: white;"><span class="w3-hide-small w3-hide-medium">&nbsp;App Store</span></i>
+                                        </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="top-log list-inline">   
+   
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'userDashboard_arabic' request.user.id %}">{{ user.username|title }}</a> / </li>
+                            <li><i class="fa fa-lock"></i><a href="{% url 'logout' %}?next={{request.path}}"> خروج </a></li>
+                            {% else %}
+                            
+                            <li><i class="fa fa-lock"></i><a href="{% url 'login_arabic' %}?next={{request.path}}"> دخول </a> / </li>
+                            <li><a href="{% url 'signup_arabic' %}?next={{request.path}}"> تسجيل </a></li>
+                            {% endif %}
+                        </ul>
+                     
+
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <div class="header-middle hidden-compact">
+            <div class="container">
+                <div class="row">           
+                    <div class="logo-w col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="logo">
+                            <a href="{% url 'shop_arabic:home_arabic' %}"><img src="{% static 'image/logo.png' %}" style="height:60;" title="Your Store" alt="Your Store" /></a>
+                        </div>                        
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 middle-right">
+                        <div class="main-menu-w">
+                            <div class="responsive so-megamenu megamenu-style-dev">
+                                <nav class="navbar-default">
+                                    <div class=" container-megamenu  horizontal open ">
+                                        <div class="navbar-header">
+                                            <button type="button" id="show-megamenu" data-toggle="collapse" class="navbar-toggle">
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="megamenu-wrapper">
+                                            <span id="remove-megamenu" class="fa fa-times"></span>
+                                            <div class="megamenu-pattern">
+                                                <div class="container-mega">
+                                                    <ul class="megamenu" data-transition="slide" data-animationtime="250">
+
+
+
+
+                                                        <li class="home hover">
+                                                            <a href="{% url 'shop_arabic:home_arabic' %}" style="font-size: 17px; font-weight: 900;">الرئيسية</a>
+                                                        </li>  
+                                                        
+                                              
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix" style="font-size: 17px; font-weight: 900;">
+                                                               ماركة السيارة                                                       
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu" style="width: 100%; display: none; max-height: 350px; overflow-y: scroll;">
+                                                                <div class="content">
+                                                                   
+
+                                                                    <div class="row">
+                                                                        {% if NavBrands_arabic %}
+                                                                        {% for b in NavBrands_arabic %}
+                                                                        <div class="col-md-3">
+                                                                            <a href="{{ b.get_absolute_url_arabic }}" class="title-submenu">
+                                                                                <img src="{{ b.image.url }}" height="20px" width="30px" />{{ b.name_arabic|title }}
+                                                                            </a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                        {% endif %}
+                                               
+                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </li>                                       
+
+                                                        
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix" style="font-size: 17px; font-weight: 900;">
+                                                              نوع قطع الغيار                                                             
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu">
+                                                                <div class="content" style="display: flex;  max-height: 350px; overflow-y: scroll;">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <ul class="row-list">
+                                                                                                
+                                                                                {% if Navcategories_arabic %}
+                                                                                {% for c in Navcategories_arabic %}
+                                                                                <li><a class="subcategory_item" href="{{ c.get_absolute_url_arabic }}">{{ c.name_arabic|title }}</a></li>
+                                                                                {% endfor %}
+                                                                                {% endif %}
+                                                                            </ul>
+                                                                        </div>
+                                                                        <!-- <div class="col-md-6">
+                                                                            <ul class="row-list">
+                                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
+                                                                            </ul>
+                                                                        </div> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </li>
+
+                                                        
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix" style="font-size: 17px; font-weight: 900;">
+                                                               المقالات                                                           
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu">
+                                                                <div class="content" style="display: flex;">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <ul class="row-list">
+                                                                                                
+                                                                                {% if allBlogTags %}
+                                                                                {% for c in allBlogTags %}
+                                                                                <li><a class="subcategory_item" href="{{ c.get_absolute_url_arabic }}">{{ c.tag_arabic|title }}</a></li>
+                                                                                {% endfor %}
+                                                                                {% endif %}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </li>
+
+                                                        
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="{% url 'shop_arabic:aboutUs_arabic' %}" class="clearfix" style="font-size: 17px; font-weight: 900;">
+                                                                من نحن
+                                                                <b class="caret"></b>
+                                                            </a> 
+                                                            <!-- <div class="sub-menu" style="width: 40%; ">
+                                                                <div class="content" >
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <ul class="row-list">
+                                                                                <li><a class="subcategory_item" href="faq.html">FAQ</a></li>
+                                                                                
+                                                                                <li><a class="subcategory_item" href="sitemap.html">Site Map</a></li>
+                                                                                <li><a class="subcategory_item" href="contact.html">Contact us</a></li>
+                                                                                <li><a class="subcategory_item" href="banner-effect.html">Banner Effect</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <ul class="row-list">
+                                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                        <!-- </li>                                       -->
+                                                                                                               
+                                                        <li class="">
+                                                            <p class="close-menu"></p>
+                                                            <a href="{% url 'shop_arabic:contact_arabic' %}" class="clearfix" style="font-size: 17px; font-weight: 900;">
+                                                               تواصل معنا
+                                                            </a>
+                                                        </li> 
+                                                        
+                                                    </ul>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+
+
+                        <!--
+                            Search navnbar
+                        -->
+                        <style>
+                            .searcByMe {
+                                border: none;
+                                width: 180px;
+                                background-color: #fff;
+                                border-right: 1px solid #ddd;
+                                border-top-left-radius: 5px;
+                                border-bottom-left-radius: 5px;
+                                padding-right: 10px 15px;
+                            }
+                   
+                                                    @media (min-width: 800px) {
+                                                        .searchForm {
+                                                            /* font-size: 30px;
+                                                            font-weight: 300; */
+                            
+                                                           
+                                                            /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+                                                            /* transform: scale(1, 1.2); */
+                                                            /* transform: scaleY(1.3); */
+                                                            /* text-transform: capitalize; */
+                                                
+                                                            /* transform: scaleY(1.3); */
+                                                    
+                                                        }       
+                                                    }
+                        .basicAutocomplete ul {
+                            background-color: rgb(240, 240, 240);
+                        }
+                        .basicAutocomplete li {
+                            background-color: rgb(240, 240, 240);
+                            font-size:2.6vmax;
+                            font-family:cursive;
+                            transform: scale(.5, 1);
+                            color: black;
+                        }
+                        .basicAutocomplete li a{
+                            color: black;
+                        }
+ 
+                     
+                   
+                        
+                                                 </style>
+                        <div class="search-header-w">
+                            <div class="ico-search"><i class="fa fa-search" style="padding-top: 8px;"></i></div>                                
+                              
+                            <div id="sosearchpro" class="sosearchpro-wrapper so-search ">
+                                <form method="get" action="{% url 'shop_arabic:navbarSearch_arabic' %}" style="width:90%;" class="searchForm">
+                                    <div id="search0" class="basicAutocomplete search input-group form-group">
+                                        <!-- <div class="select_category filter_type  icon-select hidden-sm hidden-xs">
+                                            <select class="no-border" name="productSearchAllTypesCategory">
+                                                <option value="">All Categories</option>
+                                                {% if search_allCategories %}
+                                                {% for c in search_allCategories %}
+                                                <option>{{ c.name|title }}</option>
+                                                 {% endfor %} {% endif %}
+
+                                      
+                                            </select>
+                                        </div> -->
+                                
+                                       <div class="select_category " style="width:40;"></div>
+                                        
+                                        <input class="autosearch-input form-control" type="text" size="50" autocomplete="off" 
+                                        id="searchFree" placeholder="  اسم أو رقم القطعة " 
+                                        name="productSearchAllTypes" required="true">
+                                
+                                        <button type="submit" class="button-search btn btn-primary" name="submit_search"><i class="fa fa-search"></i></button>
+                                    
+                                    </div>
+                                    <!-- <input type="hidden" name="route" value="product/search" /> -->
+                                </form>
+                            </div>
+                        </div>                                    
+                    </div>
+                </div>
+
+
+
+                {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                <div class="shopping_cart" id="cartNAvBar">
+                    <div id="cart" class="btn-shopping-cart">
+                        <a href="javascript:void(0)" data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <div class="shopcart">
+                                <span class="icon-c">
+                                    <i class="fa fa-shopping-basket"></i>
+                                </span>
+                                <div class="shopcart-inner">
+                                    <p class="text-shopping-cart">
+                                        سلة المشتريات
+                                    </p>
+
+                                    <span class="total-shopping-cart cart-total-full">
+                                    <span class="items_cart">&ensp;{{ total_items }}</span><span class="items_cart2"> قطع&ensp; EGP\{{ cart.get_total_price|floatformat }}</span><span class="items_carts">EGP {{ cart.get_total_price }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <ul class="dropdown-menu pull-right shoppingcart-box" role="menu" style="max-height: 350px; overflow-y: scroll;">
+                            <li>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        {% if cart %}
+                                        {% for item in cart %}
+                                        {% with product=item.product  %}
+                                        <tr>
+                                            <td class="text-center" style="width:70px">
+                                                <a href="{{ product.get_absolute_url_arabic }}">
+                                                    <img src="{{ product.image.url }}" style="width:70px" alt="{{ product.name_arabic|title }}" title="Yutculpa ullamco" class="preview">
+                                                </a>
+                                            </td>
+                                            <td class="text-left"> <a class="cart_product_name" href="{{ product.get_absolute_url_arabic }}">{{ product.name_arabic|title }}</a> 
+                                            </td>
+                                            <td class="text-center">x{{ item.quantity }}</td>
+                                            <td class="text-center">EGP {{ item.total_price }}</td>
+                                            <!-- <td class="text-right">
+                                                <a href="{{ product.get_absolute_url }}" class="fa fa-edit"></a>
+                                            </td> -->
+                                            <td class="text-right">
+                                                <!-- <a onclick="cart.remove('2');" class="fa fa-times fa-delete"></a> -->
+                                                <a href="{% url 'cart:cart_remove_arabic' product.id %}" class="fa fa-times fa-delete"></a>
+                                            </td>
+                                        </tr>
+                                        {% endwith %}
+                                        {% endfor %}  
+                                        {% endif %}
+                                     
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <div>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <!-- <tr>
+                                                <td class="text-left"><strong>Sub-Total</strong>
+                                                </td>
+                                                <td class="text-right">$140.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left"><strong>Eco Tax (-2.00)</strong>
+                                                </td>
+                                                <td class="text-right">$2.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left"><strong>VAT (20%)</strong>
+                                                </td>
+                                                <td class="text-right">$20.00</td>
+                                            </tr> -->
+                                            <tr>
+                                                <td class="text-left"><strong>الإجمالى</strong>
+                                                </td>
+                                                <td class="text-right">EGP {{ cart.get_total_price|floatformat }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-right"> <a class="btn view-cart" href="{% url 'cart:cart_detail_arabic' %}#cart_detail"><i class="fa fa-shopping-cart"></i>اذهب للسلة</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="{% url 'orders:order_create_arabic' %}"><i class="fa fa-share"></i>ادفع الان</a> 
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+
+
+                        </div></div>
+                        {% else %}
+                        <div class="shopping_cart" id="cartNAvBar">
+                            <div id="cart" class="btn-shopping-cart">
+                                <a href="javascript:void(0)" data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+
+
+
+                        <div class="shopcart">
+                            <span class="icon-c">
+                                <i class="fa fa-shopping-basket"></i>
+                            </span>
+                            <div class="shopcart-inner">
+                                <p class="text-shopping-cart">
+                                    سلة المشتريات
+                                </p>
+
+                                <span class="total-shopping-cart cart-total-full">
+                                <span class="items_cart">(فارغة)</span><span class="items_cart2"> </span><span class="items_carts"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        </a>
+           
+                        </div>
+                    </div> 
+                    {% endif %}
+                    {% endwith %}
+
+
+                
+            </div>
+            
+        </div>
+
+    </header>
+    <!-- //Header Container  -->
+
+
+
+
+    <script>
+        // get the highest z-index in the page and apply higher to your attr:
+        $(document).ready(function() {
+     
+     var highest_z_index = 0;
+     var current_z_index = 0;
+    
+     // Loop through each div and get the highest z-index
+     $('div').each(function() {
+    
+       current_z_index = parseInt($(this).css("z-index"));
+    
+       if(current_z_index > highest_z_index) {
+         highest_z_index = current_z_index+1;
+       }
+     });
+    
+     // Apply a higher z-index to my menu element
+     $('#header').css('z-index', highest_z_index);
+
+
+     $('#searchFree').autoComplete({
+        resolverSettings: {
+            url: '{% url "shop:ajax_productSearchAllTypes_name" %}'
+        },
+        minLength: 2,
+        noResultsText: "لا يوجد نتائج مطابقة",
+    });
+    });
+    </script>

@@ -1,0 +1,116 @@
+{% extends 'shop/base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Your Shopping Cart
+{% endblock %}
+ {% block slider %}
+ <div style="padding-top:40px;"></div>
+{% endblock %}
+
+{% block content %}
+
+
+<!--start frome here--->
+
+<!--tittle-->
+<div class=" bg-dark text-white w-100 p-3 rounded">
+
+        <div class=""><i class='fas fa-shopping-cart w3-text-pink'></i>&nbsp;Shopping Cart</div>
+      </div>
+      <!--end tittle-->
+      <div class="row w3-small">
+{% if cart %}
+    {% for item in cart %}
+    {% with product=item.product  %}
+      <!--first-product-->
+        <div class="col-lg-4 col-md-6 col-sm-12  mt-4">
+        <div class=" card w3-hover-shadow h-100 " >
+        <p class="text-center card-text text-secondary card-link p-3  same-height-box "style="height:10%; font-size: 20px;">
+            <a class="card-link" href="{{ product.get_absolute_url }}">{{ product.name|title }}</a> </p>
+          <a href="{{ product.get_absolute_url }}">
+          <img class="card-img-top w3-display-container" src="{{ product.image.url }}"style="object-fit:cover;" alt="Card image" ></a>
+          
+          <div class="card-body w3-border-top "> 	
+            <p class="card-text text-center">
+                <a href="{% url 'cart:cart_remove' product.id %}" class=" w3-text-pink  w3-hover-text-gray  w3-small w3-display-bottomright" style="margin-top:5px; margin-right: 5px;">
+                    <span class="align-top">Remove</span> <i class="fa fa-trash "></i></a>
+            <span class="text-center">Item Price: <span class=""> {{ item.price }}$</span></span>
+            <!--quantity-->
+          
+            <form action="{% url 'cart:cart_add' product.id %}"class="text-center" method="post" >
+                    {% csrf_token %}
+       
+                  <label>Qua:{{ item.update_quantity_form.quantity }}</label>
+                 
+        <!-- <input type="number" name="quantity" class="w3-tiny rounded w-25"min="1" max="50"> -->
+        {{ item.update_quantity_form.update }}
+        <input type="submit" value="Update" class="btn w3-pink w3-tiny w3-round-xxlarge w-25 w3-hover-shadow">
+      </form><!--end quantity--></p>
+
+      <p class="card-text text-center">Total Price: <span class="w3-large"> {{ item.total_price }}$</span></span></p>
+            
+      
+            
+            <!-- <a href="#" class=" w3-text-pink  w3-hover-text-gray w3-small float-right"style="text-decoration:none;">Wish list <i class='fas fa-heart text-danger '></i></a></p> -->
+          </div>
+        </div>
+        </div>
+        <!--end first-product-->
+        
+        {% endwith %}
+        {% endfor %}  
+      </div>
+      
+  <p class="text-center mt-4"><a href="{% url 'cart:cart_clean' %}" class="w3-margin w3-text-pink w3-hover-text-gray w3-small " style="text-decoration:none;"><span>
+    Clear Your Cart</span> <i class="fa fa-trash "></i></a></p>
+
+        {% endif %}
+
+
+
+        <!-- <ul class="pagination my-4 w-100 w3-small">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item ml-auto disabled"><a class="page-link " href="#">Page 2 of 16</a></li>
+      </ul> -->
+      
+      
+      <div class="  w-100 ">
+      <div class=" w-50 float-right">
+      <div class="card   my-4 shadow">
+            {% with totail_items=cart|length %}
+            {% if cart|length > 0 %}  
+        <div class="card-header w3-pale-red ">
+          <p><span class="float-left">Product:</span><span class="float-right">{{ totail_items }} item{{ totail_items|pluralize }}</span></p><br>
+        <!-- <p><span class="float-left">Shipping To Cairo Or Giza:</span><span class="float-right">${{ ship_cairo }}</span></p>
+        <p><span class="float-left">Shipping To Other Cities In Egypt:</span><span class="float-right">${{ ship_other_cairo }}</span></p> -->
+      </div> 
+        
+        <div class="card-header bg-white"><span class="float-left">Total:</span><span class="float-right w3-large"><b>${{ cart.get_total_price }}</b></span></div>
+        
+        <div class="card-footer bg-white">
+        <a href="{% url 'orders:order_create' %}">
+            <button type="button" class="btn w3-pale-red w3-round-xxlarge shadow "style="text-shadow:1px 1px 0 #444"><b>Check Out</b></button>
+        </a></div>
+        {% else %}
+        Your cart is empty!
+        {% endif %}
+        {% endwith %}
+    </div>
+      
+
+
+
+     <a href="{% url 'shop:home' %}"> <button type="button" class="btn btn-light w3-round-xxlarge  shadow mb-4 float-right" style="text-shadow:1px 1px 0 #444">
+      Continue Shopping</button></a>
+      </div>
+      </div>
+      <!---end here-->
+    </div>
+      {% endblock %}
+      

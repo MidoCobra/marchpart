@@ -1,0 +1,114 @@
+<style>
+	
+@media screen and (max-width: 992px) {
+ .hidsmall{
+    display:none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+ .hide-small{
+    display:none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+ .hide-large{
+    display:none;
+  }
+}
+
+
+	</style>
+	
+	
+	<div class="container mb-5">
+<div class="row">
+<!--categoris & CUSTOMER SUPPORT &paypal in large-->
+  <div class="col-lg-3 col-md-4 col-sm-12 hide-small">
+  <!--categories-->
+   <div class="list-group text-light rounded-lg hide-small">
+  <li class="list-group-item d-flex justify-content-between align-items-center "style="background-color:rgba(0,0,0,0.8);">
+    CATEGORIES
+    
+  </li>
+  
+  <a href="{% url 'shop:home' %}#products" class="list-group-item d-flex justify-content-between align-items-center bg-dark w3-hover-text-pink w3-small">
+    Various منتجات متنوعة
+  <i class="fa fa-angle-right"></i>
+</a>
+{% if categories %}
+{% for c in categories %}
+  <a href="{% url 'shop:all_product_list_by_category' category_slug=c.slug %}#products" class="list-group-item d-flex justify-content-between align-items-center bg-dark w3-hover-text-pink w3-small ">
+    {{ c.name|title }}
+   <i class="fa fa-angle-right"></i>
+  </a>
+  {% endfor %}
+
+{% endif %}
+</div>
+<!--end categories-->
+
+
+<!--<ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item  w3-pale-red">NEWSLETTER</li>
+  <li class="list-group-item  w3-small text-secondary">Sign up for our weekly newsletter and stay up-to-date with the latest offers, and newest products.<br>
+  <form action="/action_page.php">
+  <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control w3-small" id="email" placeholder="Enter email" name="email">
+    </div>
+	<button type="submit" class="btn btn-secondary btn-sm w3-round-xxlarge w3-small">Submit</button>
+  </form></li></ul>-->
+
+  
+  <!--CUSTOMER SUPPORT-->
+  <ul class="list-group list-group-flush rounded-lg mt-4 shadow ">
+  <li class="list-group-item  w3-pale-red">CUSTOMER SUPPORT</li>
+  <li class="list-group-item  w3-small text-secondary"><a href="#">Email Asisstance</a></li>
+  <!-- <li class="list-group-item  w3-small text-secondary"><a href="#">FAQs</a></li> -->
+  <li class="list-group-item  w3-small text-secondary">Call 1-800-123-4567</li>
+  </ul>
+  <!--end CUSTOMER SUPPORT-->
+  
+  <!--paypal-->
+  <ul class="list-group list-group-flush rounded-lg mt-4 shadow">
+  <li class="list-group-item "><img src="/static/img/Paypal-Logo.png" class="w-100" alt="Cinque Terre"></li>
+  </ul>
+  <!--end paypal-->
+</div>
+<!--end categoris & CUSTOMER SUPPORT &paypal in large-->
+
+
+  <div class="col-lg-9 col-md-8 col-sm-12">
+  <!--categoris in small-->
+   <div class="list-group text-light rounded-lg hide-large mb-4">
+  <li class="list-group-item d-flex justify-content-between align-items-center "style="background-color:rgba(0,0,0,0.8);">
+    CATEGORIES
+    
+  </li>
+  <a href="{% url 'shop:home' %}#products" class="list-group-item d-flex justify-content-between align-items-center bg-dark w3-hover-text-pink w3-small ">
+    Varius Products
+   <i class="fa fa-angle-right"></i>
+  </a>
+  {% if categories %}
+{% for c in categories %}
+  <a href="{% url 'shop:all_product_list_by_category' category_slug=c.slug %}#products" class="list-group-item d-flex justify-content-between align-items-center bg-dark w3-hover-text-pink w3-small ">
+    {{ c.name|title }}
+   <i class="fa fa-angle-right"></i>
+  </a>
+{% endfor %}
+{% endif %}
+ 
+
+</div>
+<!--end categoris in small-->
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+<!--start from here-->
+<!--tittle-->
+<div class=" bg-dark text-white w-100 p-3 rounded" id="products">
+  <div>{% if category == None %}FEATURED PRODUCTS منتجات متنوعه  {% else %} {{ category.name }}{% endif %}</div>
+</div>
+<!--end tittle-->
+
+<!--row for products-->
+<div class="row w3-small">
+
+    {% if products_paginator %}
+    {% for product in products_paginator %}
+<!--first-->
+  <div class="col-lg-4 col-md-6 col-sm-12 mt-4"><div class="card w3-hover-shadow h-100">
+  <p class="text-center card-text  text-secondary card-link pt-3 px-3 " style="height:15%; font-size: 20px;"><a class="card-link " href="{{ product.get_absolute_url }}">{{ product.name|title }} </a> </p>
+    
+	<img class="card-img-top " src="{{ product.image.url }}"style="object-fit:cover;" alt="Card image" >
+									
+    <div class="card-body w3-border-top">
+     	  
+    <p class="text-center card-text">Price: <span class="w3-large ">${{ product.price }}</span></p>
+     <p class="text-center card-text"> <a class="card-link btn w3-small  w3-pink  w3-round-xxlarge w3-hover-white " href="{{ product.get_absolute_url }}#details">Quick View</a></p>
+       <!-- <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  ">Cartالعربه<i class='fas fa-shopping-cart'></i></a>
+        <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  float-right">Wishlist<i class='fas fa-heart text-danger '></i></a> -->
+    </div>
+  </div>
+  
+  </div>
+  <!--end first-->
+  
+						
+  {% endfor %}
+  {% endif %}
+ 
+  
+
+  </div>
+  <!--end row for products-->
+  
+
+
+  
+  
+  <!--pagnation for productts pages -->
+  <!-- <ul class="pagination my-4 w-100 w3-small">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item active"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">4</a></li>
+  <li class="page-item"><a class="page-link" href="#">5</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  <li class="page-item ml-auto disabled"><a class="page-link " href="#">Page 2 of 16</a></li>
+</ul> -->
+{% if products_paginator.has_other_pages %}
+  <ul class="pagination my-4 w-100 w3-small">
+    {% if products_paginator.has_previous %}
+      <li><a href="?page={{ products_paginator.previous_page_number }}#products" class="page-link">&laquo;</a></li>
+    {% else %}
+      <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+    {% for i in products_paginator.paginator.page_range %}
+      {% if products_paginator.number == i %}
+        <li class="page-link w3-pink"><span>{{ i }} <span class="sr-only page-item active">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}#products" class="page-link">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if products_paginator.has_next %}
+      <li><a href="?page={{ products_paginator.next_page_number }}#products" class="page-link">&raquo;</a></li>
+    {% else %}
+      <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+<!--pagnation for productts pages -->
+<!---end here-->
+
+
+<!--
+  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Other Blocks For Testing <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+-->
+
+<!--row for Brands-->
+<div class="row w3-small">
+
+  {% if brand %}
+  {% for b in brand %}
+<!--first-->
+<div class="col-lg-4 col-md-6 col-sm-12 mt-4"><div class="card w3-hover-shadow h-100">
+<p class="text-center card-text  text-secondary card-link pt-3 px-3 " style="height:15%; font-size: 20px;"><a class="card-link " href="{{ b.get_absolute_url }}">{{ b.name|title }} </a> </p>
+  
+<img class="card-img-top " src="{{ b.image.url }}"style="object-fit:cover;" alt="Card image" >
+                
+  <div class="card-body w3-border-top">
+   <p class="text-center card-text"> <a class="card-link btn w3-small  w3-pink  w3-round-xxlarge w3-hover-white " href="{{ b.get_absolute_url }}">Quick View</a></p>
+     <!-- <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  ">Cartالعربه<i class='fas fa-shopping-cart'></i></a>
+      <a href="#" class="card-link w3-text-pink  w3-hover-text-gray  float-right">Wishlist<i class='fas fa-heart text-danger '></i></a> -->
+  </div>
+</div>
+
+</div>
+<!--end first-->
+
+          
+{% endfor %}
+{% endif %}
+
+
+
+</div>
+<!--end row for Brands-->

@@ -1,0 +1,687 @@
+{% extends 'shop/base.html' %}
+{% load ratings %}
+{% load widget_tweaks %}
+{% block title %}
+    Product Detail
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<style>
+
+    .star-ratings-rating-average, 
+    .star-ratings-rating-count,
+    .star-ratings-rating-user {
+        display: none;
+    }
+    </style>    
+    <!-- Main Container  -->
+    <div class="main-container container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+            
+            {% if product.model.name %}<li>{{ product.model.name|title }}</li> {% endif %}
+            <li>{{ product.category.name|title }}</li>
+        
+            
+        </ul>
+        
+        <div class="row">
+    
+            <!--Left Part Start -->
+{% include 'side-categories-list.html' %}
+            <!--Left Part End -->
+
+            <!--Middle Part Start-->
+            <div id="content" class="col-md-9 col-sm-8">
+                
+                <div class="product-view row">
+                    <div class="left-content-product">
+                
+                        <div class="content-product-left class-honizol col-md-5 col-sm-12 col-xs-12">
+                            <div class="large-image">
+                                <img itemprop="image" class="product-image-zoom" src="{{ product.image3.url }}"  title="{{ product.name }}" alt="{{ product.name }}">
+                                <!-- <img itemprop="image" class="product-image-zoom" src="/static/image/catalog/demo/product/replacement/1.jpg"  title="{{ product.name }}" alt="{{ product.name }}"> -->
+                            </div>
+                            {% if product.youtube_link %}
+                            <a class="thumb-video pull-left" href="{{ product.youtube_link }}"><i class="fa fa-youtube-play"></i></a>
+                            {% endif %}
+                            <div id="thumb-slider" class="yt-content-slider full_slider owl-drag" data-rtl="yes" data-autoplay="no" data-autoheight="no" data-delay="4" data-speed="0.6" data-margin="10" data-items_column00="4" data-items_column0="4" data-items_column1="3" data-items_column2="4"  data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
+                                <a data-index="0" class="img thumbnail " data-image="{{ product.image3.url }}" title="{{ product.name }}">
+                                    <img src="{{ product.image3.url }}" title="{{ product.name }}" alt="{{ product.name }}">
+                                </a>
+                                <a data-index="1" class="img thumbnail " data-image="{{ product.image4.url }}" title="{{ product.name }}">
+                                    <img src="{{ product.image4.url }}" title="{{ product.name }}" alt="{{ product.name }}">
+                                </a>
+                                <a data-index="2" class="img thumbnail " data-image="{{ product.image5.url }}" title="{{ product.name }}">
+                                    <img src="{{ product.image5.url }}" title="{{ product.name }}" alt="{{ product.name }}">
+                                </a>
+                                <a data-index="3" class="img thumbnail " data-image="{{ product.image3.url }}" title="{{ product.name }}">
+                                    <img src="{{ product.image3.url }}" title="{{ product.name }}" alt="{{ product.name }}">
+                                </a>
+                                <!-- <a data-index="4" class="img thumbnail " data-image="/static/image/catalog/demo/product/replacement/5.jpg" title="{{ product.name }}">
+                                    <img src="/static/image/catalog/demo/product/replacement/5.jpg" title="{{ product.name }}" alt="{{ product.name }}">
+                                </a> -->
+                            </div>
+                            
+                        </div>
+                        <div class="content-product-right col-md-7 col-sm-12 col-xs-12">
+                            <div class="title-product">
+                                <h1>{{ product.name|title }}</h1>
+                            </div>
+                            <!-- Review ---->
+                            
+                            <div class="box-review form-group">
+                                <div class="ratings">
+                                    <div class="rating-box">
+                                        <!-- <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> -->
+                                        {% ratings product icon_height=18 icon_width=18 read_only="True" %} 
+                                    </div>
+                                </div>
+
+                                <a class="reviews_button" href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{count_reviews}} reviews</a>  | 
+                                <a class="write_review_button" href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a>
+                            </div>
+
+                            <div class="product-label form-group">
+                                <div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
+                                    {% if product.sale_price %}
+                                    <span class="price-new" itemprop="price">EGP {{ product.sale_price }}</span>
+                                    <span class="price-old">{{ product.price }}</span> 
+                                    {% else %}
+                                    <span class="price-new" itemprop="price">EGP {{ product.price }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if product.available %}
+                                <div class="stock"><span>Availability:</span> <span class="status-stock">In Stock</span></div>
+                                <br>
+                                <div class="stock"><span style="color: rgb(141, 141, 141); font-size: 9px;" >(Updating data every 48 hours)</span></div>
+                                {% else %}
+                                <div class="stock"><span>Availability: </span> <span style="color:red;"> &#9746; Out Of Stock</span></div>
+                                <br>
+                                <div class="stock"><span style="color: rgb(141, 141, 141); font-size: 9px;" >(Updating data every 48 hours)</span></div>
+                                {% endif %}
+                            </div>
+
+                            <div class="product-box-desc">
+                                <div class="inner-box-desc">
+                                    <!-- <div class="price-tax"><span>Ex Tax:</span> $60.00</div> -->
+                                    <!-- <div class="reward"><span>Price in reward points:</span> 400</div> -->
+                                    {% if product.model.all  %}
+                                    <div class="brand"><span style="color: black;">Brand:</span>
+                                        {% for m in product.model.all  %}{% ifchanged m.brand|title %}
+                                        <a href="{{ m.brand.get_absolute_url }}">    {{ m.brand|title }}, </a>  {% endifchanged %}{% endfor %}     </div>{% endif %}
+                                    {% if product.model.all %}
+                                    <div class="brand"><span style="color: black;">Model:</span>
+                                        {% for m in product.model.all  %},
+                                        <a href="{{ m.get_absolute_url }}">  {{ m.name|title }}</a>  {% endfor %}     </div>{% endif %}
+                                    {% if product.engine_capacity %}
+                                    <div class="brand"><span style="color: black;">Engine Capacity:</span> {{ product.engine_capacity }} cc    </div> {% endif %}
+                                    <div class="model"><span style="color: black;">Product Code:</span> {{ product.id }}</div>
+                                    <div class="model"><span style="color: black;">Product Brand:</span> {{ product.product_commercial_name|title }}</div>
+                                    <div class="model"><span style="color: black;">Made In:</span> {{ product.made_in|title }}</div>
+                                    <div class="model"><span style="color: black;">Min. order:</span> {{ product.min_per_order }}</div>
+                                    <div class="model"><span style="color: black;">Max. Order:</span> {{ product.max_per_order }}</div>
+                                    <!-- <div class="reward"><span>Reward Points:</span> 100</div> -->
+                                </div>
+                            </div>
+
+
+                            <div id="product">
+                                <!-- <h4>Available Options</h4> -->
+                                <!-- <div class="image_option_type form-group required">
+                                    <label class="control-label">Colors</label>
+                                    <ul class="product-options clearfix"id="input-option231">
+                                        <li class="radio">
+                                            <label>
+                                                <input class="image_radio" type="radio" name="option[231]" value="33"> 
+                                                <img src="/static/image/demo/colors/blue.jpg" data-original-title="blue +$12.00" class="img-thumbnail icon icon-color">             <i class="fa fa-check"></i>
+                                                <label> </label>
+                                            </label>
+                                        </li>
+                                        <li class="radio">
+                                            <label>
+                                                <input class="image_radio" type="radio" name="option[231]" value="34"> 
+                                                <img src="/static/image/demo/colors/brown.jpg" data-original-title="brown -$12.00" class="img-thumbnail icon icon-color">               <i class="fa fa-check"></i>
+                                                <label> </label>
+                                            </label>
+                                        </li>
+                                        <li class="radio">
+                                            <label>
+                                                <input class="image_radio" type="radio" name="option[231]" value="35"> <img src="/static/image/demo/colors/green.jpg"
+                                                data-original-title="green +$12.00" class="img-thumbnail icon icon-color">              <i class="fa fa-check"></i>
+                                                <label> </label>
+                                            </label>
+                                        </li>
+                                        <li class="selected-option">
+                                        </li>
+                                    </ul>
+                                </div> -->
+                                
+                                <!-- <div class="box-checkbox form-group required">
+                                    <label class="control-label">Checkbox</label>
+                                    <div id="input-option232">
+                                        <div class="checkbox">
+                                            <label for="checkbox_1"><input type="checkbox" name="option[232][]" value="36" id="checkbox_1"> Checkbox 1 (+$12.00)</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label for="checkbox_2"><input type="checkbox" name="option[232][]" value="36" id="checkbox_2"> Checkbox 2 (+$36.00)</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label for="checkbox_3"><input type="checkbox" name="option[232][]" value="36" id="checkbox_3"> Checkbox 3 (+$24.00)</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label for="checkbox_4"><input type="checkbox" name="option[232][]" value="36" id="checkbox_4"> Checkbox 4 (+$48.00)</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="form-group box-info-product">
+                                    <form action="{% url 'cart:ajax_add_cart' product.id %}" method="post" id="add_to_cart">
+                                        {% csrf_token %}
+                                        {% if product.available %}
+                                    <div class="option quantity">
+                                        <div class="input-group quantity-control" unselectable="on" style="-webkit-user-select: none;">
+                                            <label>Quantity</label>
+                                        {% render_field form.quantity class="form-control" type='number' name="quantity" value="1" style="width:70px;" max=product.max_per_order min=product.min_per_order %}
+                                            <!-- <input class="form-control" type="text" name="quantity" value="1"> -->
+                                       
+                    
+                                            <!-- <input type="hidden" name="product_id" value="50"> -->
+                                            <!-- <span class="input-group-addon product_quantity_down">−</span>
+                                            <span class="input-group-addon product_quantity_up">+</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="cart">
+                                        <input type="submit" data-toggle="tooltip" title="" value="Add to Cart" data-loading-text="Loading..." id="button-cart" class="btn btn-mega btn-lg" onclick="cart.add('42', '1');" data-original-title="Add to Cart">
+                                    </div>
+                              {% else %}
+                              <!-- <p style="color: green;">Availabilty Will Be Updated Every 48 hours</p> -->
+                              {% endif %}
+
+<script>
+    /* -------------------------------------------------------------------------------- /
+	
+	Magentech jQuery
+	Created by Magentech
+	v1.0 - 20.9.2016
+	All rights reserved.
+	
+/ -------------------------------------------------------------------------------- */
+
+// Cart add remove functions
+var cart = {
+	add: function(product_id, quantity) {
+		addProductNotice(
+			'{{ product.name|title }}',
+			'<img src="{{ product.image.url }}" alt="">',
+			'<h3><a href="#">{{ product.name|title }}</a> added to <a href=\"{% url "cart:cart_detail" %}#cart_detail\">shopping cart</a>!</h3>',
+			'success'
+		);
+	}
+};
+
+var wishlist = {
+	add: function(product_id) {
+		addProductNotice(
+			'Product added to Wishlist',
+			'<img src="image/demo/shop/product/e11.jpg" alt="">',
+			'<h3>You must <a href="#">login</a>  to save <a href="#">Apple Cinema 30"</a> to your <a href="#">wish list</a>!</h3>',
+			'success'
+		);
+	}
+};
+var compare = {
+	add: function(product_id) {
+		addProductNotice(
+			'Product added to compare',
+			'<img src="image/demo/shop/product/e11.jpg" alt="">',
+			'<h3>Success: You have added <a href="#">Apple Cinema 30"</a> to your <a href="#">product comparison</a>!</h3>',
+			'success'
+		);
+	}
+};
+
+/* ---------------------------------------------------
+		jGrowl – jQuery alerts and message box
+	-------------------------------------------------- */
+function addProductNotice(title, thumb, text, type) {
+	$.jGrowl.defaults.closer = false;
+	//Stop jGrowl
+	//$.jGrowl.defaults.sticky = true;
+	var tpl = thumb + '<h3>' + text + '</h3>';
+	$.jGrowl(tpl, {
+		life: 4000,
+		header: title,
+		speed: 'slow',
+		theme: type
+	});
+}
+
+</script>
+
+                                    <div class="add-to-links wish_comp">
+                                        <ul class="blank list-inline">
+                                            <li class="wishlist" style="padding-bottom: 15px;">
+                                                <a href="{% url 'ajaxWishlist' product.id %}" class="icon" data-toggle="tooltip" title="" id="add_to_wislist"  data-original-title="Add to Wish List"><i class="fa fa-heart"  style="padding:5px"></i>
+                                                </a>
+                                            </li>
+                                            <!-- <li class="compare">
+                                                <a class="icon" data-toggle="tooltip" title=""
+                                                onclick="compare.add('50');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i>
+                                                </a>
+                                            </li> -->
+                                            <!-- <li>
+                                                <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                                                                                        </li> -->
+                                        </ul>
+                                        
+                                    </div>
+                                </form>
+                                </div>
+<ul>
+    <li>
+        
+        <div class="fb-share-button" data-href="{{ request.path }}" data-layout="button" data-size="large" style="padding-left: 20px;">
+            <a target="_blank" href="{% url 'shop:product_detail' product.id product.slug %}" class="fb-xfbml-parse-ignore"></a></div>
+    </li>
+
+<li>
+
+</li>
+
+
+
+    <li>
+        <!-- <a href="https://web.whatsapp.com/send?text={% url 'shop:product_detail' product.id product.slug %}" data-action="share/whatsapp/share"><img src="/static/image/pngkey.com-wasap-png-3289459.png"/ height="48" width="110"></a> -->
+        <a href="https://web.whatsapp.com/send?text=https://www.marchpart.com{% url 'shop:product_detail' product.id product.slug %}" data-action="share/whatsapp/share" target="_blank">
+            <img src="/static/image/Vector Smart Object2-06.png" height="48" width="103" style="padding-left: 10px; border-radius: 55px;"></a>
+    </li>
+</ul>
+                            </div>
+                            <!-- end box info product -->
+
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Product Tabs -->
+                <div class="producttab ">
+                    <div class="tabsslider  vertical-tabs col-xs-12">
+                        <ul class="nav nav-tabs col-lg-2 col-sm-3">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Description</a></li>
+                            <li class="item_nonactive"><a data-toggle="tab" href="#tab-review">Add Review</a></li>
+                            <li class="item_nonactive"><a data-toggle="tab" href="#tab-4">Reviews  ({{count_reviews}})</a></li>
+                            <!-- <li class="item_nonactive"><a data-toggle="tab" href="#tab-5">Custom Tab</a></li> -->
+                        </ul>
+                        <div class="tab-content col-lg-10 col-sm-9 col-xs-12">
+                            <div id="tab-1" class="tab-pane fade active in">
+                             
+                                <p style="white-space: pre-line;">
+                                    {{ product.description|capfirst }}
+                                    </p>
+                                    {% if product.features %}
+                                <h3>
+                                    Features:</h3>
+                                <p style="white-space: pre-line;">
+                                {{ product.features }}
+                             
+                                   </p>
+                                   {% endif %}
+                                
+                                
+                                
+                            </div>
+                            <div id="tab-review" class="tab-pane fade">
+                               
+                                    <div id="review">
+                                        <table class="table table-striped table-bordered">
+                                            <tbody>
+                                                <!-- <tr>
+                                                    <td style="width: 50%;"><strong>Super Administrator</strong></td>
+                                                    <td class="text-right">29/07/2015</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p>Best this product opencart</p>
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                        <div class="text-right"></div>
+                                    </div>
+                                    <h2 id="review-title">Write a review</h2>
+                                    <div class="contacts-form">
+                                        
+                                        <span style="font-size: 11px;"><span class="text-danger">Note:</span> Please Rate First!</span>
+                                        
+                                        <div class="form-group">
+                                            <b>Rating</b> <br>{% ratings product icon_height=16 icon_width=16 %} 
+                                        </div>
+                                        <div class="form-group"> <span class="icon icon-bubbles-2"></span>
+                                            <form action="{% url 'shop:ajax_add_review_product' product.id %}" method="POST" class="" id="post-form">
+                                                {% csrf_token %}
+                                                
+                                                
+                                                {% render_field form_review.comment class="form-control" type="text" %}
+                                            <!-- <textarea class="form-control" name="text" onblur="if (this.value == '') {this.value = 'Your Review';}" onfocus="if(this.value == 'Your Review') {this.value = '';}">Your Review</textarea> -->
+                                        </div> 
+                                        <div class="buttons clearfix"><button id="button-review" class="btn buttonGray" type="submit">Submit</button></div>
+                                    </form>
+                                    </div>
+                              
+                            </div>
+<script>
+    $(document).ready(function(){
+ // AJAX for posting
+  // const token = '{{csrf_token}}';
+  $('#post-form').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!")  // sanity check
+    create_post();
+  });
+  
+  
+  function create_post() {
+      console.log("create post is working!") // sanity check
+      $.ajax({
+        // headers: { "X-CSRFToken": token },
+          url : "{% url 'shop:ajax_add_review_product' product.id %}", // the endpoint
+          type : "POST", // http method
+          data : { 
+            the_post : $('#post-text').val(),
+            // the_rate : $('#post-rate').val(),
+             }, // data sent with the post request
+  
+          // handle a successful response
+          // i used if else statement that after completein the ajax request succefully it may return the response data
+          //null from my views.py so it will alert fail massage because this means that review did not saved
+          success : 
+          function(json) {
+            if(json.no_user == 'no_user'){
+              $().prepend(alert('You Must Login To Add Review!'))
+            }
+            else if(json.no_rate == 'no_rate'){
+              $().prepend(alert('You Must Rate First!'))
+            }
+            else if(json.comment == null){
+              $().prepend(alert('You Reviewed This Product Before!'))
+            }
+            else{
+              $('#post-text').val(''); // remove the value from the input
+              console.log(json); // log the returned json to the console
+              console.log("success"); // another sanity check
+  
+              $("#talk").prepend("<li><strong>"+json.comment+"</strong><br> - <em>by:&nbsp; "+json.user_name+"</em> &nbsp; @ <span> "+json.pub_date+"</span></li>");
+              console.log("success"); // another sanity check
+  
+  
+              $().prepend(alert("Review submitted"));
+            }
+          },
+  
+  
+          // handle a non-successful response
+          error : function(xhr,errmsg,err) {
+              $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+              console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+          }
+      });
+  };
+    
+// FOr photo zooming>>>>>>>>>>>>>>>>>>>>>>>
+/* ---------------------------------------------------
+	Page Product Detail
+-------------------------------------------------- */
+
+$(document).ready(function() {
+	
+	
+	var zoomCollection = '.large-image img';
+	$( zoomCollection ).elevateZoom({
+		zoomType    : "inner",
+		lensSize    :"200",
+		easing:true,
+		gallery:'thumb-slider',
+		cursor: 'pointer',
+		
+		galleryActiveClass: "active"
+	});
+	$('.large-image').magnificPopup({
+		items: [
+			{src: '{{ product.image3.url }}' },
+			{src: '{{ product.image4.url }}' },
+			{src: '{{ product.image5.url }}' },
+			{src: '{{ product.image3.url }}' },
+			// {src: 'image/catalog/demo/product/replacement/5.jpg' },
+		],
+		gallery: { enabled: true, preload: [0,2] },
+		type: 'image',
+		mainClass: 'mfp-fade',
+		callbacks: {
+			open: function() {
+				
+				var activeIndex = parseInt($('#thumb-slider .img.active').attr('data-index'));
+				var magnificPopup = $.magnificPopup.instance;
+				magnificPopup.goTo(activeIndex);
+			}
+		}
+	});
+	$("#thumb-slider .owl2-item").each(function() {
+		$(this).find("[data-index='0']").addClass('active');
+	});
+	
+	$('.thumb-video').magnificPopup({
+	  type: 'iframe',
+	  iframe: {
+		patterns: {
+		   youtube: {
+			  index: 'youtube.com/', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+			  id: 'v=', // String that splits URL in a two parts, second part should be %id%
+			  src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe. 
+				},
+			}
+		}
+	});
+	$('.product-options li.radio').click(function(){
+		$(this).addClass(function() {
+			if($(this).hasClass("active")) return "";
+			return "active";
+		});
+		
+		$(this).siblings("li").removeClass("active");
+		$(this).parent().find('.selected-option').html('<span class="label label-success">'+ $(this).find('img').data('original-title') +'</span>');
+	});
+	// Product detial reviews button
+	$(".reviews_button,.write_review_button").click(function (){
+		var tabTop = $(".producttab").offset().top;
+		$("html, body").animate({ scrollTop:tabTop }, 1000);
+	});
+	
+	
+});
+
+// end photo zooming
+    
+    });
+</script>
+
+                            <div id="tab-4" class="tab-pane fade">
+                                
+                                <ul>
+                              
+                                    {% if reviews %}
+                                    {% for r in reviews %}
+                                <li>** {{ r.comment }}</li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                            </div>
+                            <div id="tab-5" class="tab-pane fade">
+                                <h3 class="custom-color">Take a trivial example which of us ever undertakes</h3>
+                                <p>Lorem ipsum</p>
+                                    <ul class="marker-simple-list two-columns">
+                        <li>Nam liberempore</li>
+                        </ul>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //Product Tabs -->
+
+                <!-- Related Products -->
+                {% if similar_products %} 
+                <div class="related titleLine products-list grid module ">
+                    <h3 class="modtitle">Related Products  </h3>
+            
+                    <div class="releate-products yt-content-slider products-list" data-rtl="no" data-loop="yes" data-autoplay="no" data-autoheight="no" data-autowidth="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column00="4" data-items_column0="4" data-items_column1="3" data-items_column2="2" data-items_column3="2" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-hoverpause="yes">
+                          
+                           {% for sp in similar_products %} 
+                        <div class="product-layout product-grid">                                               
+                                <div class="product-item-container item--static">
+                                    <div class="left-block">
+                                        <div class="product-image-container second_img">
+                                            <a href="{{ sp.get_absolute_url }}" target="_self" title="Volup tatem accu">
+                                                <img src="{{ sp.image.url }}" class="img-1 img-responsive" alt="image1">
+                                                <img src="{{ sp.image3.url }}" class="img-2 img-responsive" alt="image2">
+                                            </a>
+                                        </div>
+                                        <span class="label-product label-new">{{ sp.model.name|title }} </span>
+                                        <!--quickview--> 
+                                        <!-- <div class="so-quickview">
+                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="{{ sp.get_absolute_url }}" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                        </div>                                                      -->
+                                        <!--end quickview-->
+                                    </div>
+                                    <div class="right-block">
+                                        <div class="button-group cartinfo--static">
+                                            
+                                            <!-- <button type="button" class="wishlist btn-button" title="Add to Wish List" onclick="wishlist.add('60');"><i class="fa fa-heart"></i></button> -->
+                                            <button type="button" class="addToCart" title="View Product">
+                                                <span>View Product </span>   
+                                            </button>
+                                            <!-- <button type="button" class="compare btn-button" title="Compare this Product " onclick="compare.add('60');"><i class="fa fa-refresh"></i></button>                                                     -->
+                                        </div>
+                                        <h4><a href="{{ sp.get_absolute_url }}" title="{{ sp.name|title }}" target="_self">{{ sp.name.title }}</a></h4>
+                                        <div class="rating">  
+                                        {% ratings sp icon_height=16 icon_width=16 read_only="True" %}
+                                        </div>
+                                        <div class="price">
+                                          <span class="price">EGP {{ sp.price }}</span>
+                                        </div>
+                                    </div>                                            
+                                </div>                                            
+                            </div>
+                            {% endfor %}  
+
+
+                     
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end Related  Products-->
+            </div>
+                
+                
+                
+            
+            
+                
+            </div>
+            
+            
+        </div>
+        <!--Middle Part End-->
+    </div>
+    <!-- //Main Container -->
+    
+
+    <script>
+    
+    
+        $(document).ready(function(){
+        
+          // ***********************for adding tour to wishlist
+  const token = '{% csrf_token %}';             /////////////////////////////////////// check that!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<<<<<<<<<<<<<
+      $('#add_to_wislist').on('click', function(event){
+    event.preventDefault();
+    console.log("icon clicked!")  // sanity check
+    add_product();
+  });
+  function add_product(){
+    console.log("add Product working")
+    $.ajax({
+      headers: { "X-CSRFToken": token },
+      url : "{% url 'ajaxWishlist' product.id %}",
+      type: "POST",
+      success :
+      function(json) {
+        if(json.product_added == 'product_added'){
+        $().prepend(alert('Product added succefully to your wishlist'))
+        }
+        else if(json.already_added == 'already_added'){
+          $().prepend(alert('Product already added to your wishlist'))
+        };
+        console.log("ajax process completed");
+      }
+    })
+  } // end of add tour to wishlist ***********************************
+
+
+        // ***********************for adding product to cart /////////////////////////
+            $('#add_to_cart').on('submit', function(event){
+          event.preventDefault();
+          console.log("icon clicked!")  // sanity check
+          
+          add_item();
+        });
+        function add_item(){
+          $(".closeAlert").empty(); // this line for not repeating the same alert every time the button clicked
+            console.log("create post is working!") // sanity check
+            $.ajax({
+                url : "{% url 'cart:ajax_add_cart' product.id %}", // the endpoint
+                type : "POST", // http method
+                data : { 
+                  update : $('#quantity').val(), // i did that to update the cart not adding extra items
+                  quantity : $('#quantity').val(),
+                  // the_rate : $('#post-rate').val(),
+                   }, // data sent with the post request
+        
+                // handle a successful response
+                // i used if else statement that after completein the ajax request succefully it may return the response data
+                //null from my views.py so it will alert fail massage because this means that review did not saved
+                success : 
+                function(json) {
+                    // $().prepend(alert("Item Added To Your Cart"));
+                    // $('#check_cart').prepend("<a href='{% url 'cart:cart_detail' %}'>Check Your Cart</a>");
+                    $('.closeAlert').prepend("<a href='{% url 'cart:cart_detail' %}'>Check Your Cart</a>");
+ 
+                 $( "#header" ).load(window.location.href + " #header" );  // reload the navbarcart
+
+                    
+                  },
+           
+        
+        
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        }; // end of add tour to cart ***********************************
+    
+    
+          }); //end document.ready
+          </script>
+    {% endblock %}

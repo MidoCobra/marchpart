@@ -1,0 +1,96 @@
+{% extends "shop/base.html" %}
+{% block slider %}
+<div style="padding: 30px;"></div>
+{% endblock %}
+{% block content %}
+
+<style>
+
+
+
+.comma:not(:first-child) {
+  margin-left: -.3em;  
+}
+
+/* next 2 rules are for spacing when the first .comma is empty too */
+.comma:first-child:empty ~ .comma:not(:empty) {
+  margin-left: 0;  
+}
+
+.comma:first-child:empty ~ .comma:not(:empty) ~ .comma:not(:empty) {
+  margin-left: -.3em;  
+}
+
+.comma:empty {
+  display: none;
+}
+
+.comma:not(:first-child):before {
+  content: ", ";
+}
+
+.comma:not(:first-child):before {
+  content: ", ";
+}
+
+.comma:empty + .comma:not(:empty):before {
+  content : "";
+}
+
+.comma:not(:empty) ~ .comma:empty + .comma:not(:empty):before {
+  content : ", ";
+}
+</style>
+
+
+  <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for k in messages %}
+            <li style="color: rgb(94, 19, 19)"> {{ k }}</li>
+            {% endfor %}
+
+        </ul>
+        {% endif %}
+    </div><br>
+    
+    <div class="container">
+         {% if match or match2 %}
+         <div id="myList"> 
+            {% for k in match %}
+                                            
+                       <div class="media p-3 w3-animate-zoom" id="list">
+                          <img src="{{ k.image.url }}" alt="product photo" class="mr-3 mt-3 w3-round-large" style="width:80px; height: 100px;">
+                          <div class="media-body">
+                              <a href="{{ k.get_absolute_url }}" style="color:purple"><h4>{{ k.name|title }}</a></h4>
+                            <p><strong>Price:</strong id="list"> {{k.price }}<br>
+                               <!-- <strong>City:</strong>  {{k.city|title}} -->
+                            </p>
+                          </div>
+                        </div>
+                        <hr id="list">
+                        {% endfor %}
+            {% for k in match2 %}
+                                             
+                       <div class="media p-3 w3-animate-zoom" id="list">
+                          <div class="media-body">
+                              <a href="{{ k.get_absolute_url }}" style="color:purple"><h4>{{ k.name|title }}</a></h4>
+                        
+                       
+                          </div>
+                        </div>
+                        <hr id="list">
+                        {% endfor %}
+                 
+                        {% endif %}
+                      </div>
+                        <div  class="container" style="padding-bottom:30px; padding-top:15px;">
+                      <a href="{% url 'product_list' %}">Go Home</a></div>
+          </div>
+                              
+                     
+                  
+        
+ 
+     
+     {% endblock %}

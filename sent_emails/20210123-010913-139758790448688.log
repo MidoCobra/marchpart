@@ -1,0 +1,16 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Please verify your account
+From: no-reply@marchpart.com
+To: tee@tee.com
+Reply-To: no-reply@marchpart.com
+Date: Fri, 22 Jan 2021 23:09:13 -0000
+Message-ID: 
+ <161135695335.17734.14859458034959139123@DESKTOP-0SLA954.localdomain>
+
+Please verify your account by clicking on this link:
+
+https://127.0.0.1:8000/api/auth/users/activate/?user_id=85&timestamp=1611356952&signature=AcxKr6YGbk15VHl9OaFdmS5pXj0
+
+-------------------------------------------------------------------------------

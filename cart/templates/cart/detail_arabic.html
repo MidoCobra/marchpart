@@ -1,0 +1,146 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    سلة مشترياتك
+{% endblock %}
+
+{% block content %}
+<style>
+	.hideLanguageTab {
+			display: none;
+		}
+	</style>
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop_arabic:home_arabic' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">سلة المشتريات</a></li>
+		</ul>
+		
+		<div class="row">
+			<!--Middle Part Start-->
+        <div id="content" class="col-sm-12">
+          <h2 class="title">سلة المشتريات</h2>
+            <div class="table-responsive form-group">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td class="text-center">صورة المنتج</td>
+                    <td class="text-left">اسم المنتج</td>
+                    <td class="text-left">موديل السيارة</td>
+                    <td class="text-left">الكمية</td>
+                    <td class="text-right">سعر القطعة</td>
+                    <td class="text-right">إجمالى السعر</td>
+                  </tr>
+                </thead>
+                <tbody>
+
+                {% if cart %}
+                {% for item in cart %}
+                {% with product=item.product  %}
+                  <tr>
+                    <td class="text-center"><a href="{{ product.get_absolute_url_arabic }}"><img width="70px" src="{{ product.image.url }}" alt="{{ product.name_arabic|title }}" title="{{ product.name|title }}" class="img-thumbnail" /></a></td>
+                    <td class="text-left"><a href="{{ product.get_absolute_url_arabic }}">{{ product.name_arabic|title }}</a><br />
+                     </td>
+                    <td class="text-left">{{ product.product_commercial_name_arabic|title }}</td>
+                    <td class="text-left" width="200px"><div class="input-group btn-block quantity">
+						<form action="{% url 'cart:cart_add_arabic' product.id %}" method="post" >
+							{% csrf_token %}
+							
+							{% render_field item.update_quantity_form.quantity class="form-control" type="number" max=product.max_per_order min=product.min_per_order style="width:61px; height:32px" %}
+								<span class="input-group-btn">
+					<!-- <input type="text" name="quantity" value="1" size="1" class="form-control" /> -->
+				
+						
+					<button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary" style="padding: 8px;"><i class="fa fa-clone"></i>
+					{% render_field item.update_quantity_form.update %}</button>
+					<a href="{% url 'cart:cart_remove_arabic' product.id %}">
+					<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" style="padding: 8px;"><i class="fa fa-times-circle"></i></button></a>
+				</span>	
+				
+				
+			</form>
+			</div></td>
+                        <td class="text-right">EGP {{ item.price }}</td>
+                    <td class="text-right">{{ item.total_price }}</td>
+                  </tr>
+
+                  {% endwith %}
+                  {% endfor %}  
+                  {% endif %}
+            
+                  <!-- <tr>
+                    <td class="text-center"><a href="product.html"><img width="70px" src="image/catalog/demo/product/replacement/10.jpg" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail" /></a></td>
+                    <td class="text-left"><a href="product.html">Comas samer rumas</a></td>
+                    <td class="text-left">Pt 002</td>
+                    <td class="text-left" width="200px"><div class="input-group btn-block quantity">
+                        <input type="text" name="quantity" value="1" size="1" class="form-control" />
+                        <span class="input-group-btn">
+                        <button type="submit" data-toggle="tooltip" title="Update" class="btn btn-primary"><i class="fa fa-clone"</i></button>
+                        <button type="button" data-toggle="tooltip" title="Remove" class="btn btn-danger" onClick=""><i class="fa fa-times-circle"></i></button>
+                        </span></div></td>
+                    <td class="text-right">$150.00</td>
+                    <td class="text-right">$150.00</td>
+                  </tr> -->
+                </tbody>
+			  </table>
+			  <div class="w3-right"><h3> <b>إجمالى السعر:</b> EGP {{cart.get_total_price}} </h3> </div>
+            </div>
+          <!-- <h3 class="subtitle no-margin">What would you like to do next?</h3> -->
+          <p>إذا كنت تحتفظ برقم كوبون، استخدمه هنا.</p>
+          <!-- <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p> -->
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a href="#collapse-coupon" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">استخدم كود الكوبون
+							
+							<i class="fa fa-caret-down"></i>
+						</a>
+					</h4>
+				</div>
+				<div id="collapse-coupon" class="panel-collapse collapse in" aria-expanded="true">
+					<div class="panel-body">
+						<label class="col-sm-2 control-label" for="input-coupon">ادخل رقم الكوبون هنا</label>
+						<div class="input-group">
+							<form action="{% url 'orders:order_create_arabic' %}" class="input-group">
+							<input type="text" name="coupon" value="" placeholder="ادخل رقم الكوبون هنا" id="input-coupon" class="form-control">
+							<span class="input-group-btn"> <a href="{% url 'orders:order_create_arabic' %}"> <button type="submit" class="btn btn-primary">اعتماد</button></a></span>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-8">
+				<table class="table table-bordered">
+					<tbody>
+					
+				
+						<!-- <tr>
+                            <td class="text-right">
+                                <strong>الإجمالى:</strong>
+							</td>
+                            <td class="text-right">EGP {{cart.get_total_price}}</td>
+						</tr> -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		 <div class="buttons">
+            <div class="pull-left"><a href="{% url 'shop_arabic:home_arabic' %}" class="btn btn-primary">تابع التسوق</a></div>
+            <div class="pull-right"><a href="{% url 'orders:order_create_arabic' %}" class="btn btn-primary">ادفع الان</a></div>
+		  </div>
+        </div>
+        <!--Middle Part End -->
+		
+	</div>
+	<br>
+	</div>
+	<!-- //Main Container -->
+	
+{% endblock %}

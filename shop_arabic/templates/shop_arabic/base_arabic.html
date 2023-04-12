@@ -1,0 +1,275 @@
+{% load static %}
+<title>
+{% block title %}  
+{% endblock %}
+</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!-- Basic page needs
+    ============================================ -->
+    
+    <meta charset="utf-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <!-- <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" /> -->
+   
+    <!-- Mobile specific metas
+    ============================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'arabic/ico/favicon-16x16.png' %}"/>
+  
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+
+
+
+    <!-- Libs CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'arabic/css/bootstrap/css/bootstrap.rtl.min.css' %}">
+    <link href="{% static 'arabic/css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/js/datetimepicker/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/js/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/lib.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/js/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/js/minicolors/miniColors.css' %}" rel="stylesheet">
+    
+    <!--
+        I added this
+    -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.2/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css" rel="stylesheet"> -->
+    
+    <link href="{% static 'arabic/js/pe-icon-7-stroke/css/pe-icon-7-stroke.css' %}" rel="stylesheet">
+
+    
+    <link href="{% static 'arabic/css/pe-icon-7-stroke/css/helper.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS
+    ============================================ -->
+    <link href="{% static 'arabic/css/themecss/so_searchpro.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so_megamenu.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so_advanced_search.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so-listing-tabs.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so-categories.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so-newletter-popup.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/themecss/so-latest-blog.css' %}" rel="stylesheet">
+
+    <link href="{% static 'arabic/css/footer/footer5.css' %}" rel="stylesheet">
+    <link href="{% static 'arabic/css/header/header5.css' %}" rel="stylesheet">
+    <link id="color_scheme" href="{% static 'arabic/css/home5.css' %}" rel="stylesheet"> 
+    <link href="{% static 'arabic/css/responsive.css' %}" rel="stylesheet">
+
+
+    <link href="{% static 'MyCss/styles.css' %}" rel="stylesheet">
+     <!-- Google web fonts
+    ============================================ -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Rubik:300,400,400i,500,600,700' rel='stylesheet' type='text/css'>     
+    <style type="text/css">
+         body{font-family:'Rubik', sans-serif;}
+    </style> -->
+    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@600&family=Roboto:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mada&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet"> 
+<style>
+@font-face{
+   font-family:'Kufam', cursive; 
+   src: url('https://fonts.googleapis.com/css2?family=Kufam:wght@600&family=Roboto:ital,wght@1,700&display=swap')
+ }
+/* @font-face{
+   font-family:'Scheherazade', serif; 
+   src: url('https://fonts.googleapis.com/css2?family=Scheherazade&display=swap')
+ } */
+@font-face{
+   font-family:'Harmattan', sans-serif; 
+   src: url('https://fonts.googleapis.com/css2?family=Harmattan:wght@400;700&family=Scheherazade&display=swap')
+ }
+@font-face{
+    font-family: 'Mada', sans-serif;
+   src: url('https://fonts.googleapis.com/css2?family=Mada&display=swap')
+}
+
+ @font-face {
+  font-family: 'Amiri', serif;
+  src: url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+}
+
+@font-face {
+font-family: "DroidArabicKufi";
+src: url("{% static 'font/droid_arabic_kufi/DroidKufi-Bold.ttf' %}");
+src: url("{% static 'font/droid_arabic_kufi/DroidKufi-Regular.ttf' %}");
+/* src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"),
+url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"),
+url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg"); */
+}
+
+body,
+input,
+textarea,
+select,
+div,
+li,
+ul,
+span,
+a
+ {
+	font-family: 'DroidArabicKufi', serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+	font-family: 'DroidArabicKufi', serif; 
+}
+.fontDroidArabicKufi {
+	font-family: 'DroidArabicKufi', serif; 
+}
+
+
+</style>
+    
+    <!--
+        Star Ratings
+    =============================================-->
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+
+    <!--
+        For Ajax Calls
+    ================================================-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <!--jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+    <!--ReCaptcha google link-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+    <!--
+        Facebook Share
+    -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0&appId=474446426652764&autoLogAppEvents=1" nonce="n0wlYepx"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1755ZHNZ6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1755ZHNZ6N');
+</script>
+
+
+
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1302711140129033');
+    fbq('track', 'PageView');
+    </script>
+    
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1302711140129033&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+
+
+
+
+</head>
+
+<body class="common-home res layout-5" style="font-family: 'DroidArabicKufi', serif; color: rgb(77, 77, 77);">
+    
+    <div id="wrapper" class="wrapper-fluid banners-effect-5">
+    
+{% include 'shop_arabic/navbar5_arabic.html' %}
+<div style="padding-top: 137px;"></div>
+<div style="padding-top: 40px;" class="w3-hide-large w3-hide-medium"></div>
+    
+    {% block content %}
+
+    {% endblock %}
+
+{% include 'shop_arabic/footer_arabic.html' %}
+    </div>
+   
+
+<!-- End Color Scheme
+============================================ -->
+
+
+<!-- Include Libs & Plugins
+============================================ -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="{% static 'arabic/js/jquery-2.2.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/owl-carousel/owl.carousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/slick-slider/slick.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/themejs/libs.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/unveil/jquery.unveil.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/countdown/jquery.countdown.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/dcjqaccordion/jquery.dcjqaccordion.2.8.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/datetimepicker/moment.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/jquery-ui/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/modernizr/modernizr-2.6.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/minicolors/jquery.miniColors.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'arabic/js/lightslider/lightslider.js' %}"></script>
+
+<!-- Theme files
+============================================ -->
+
+<script type="text/javascript" src="{% static 'arabic/js/themejs/application.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'arabic/js/themejs/homepage.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'arabic/js/themejs/toppanel.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/themejs/so_megamenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'arabic/js/themejs/addtocart.js' %}"></script>  
+
+<!-- <script type="text/javascript" src="{% static 'arabic/js/themejs/cpanel.js' %}"></script> -->
+<!-- <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/3de7ad37/dist/latest/bootstrap-autocomplete.js"></script> -->
+
+
+
+<!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function () {
+        var options = {
+            whatsapp: "+201220622224", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            position: "right", // Position may be 'right' or 'left'
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
+<!-- /GetButton.io widget -->
+
+</body>
+</html>

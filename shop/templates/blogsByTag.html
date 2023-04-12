@@ -1,0 +1,176 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+    {% if blogsTag %}{{ blogsTag.tag|title }} {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">Blogs</a></li>
+			<li><a href="#">{{ blogsTag.tag|title }}</a></li>
+			
+		</ul>
+		
+		<div class="row">
+			<!--Left Part Start -->
+            <aside class="col-md-3 col-sm-4 content-aside left_column " id="column-left">
+                {% if allBlogTags %}
+                <div class="module blog-category titleLine">
+                    <h3 class="modtitle">Blog Category</h3>
+                    <div class="modcontent">
+                        <ul class="list-group ">
+                            {% for ab in allBlogTags %}
+                            <li class="list-group-item"> <a href="{{ ab.get_absolute_url }}"class="group-item active">{{ ab.tag|title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                        
+                    </div>
+                </div>
+                {% endif %}
+                <div class="module product-simple">
+                    <h3 class="modtitle">
+                        <span>Latest products</span>
+                    </h3>
+                    <div class="modcontent">
+                        <div class="so-extraslider" >
+                            <!-- Begin extraslider-inner -->
+                            <div class=" extraslider-inner">
+                                <div class="item ">
+                                    {% if latest_products %}
+                                    {% for p in latest_products %}
+                                    <div class="product-layout item-inner style1 ">
+                                        <div class="item-image">
+                                            <div class="item-img-info">
+                                                <a href="{{ p.get_absolute_url }}" target="_self" title="{{ p.name|title }} ">
+                                                    <img src="{{ p.image.url }}" alt="{{ p.name|title }}">
+                                                    </a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="item-title">
+                                                <a href="{{ p.get_absolute_url }}" target="_self" title="{{ p.name|title }}">{{ p.name|title }} </a>
+                                            </div>
+                                            <!-- <div class="rating">
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                            </div> -->
+                                            <div class="content_price price">
+                                                {% if p.sale_price %}
+                                                           
+                                                <span class="price-new" style="font-size: 13px;">EGP {{ p.sale_price }}</span>
+                                                <span class="price-old" style="font-size: 13px;">{{ p.price }}</span>
+                                             
+                                                {% else %}
+                                                <span class="price-new product-price">EGP {{ p.price }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- End item-info -->
+                                        <!-- End item-wrap-inner -->
+                                    </div>
+                                    <!-- End item-wrap -->
+                                   {% endfor %}
+                                   {% endif %}
+                                </div>
+                            </div>
+                            <!--End extraslider-inner -->
+                        </div>
+                    </div>
+                </div>
+<!--                 
+                <div class="module banner-left hidden-xs ">
+                    <div class="banner-sidebar banners">
+                      <div>
+                        <a title="Banner Image" href="#"> 
+                          <img src="{{ blog.image2.url }}" alt="Banner Image"> 
+                        </a>
+                      </div>
+                    </div>
+                </div>   -->
+            </aside>
+            <!--Left Part End -->
+			
+			<!--Middle Part Start-->
+			<div id="content" class="col-md-9 col-sm-8">
+				<div class="blog-header">
+					<h3>Our Blog</h3>
+					
+				</div>
+				<div class="blog-category clearfix">
+              
+                    <!-- <div class="product-filter product-filter-top filters-panel hidden-sm hidden-xs">
+                        <div class="row">
+                            <div class="col-sm-4 view-mode">
+                                <div class="list-view ">
+                                    <button type="button" id="grid-view" class="btn btn-view hidden-sm hidden-xs">1</button>
+                                    <button type="button" id="grid-view-2" class="btn btn-view ">2</button>
+                                    <button type="button" id="grid-view-3" class="btn btn-view hidden-sm hidden-xs ">3</button>
+                                    <button type="button" id="grid-view-4" class="btn btn-view hidden-sm hidden-xs">4</button>
+                                    <button type="button" id="list-view" class="btn btn-view list "><i class="fa fa-bars"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="blog-listitem row">
+                        {% if blogs %}
+                        {% for b in blogs %}
+                        <div class="blog-item col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="blog-item-inner clearfix">
+                                <div class="itemBlogImg clearfix">
+                                    <div class="article-image">
+                                        <div>
+                                            <a class="" href="{{ b.get_absolute_url }}">
+                                                <img src="{{ b.image.url }}" alt="{{ b.title|title }}" />
+                                            </a>
+                                        </div>
+                                        <div class="article-date">
+                                            <div class="date">  <span class="article-date">
+                                                <b>{{ b.created_at|date:"d" }}</b> {{ b.created_at|date:"M" }}
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="itemBlogContent clearfix ">
+                                    <div class="blog-content">
+                                        <div class="article-title font-title">
+                                            <h4><a href="{{ b.get_absolute_url }}">{{ b.title|title }}</a></h4>
+                                        </div>
+                                        <div class="blog-meta"> <span class="author"><i class="fa fa-user"></i><span>Post by </span>{{ b.author|title }}</span>
+                                        </div>
+                                        <p class="article-description">{{ b.paragraph_1|truncatechars:150 }}</p>
+                                        <div class="readmore">  <a class="btn-readmore font-title" href="{{ b.get_absolute_url }}"><i class="fa fa-caret-right"></i>Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                  
+                    </div>
+                    <div class="product-filter product-filter-bottom filters-panel clearfix">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!--Middle Part End-->
+	</div>
+	<!-- //Main Container -->
+	
+{% endblock %}

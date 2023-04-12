@@ -1,0 +1,117 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block content %}
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+			<li>About Us</li>
+		</ul>
+		
+		<div class="row" style="text-align: justify;">
+			<div id="content" class="col-sm-12">
+				<div class="about-us about-demo-4">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 about-us-content">
+							<div class="content-about">
+								<h2 class="about-title">About Us</h2> <img src="{% static 'image/blog-1-570x365.jpg' %}" alt="About Us">
+								<p class="description-about"> 
+                                    our main concern is the end user satisfaction ,in car parts field we notice as car owners that we need better service in this field ,so we took a decision as a team and owners to work hard building a foundation to help the end users take a benefit of purchasing those parts online through our website and application . not only the passengers  cars but also we will expand our chain to get the commercial vehicles involved at our services . also we will recommend the best maintenance service centers to help the end user get the best man crafted work in his car safely and with a warranty .
+                                </p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 faq-about-us">
+							<h2 class="about-title">March Part</h2>
+							<div class="content-faq">
+								<div id="accordion" role="tablist" aria-multiselectable="true">
+									<div class="panel">
+										<div class="panel-head" role="tab" id="headingOne">
+											<h4 class="panel-title">						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">						  <span>Why choose us?</span>						</a>					  </h4> </div>
+										<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="height: 0px;">
+											<div class="panel-body">
+                                                Many companies in the market now offering their service ,you choose us for many reasons <br> <br>
+1-	We are giving a good care of the customer needs ,and we know as in experts in this field how the customer think about his car . <br>
+2-	We have the best customer service experience   <br>
+3-	We have a technical experts that know exactly what part  your car needs  <br>
+4-	We take good care of delivering the part to you house  <br>
+5-	We also help you to find the best maintainer to work in your vehicle  <br>
+6-	the cost of the spare part itself is the best all over Egypt  we guarantee the best price for the best quality  <br>
+
+                                            
+                                                 </div>
+										</div>
+									</div>
+									<!-- <div class="panel">
+										<div class="panel-head" role="tab" id="headingTwo">
+											<h4 class="panel-title">						<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">						  <span>Our Team</span>						</a>					  </h4> </div>
+										<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true">
+											<div class="panel-body"> 
+                                                <b>Michael Hanna </b> founder and ceo <br>
+                                                <b>Hany George</b>    business analyst and march group owner <br>
+                                                <b>Remon Iskander </b>   sales director and suppliers coordinator <br>
+                                                <b>George Hanna</b>  financial manager <br>
+    
+                                            </div>
+										</div>
+									</div> -->
+									<div class="panel">
+										<div class="panel-head" role="tab" id="headingThree">
+											<h4 class="panel-title">						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">						  <span>Our Vision</span>						</a>					  </h4> </div>
+										<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;">
+											<div class="panel-body">
+                                                our vision is to reach out every customer lacks the time to search for his car parts urgently needed not to get stuck. <br>
+                                                Unifying the spare parts market prices ,and deliver the best experience to our valuable customer
+                                                to save the time and effort  for the customer searching for the parts from the actual spare parts shops everywhere .all in one place. <br>
+                                                The main vision for us also to become part of the Egyptian and middle east spare parts company.  <br>
+                                                    
+                                            
+                                            </div>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-head" role="tab" id="headingFour">
+											<h4 class="panel-title">						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">	 <span>Our Misson</span>						</a>					  </h4> </div>
+										<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour" aria-expanded="false" style="height: 0px;">
+											<div class="panel-body"> 
+                                                To deliver the best service and to make remarkable changes to the spare parts field , and not to let you stuck by any how.
+                                                 </div>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-head" role="tab" id="headingFive">
+											<h4 class="panel-title">						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">						  <span>Marketing strategy </span>						</a>					  </h4> </div>
+										<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive" aria-expanded="false" style="height: 0px;">
+											<div class="panel-body">
+                                                We are planning to reach out our customers through the social media ,radios stations ,tv ads ,sponsoring events , we will do it perfectly and we have potentials. <br>
+                                                We have many partners already . 
+                                                    
+                                            </div>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-head" role="tab" id="headingSix">
+											<h4 class="panel-title">						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">						  <span>Problem Solver </span>						</a>					  </h4> </div>
+										<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix" aria-expanded="false" style="height: 0px;">
+											<div class="panel-body"> Our moto is never get stuck this is also for us as a team AND FOR OUR CUSTOMER ,
+                                                we will do our best to solve your problem even by getting you the spare parts from abroad , this is our mission 
+                                                 </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- //Main Container -->
+	
+
+    {% endblock %}

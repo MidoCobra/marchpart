@@ -1,0 +1,58 @@
+
+
+        <h3 style="background-color: yellow; padding: 5px; color: black;">Hi {{ user.username|title }}, We recieved your order, We will contact you within 24 hours to confirm the request.</h3>
+        <h3 style="background-color: yellow; padding: 5px; color: black;">لقد تم استقبال طلبك بنجاح، سيتم التواصل معك خلال اربع و عشرين ساعة لتأكيد الطلب، شكرا لتسوقك معنا</h3>
+      <br><h4 style="color: crimson;">
+        سوف يتم تحصيل ٢٠ ٪ من قيمة الاوردر ،كجدية حجز قبل الشحن ،سوف يتم الاتصال من قبل خدمة العملاء في اقرب وقت
+      </h4>
+        <br>
+        <table>
+            <thead>
+              <!-- <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+              </tr> -->
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Name</b></td>
+                <td>{{ first_name|title }} {{ last_name|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>Email</b></td>
+                <td>{{ email }}</td>      
+              </tr>
+              <tr>
+                <td><b>Address</b></td>
+                <td>{{ address|capfirst }} {{ city|title }}</td>      
+              </tr>
+              <tr>
+                <td><b>Phone Number</b></td>
+                <td>{{ phone1 }}</td>      
+              </tr>
+              {% if order_items %}
+              {% for o in order_items %}
+                  <tr>
+                <td><b>Item</b></td>
+                <td>{{ o.product.name|capfirst }}   <br>  
+            ({{ o.product.name_arabic|capfirst }}) </td>    
+              </tr>
+              {% endfor %}
+              {% endif %}
+              <tr>
+                <td><b>Total Fees</b></td>
+                <td>{{ fees }} EGP</td>      
+              </tr>
+            </tbody>
+          </table>
+
+    </div>
+    <br>
+
+        <h4><b>March Part Team</b></h4>
+   
+</div>
+
+
+

@@ -1,0 +1,238 @@
+{% extends 'shop/base.html' %}
+{% block title %}  {{ request.user.username|title }} Invoices {% endblock %}
+{% block content %}
+<style>
+  .OnlyBlockHome{
+    display: block;
+}
+.OnlyNoneHome{
+    display: none;
+}
+</style>
+
+<style>
+
+.myButton1{
+    background-color: #3ec242; /* Green */
+    font-size: 1.2vmax;
+    color: white;
+    padding: 8px 19px;
+    border-radius: 12px;
+    border: 2px solid #6e6e6e; /* Green */
+    
+    }
+    
+.myButton2{
+    background-color: #cecece; /* Green */
+    font-size: 1.2vmax;
+    color: white;
+    padding: 8px 19px;
+    border-radius: 12px;
+    border: 2px solid #6e6e6e; /* Green */
+    
+    }
+    
+    
+    </style>
+<div class="container container-fluid" style="max-width: 80%; margin: auto;">
+    <div class="d-flex justify-content-center">
+{% if paidInvoices %}
+<h3 class="w3-center" style="color: black;"><b>{{ request.user.username|title }}'s Paid Invoices</b></h3>
+<table class="table table-hover">
+    <!-- <thead>
+      <tr>
+        <th>Invoice Number</th>
+        <th>Lastname</th>
+
+      </tr>
+    </thead> -->
+    <tbody>
+{% for p in paidInvoices %}
+    <thead>
+      <tr>
+        <th  style="background-color: black;"> </th>
+        <th style="background-color: black;"></th>
+
+      </tr>
+    </thead>
+<tr style="background-color: yellow; color: black;">    
+    <td><b>Invoice Number</b></td>
+    <td>{{ p.code }} (Paid Online)</td>  
+          
+  </tr>
+
+      <tr>
+        <td><b>Name</b></td>
+        <td>{{ p.first_name|title }} {{ p.last_name|title }}</td>      
+      </tr>
+      <tr>
+        <td><b>Email</b></td>
+        <td>{{ p.email }}</td>      
+      </tr>
+
+      <tr>
+        <td><b>Address</b></td>
+        <td>{{ p.address|capfirst }} {{ p.city|title }}</td>      
+      </tr>
+      <tr>
+        <td><b>Phone Number</b></td>
+        <td>{{ p.phone1 }}</td>      
+      </tr>
+
+
+      {% if p.items %}
+      {% for o in p.items.all %}
+          <tr>
+
+        <td><b>Item</b></td>
+        <td>{{ o.product.name|capfirst }}   <br>  
+    ({{ o.product.name_arabic|capfirst }}) </td>    
+
+      </tr>
+      {% endfor %}
+      {% endif %}
+
+
+      <tr>
+        <td><b>Total Fees</b></td>
+        <td>{{ p.fees }} EGP</td>      
+      </tr>
+      <tr>
+        <td><b>Order Status</b></td>    
+          <td>
+    {% if not p.delivered_to_client %}
+    <button class="myButton myButton1">Received &#10004;</button>
+    {% if p.sent %}
+    <button class="myButton myButton1">Shipped &#10004;</button>
+    {% else %}
+    <button class="myButton myButton2">Shipped &#10006;</button>
+    {% endif %}
+    {% if p.delivered_to_client %}
+    <button class="myButton myButton1">Delivered &#10004;</button>
+    {% else %}
+    <button class="myButton myButton2">Delivered &#10006;</button>
+    {% endif %}
+    
+    {% else %}
+    
+    <span style="color: green;">Order Is Delivered</span> {% endif %}
+          </td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+
+{% endif %}
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+<div class="container container-fluid" style="  max-width: 80%; margin: auto; background-color: cornsilk;">
+    <div class="d-flex justify-content-center">
+{% if cashOnDeliveryInvoice %}
+<h3 class="w3-center" style="color: black;"><b>{{ request.user.username|title }}'s Cash On Delivery (Unpaid Invoices)</b></h3>
+<table class="table table-hover">
+    <!-- <thead>
+      <tr>
+        <th>Invoice Number</th>
+        <th>Lastname</th>
+
+      </tr>
+    </thead> -->
+    <tbody>
+{% for p in cashOnDeliveryInvoice %}
+    <thead>
+      <tr>
+        <th  style="background-color: black;"> </th>
+        <th style="background-color: black;"></th>
+
+      </tr>
+    </thead>
+<tr style="background-color: yellow; color: black;">    
+    <td><b>Invoice Number</b></td>
+    <td>{{ p.code }} (Cash On Delivery)</td>      
+  </tr>
+      <tr>
+        <td><b>Name</b></td>
+        <td>{{ p.first_name|title }} {{ p.last_name|title }}</td>      
+      </tr>
+      <tr>
+        <td><b>Email</b></td>
+        <td>{{ p.email }}</td>      
+      </tr>
+
+      <tr>
+        <td><b>Address</b></td>
+        <td>{{ p.address|capfirst }} {{ p.city|title }}</td>      
+      </tr>
+      <tr>
+        <td><b>Phone Number</b></td>
+        <td>{{ p.phone1 }}</td>      
+      </tr>
+
+
+      {% if p.items %}
+      {% for o in p.items.all %}
+          <tr>
+
+        <td><b>Item</b></td>
+        <td>{{ o.product.name|capfirst }}   <br>  
+    ({{ o.product.name_arabic|capfirst }}) </td>    
+
+      </tr>
+      {% endfor %}
+      {% endif %}
+
+
+      <tr>
+        <td><b>Total Fees</b></td>
+        <td>{{ p.fees }} EGP</td>      
+      </tr>
+
+      <tr>
+        <td><b>Order Status</b></td>    
+          <td>
+    {% if not p.delivered_to_client %}
+    <button class="myButton myButton1">Received &#10004;</button>
+    {% if p.sent %}
+    <button class="myButton myButton1">Shipped &#10004;</button>
+    {% else %}
+    <button class="myButton myButton2">Shipped &#10006;</button>
+    {% endif %}
+    {% if p.delivered_to_client %}
+    <button class="myButton myButton1">Delivered &#10004;</button>
+    {% else %}
+    <button class="myButton myButton2">Delivered &#10006;</button>
+    {% endif %}
+    
+    {% else %}
+    
+    <span style="color: green;">Order Is Delivered</span> {% endif %}
+          </td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+
+{% endif %}
+
+
+
+
+
+
+</div>
+</div>
+
+{% endblock %}

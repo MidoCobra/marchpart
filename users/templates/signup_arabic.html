@@ -1,0 +1,436 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load widget_tweaks %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+  .OnlyBlockHome{
+    display: block;
+}
+.OnlyNoneHome{
+    display: none;
+}
+</style>
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop_arabic:home_arabic' %}"><i class="fa fa-home"></i></a></li>
+			<li><a href="#">الحسابات</a></li>
+			<li><a href="#">تسجيل حساب</a></li>
+		</ul>
+		
+		<div class="row">
+			<div id="content" class="col-sm-12">
+				<h2 class="title">تسجيل حساب جديد</h2>
+        <p>إذا كان لديك حساب بالفعل يمكنك  <a href="{% url 'login' %}" style="color:blue;">تسجيل دخول</a>.</p>
+        
+
+
+
+        {% if form.errors %}
+        <div class="alert w3-pale-blue">
+          <h4>من فضلك صحح الأخطاء الاتية</h4>
+          <!--Form Messages-->
+          
+          {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}" style="color: rgb(184, 11, 11);">{{ message|safe }}</div>
+          {% endfor %}
+          {% endif %}
+          <!--Form Messages-->
+<ul>
+  {% for field in form %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <li><a href="#{{ field.name }}" class="error">{{ error|escape }}</a></li>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+</ul>
+{% if form.non_field_errors %}
+  {{ form.non_field_errors }}
+{% endif %}
+</div>
+{% endif %} 
+
+
+
+
+
+
+
+        <form method="POST" enctype="multipart/form-data" class="form-horizontal account-register clearfix">
+          {% csrf_token %}
+					<fieldset id="account">
+						<legend>بياناتك الشخصية</legend>
+						<div class="form-group required" style="display: none;">
+							<label class="col-sm-2 control-label">Customer Group</label>
+							<div class="col-sm-10">
+								<div class="radio">
+									<label>
+										<input type="radio" name="customer_group_id" value="1" checked="checked"> Default
+									</label>
+								</div>
+							</div>
+            </div>
+            <div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-fax">اسم المستخدم</label>
+							<div class="col-sm-10">
+                {% render_field form.username id="username" name="username" class="form-control rounded-0" type='text' placeholder="اسم المستخدم" onchange="return validateUsername(this);" %}
+								<!-- <input type="text" name="fax" value="" placeholder="Fax" id="input-fax" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-firstname">الإسم</label>
+							<div class="col-sm-10">
+                {% render_field form.first_name name="first_name"  class="form-control" type='text' placeholder="الإسم" %}
+								<!-- <input type="text" name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-lastname">اسم العائلة</label>
+							<div class="col-sm-10">
+                {% render_field form.last_name name="last_name"  class="form-control rounded-0" type='text' placeholder="اسم العائلة"  %}
+								<!-- <input type="text" name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-email">البريد الاليكترونى</label>
+							<div class="col-sm-10">
+                {% render_field form.email name="email"  class="form-control rounded-0" type='email' placeholder="بريدك المفعل" id="email" onchange="return validateEmail(this);" %}
+								<!-- <input type="email" name="email" value="" placeholder="E-Mail" id="input-email" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-telephone">رقم المحمول</label>
+							<div class="col-sm-10">
+                {% render_field form.mobile name="mobile"  class="form-control rounded-0" type='text' placeholder="رقم المحمول الخاص بك"  %}
+								<!-- <input type="tel" name="telephone" value="" placeholder="Telephone" id="input-telephone" class="form-control"> -->
+							</div>
+						</div>
+
+					</fieldset>
+					<fieldset id="address">
+						<legend>عنوانك</legend>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="input-company">المدينة</label>
+							<div class="col-sm-10">
+                {% render_field form.city name="city"  class="form-control rounded-0" type='text' placeholder="مدينتك"  %}
+								<!-- <input type="text" name="city" value="" placeholder="city" id="input-company" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-address-1">المحافظة</label>
+							<div class="col-sm-10">
+                {% render_field form.province name="province"  class="form-control rounded-0" type='text' placeholder="محافظتك"  %}
+								<!-- <input type="text" name="province" value="" placeholder="province" id="input-address-1" class="form-control"> -->
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<label class="col-sm-2 control-label" for="input-address-2">Address 2</label>
+							<div class="col-sm-10">
+								<input type="text" name="address_2" value="" placeholder="Address 2" id="input-address-2" class="form-control">
+							</div>
+						</div> -->
+						<!-- <div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-city">City</label>
+							<div class="col-sm-10">
+								<input type="text" name="city" value="" placeholder="City" id="input-city" class="form-control">
+							</div>
+						</div> -->
+						<!-- <div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-postcode">Post Code</label>
+							<div class="col-sm-10">
+								<input type="text" name="postcode" value="" placeholder="Post Code" id="input-postcode" class="form-control">
+							</div>
+						</div> -->
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-postcode">البلد</label>
+							<div class="col-sm-10">
+                {% render_field form.country name="country"  class="form-control rounded-0" type='text' placeholder="بلدك"  %}
+							</div>
+						</div>
+<!-- 			
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-zone">Region / State</label>
+							<div class="col-sm-10">
+								<select name="zone_id" id="input-zone" class="form-control">
+									<option value=""> --- Please Select --- </option>
+									<option value="3513">Aberdeen</option>
+									<option value="3514">Aberdeenshire</option>
+									<option value="3515">Anglesey</option>
+									<option value="3516">Angus</option>
+								  
+								</select>
+							</div>
+						</div> -->
+					</fieldset>
+					<fieldset>
+						<legend>كلمة السر</legend>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-password">كلمة السر</label>
+							<div class="col-sm-10">
+                {% render_field form.password1 name="password1"  class="form-control rounded-0" type='password' placeholder="Password" id="password1" %}
+								<!-- <input type="password" name="password" value="" placeholder="Password" id="input-password" class="form-control"> -->
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-confirm">تأكيد كلمة السر</label>
+							<div class="col-sm-10">
+                {% render_field form.password2 name="password2"  class="form-control rounded-0" type='password' placeholder="تأكيد كلمة السر" id="password2" onchange="return checkPassword(this);" %}
+								<!-- <input type="password" name="confirm" value="" placeholder="Password Confirm" id="input-confirm" class="form-control"> -->
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>المتابعة عبر البريد الإليكترونى</legend>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">اشتراك</label>
+							<div class="col-sm-10">
+								<label class="radio-inline">
+                  {% render_field form.newsLetter name="newsletter" type='checkbox' %}
+								</label>
+					
+							</div>
+						</div>
+					</fieldset>
+					<div class="buttons">
+            <br>
+						<div class="pull-right">لقد قرأت ووافقت على <a href="#" class="agree"><b>شروط الاستخدام و الخصوصية</b></a>
+              {% render_field form.agreement class="form-check-input" type="checkbox" %}
+              <br>
+              <!-- <input class="box-checkbox" type="checkbox" name="agree" value="1"> -->
+               &nbsp;
+              
+
+              <div class="g-recaptcha form-group" data-sitekey="6LfE570ZAAAAAHtB83TiCPq3nfuusnwExnVs8scu"></div>
+              <br>
+							<input type="submit" value="استمرار" class="btn btn-primary">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- //Main Container -->
+
+  <script>
+  
+    //--------------------------------
+    // This code compares two fields in a form and submit it
+    // if they're the same, or not if they're different.
+    //--------------------------------
+    function checkPassword() {
+      p1 = document.getElementById("password1");
+      p2 = document.getElementById("password2");
+        if (p1.value != p2.value)
+        {
+            alert('Passwords Don\'t Match!');
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //-->
+
+    $(document).ready(function() {
+	$('#username').change(function validateUsername() {
+		console.log($(this).val());
+		var username = $(this).val();
+
+		$.ajax({
+			url: 'ajax/validate_username',
+			data: {
+				username: username
+			},
+			dataType: 'json',
+			success: function(data) {
+				if (data.is_taken) {
+					alert(data.error_message);
+				}
+			}
+		});
+	});
+
+	$('#email').change(function validateEmail() {
+		var email = $(this).val();
+
+		$.ajax({
+			url: 'ajax/validate_email',
+			data: {
+				email: email
+			},
+			dataType: 'json',
+			success: function(data) {
+				if (data.is_taken) {
+          alert(data.error_message);
+				}
+			}
+		});
+	});
+});
+    </script> 
+{% endblock %}
+
+
+
+
+<!--
+  ==============================================================================================================
+  ==============================================================================================================
+  ==============================================================================================================
+  ==============================================================================================================
+  ==============================================================================================================
+  ==============================================================================================================
+-->
+<style>
+    .login-paralex {background: linear-gradient( rgba(51, 102, 204, 0.411), rgba(51, 102, 204, 0.404) ), url('/static/images/aswan-philea.jpg') fixed;
+            background-repeat: no-repeat;
+               background-size: cover;
+               background-position:center;
+           
+               } 
+    </style>
+<div class="container-fluid w3-padding-64 login-paralex">
+    <div class="container ">
+          <!-- Recaptcha invalid -->
+    {% if messages %}
+    {% for message in messages %}
+    <h2 style="color: red;"><b>{{ message }}</b></h2>
+    {% endfor %}
+    {% endif %}
+
+    <!-- <div class="card mx-auto" style="max-width:400px;"> -->
+        <div class="card mx-auto" style="max-width:400px; background-color: rgba(170, 200, 255, 0.452);">
+            <!--Form Error-->
+            {% if form.errors %}
+            <div class="alert w3-pale-blue">
+              <h4>Please fix the following errors</h4>
+              <!--Form Messages-->
+              
+              {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}" style="color: rgb(184, 11, 11);">{{ message|safe }}</div>
+              {% endfor %}
+              {% endif %}
+              <!--Form Messages-->
+    <ul>
+      {% for field in form %}
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+    {% if form.non_field_errors %}
+      {{ form.non_field_errors }}
+    {% endif %}
+  </div>
+  {% endif %} 
+  <!--End Form Error--> 
+     <div class="card-header"><h2 class="text-dark text-center"><b>Create Account</b></h2></div>
+      <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+  
+  <div class="form-group">      
+    {% render_field form.username id="id_username" name="username" class="form-control rounded-0" type='text' placeholder="Username" %}
+  </div>
+  
+  <div class="form-group">      
+      {% render_field form.first_name name="first_name"  class="form-control rounded-0" type='text' placeholder="First Name" %}
+  </div>
+  
+  <div class="form-group">      
+      {% render_field form.last_name name="last_name"  class="form-control rounded-0" type='text' placeholder="Last Name"  %}
+  </div>	
+  
+  <div class="form-group">      
+      {% render_field form.country name="country"  class="form-control rounded-0" type='text' placeholder="Your Country"  %}
+  </div>	
+  
+  <div class="form-group ">     
+      {% render_field form.email name="email"  class="form-control rounded-0" type='email' placeholder="Vaild Email" id="email" %}
+  </div>
+  
+  <div class="form-group ">     
+      {% render_field form.password1 name="v"  class="form-control rounded-0" type='password' placeholder="Password" id="pass1" %}
+  </div>
+  
+  <div class="form-group">     
+      {% render_field form.password2 name="password2"  class="form-control rounded-0" type='password' placeholder="Confirm Password" id="pass2" onchange="return checkPassword(this);" %}
+  </div>
+  
+  
+  <div class="form-group ">     
+      {% render_field form.photo name="photo"  class="form-control rounded-0" type="file"  %}
+  </div>
+  
+  
+  <div class="g-recaptcha form-group" data-sitekey="6LcPdXcUAAAAAIHNHWd84NJ4PDSrhWZC1nJ9vmVC"></div>
+  <br>
+  
+  <div class="form-group form-check float-left">
+    <label class="form-check-label"></label>{% render_field form.agreement class="form-check-input" type="checkbox" %}</label>
+    Check the box if you accept the
+    <a style="color: grey; cursor: pointer;" class="card-link text-danger" data-toggle="modal" data-target="#termsModal"> Terms & Conditions</a>  
+       of usage of this site? 
+  </div>
+  
+  <button type="submit" class="btn w3-indigo w-100">REGISTER</button>
+</form>
+<br>
+<p class="text-center"><span class="bg-white rounded-circle shadow pt-2 pb-2 pl-3 pr-3 "><b>OR</b></span></p>
+<hr style="margin-top:-28px;"></br>
+<button type="submit" class="btn btn-primary bg-danger w-100">Have An Account</button>
+</div></div>
+
+
+
+            </div></div>
+
+
+  <!-- The Modal -->
+  <div class="modal" id="termsModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+             <!-- Modal body -->
+        <div class="modal-body">
+          <h1 class="W3-center w3-text-teal">Terms & Conditions of usage</h1>
+          <p>
+            <br>
+              <h3><b>Raa Tours</b> Customer Terms and Conditions</h3><br>
+                Revised October 13, 2018<br><br>                        
+            </p>
+          </div>
+        </div>
+        </div></div>
+<!--End Modal Terms And conditions -->
+
+    <script>
+  
+        //--------------------------------
+        // This code compares two fields in a form and submit it
+        // if they're the same, or not if they're different.
+        //--------------------------------
+        function checkPassword() {
+          p1 = document.getElementById("pass1");
+          p2 = document.getElementById("pass2");
+            if (p1.value != p2.value)
+            {
+                alert('Passwords Don\'t Match!');
+                return false;
+            } else {
+                return true;
+            }
+        }
+        //-->
+        </script> 
+
+
+ 

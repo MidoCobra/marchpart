@@ -1,0 +1,620 @@
+{% load static %}
+<style>
+    .OnlyBlockHome{
+        display: none;
+    }
+    
+    .fontSize {
+        font-size: 18px;
+        font-weight: 700;
+    }
+</style>
+    <!-- Header Container  -->
+    <header id="header" class="typeheader-5" style="position: fixed;top: 0;width: 100%; z-index:5;">
+        
+        <!-- Header Top -->
+        <div class="header-top hidden-compact"> 
+            <div class="container">
+                <div class="row">
+                    <div class="header-top-left col-lg-3 col-md-4 hidden-sm hidden-xs">           
+                        <!-- <div class="telephone ">
+                            <i class="fa fa-phone"></i> Hotline: <a href="tel:+20{{contact_information.phone3}}">(+20) {{contact_information.phone3}}</a>
+                        </div> -->
+                        <!-- <a href="https://play.google.com/store/apps/details?id=com.marchpart.marchpart" target="blank" style="padding-top: 20px;"> 
+                            <img src="{% static 'image/android.png' %}" style="width: 50px;"> </a>  
+                            <a href=""> <img src="{% static 'image/apple.png' %}" style="width: 50px;"> </a> -->
+                    </div>
+                    <div class="header-top-right col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                        <ul class="top-link list-inline lang-curr">
+                            <!-- <li class="currency">
+                                <div class="btn-group currencies-block">
+                                    <form action="index.html" method="post" enctype="multipart/form-data" id="currency">
+                                        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                            <span class="icon icon-credit "></span> $ US Dollar  <span class="fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu btn-xs">
+                                            <li> <a href="#">(€)&nbsp;Euro</a></li>
+                                            <li> <a href="#">(£)&nbsp;Pounds    </a></li>
+                                            <li> <a href="#">($)&nbsp;US Dollar </a></li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </li>    -->
+                            <li>
+                                <div style="padding-top: 15px;font-size: 16px;">
+                                    <a href="https://play.google.com/store/apps/details?id=com.marchpart.marchpart">
+                                <i class="fab fa-google-play" style="color: white;"><span class="w3-hide-small w3-hide-medium">&nbsp;Play Store</span></i>
+                            </a>    
+                            </div>
+                            </li>
+                            <li>
+                                <div style="padding-top: 15px; font-size: 16px;">
+                                    <a href="https://apps.apple.com/eg/app/march-part-%D9%85%D8%A7%D8%B1%D8%B4-%D8%A8%D8%A7%D8%B1%D8%AA/id1554151707">
+                                    <i class="fab fa-apple" style="color: white;"><span class="w3-hide-small w3-hide-medium">&nbsp;App Store</span></i>
+                                    </a>
+                                </div>
+                            </li>
+                            {% if user.is_authenticated %}
+                            {% if request.user.email == "Bishoynady@outlook.com" or request.user.email == "mgbnmichael@yahoo.com"  or request.user.email == "sales@desertcameldev.com" %}
+                            <li>
+                                <div style="padding-top: 0px; font-size: 13px;">
+                                    <b><a href="{% url 'photos:basic_upload' %}">Photos Uploader</a></b>
+                                   
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            <li class="language">
+                                <div class="btn-group languages-block hideLanguageTab">
+                                    <form action="{{ english_language }}" method="post" enctype="multipart/form-data" id="bt-language" style="padding-top: 13px;">
+                                        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                            <img src="{% static 'image/catalog/flags/uk.png' %}" alt="English" title="English">
+                                            <span class="eng">English</span>
+                                            <span class="fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <!-- <li><a href="{% url 'shop:home' %}"><img class="image_flag" src="{% static 'image/catalog/flags/gb.png' %}" alt="English" title="English" /> English </a></li> -->
+                                            <li class="OnlyBlockHome"> <a href="{% url 'shop_arabic:home_arabic' %}"> <img class="image_flag" src="{% static 'image/catalog/flags/arEgy.png' %}" alt="Arabic" title="Arabic" /> العربية </a> </li>
+                                            <li class="OnlyNoneHome"> <a href="{{ arabic_language }}"> <img class="image_flag" src="{% static 'image/catalog/flags/arEgy.png' %}" alt="Arabic" title="Arabic" /> العربية </a> </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        <ul class="top-log list-inline"> 
+                              
+                            {% if request.user.is_authenticated %} 
+                            <li><a href="{% url 'userDashboard' request.user.id %}">{{ user.username|title }}</a> / </li>
+                            <li><i class="fa fa-lock"></i><a href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+                            {% else %}
+                            
+                            <li><i class="fa fa-lock"></i><a href="{% url 'login' %}?next={{request.path}}">Login</a> / </li>
+                            <li><a href="{% url 'signup' %}?next={{request.path}}">Register</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <div class="header-middle hidden-compact">
+            <div class="container">
+                <div class="row">           
+                    <div class="logo-w col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="logo">
+                            <a href="{% url 'shop:home' %}"><img src="{% static 'image/logo.png' %}" style="height:60;" title="Your Store" alt="Your Store" /></a>
+                        </div>                        
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 middle-right">
+                        <div class="main-menu-w">
+                            <div class="responsive so-megamenu megamenu-style-dev">
+                                <nav class="navbar-default">
+                                    <div class=" container-megamenu  horizontal open ">
+                                        <div class="navbar-header">
+                                            <button type="button" id="show-megamenu" data-toggle="collapse" class="navbar-toggle">
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="megamenu-wrapper">
+                                            <span id="remove-megamenu" class="fa fa-times"></span>
+                                            <div class="megamenu-pattern">
+                                                <div class="container-mega">
+                                                    <ul class="megamenu" data-transition="slide" data-animationtime="250">
+                                                        <li class="home hover">
+                                                            <a href="{% url 'shop:home' %}"><p class="fontSize">Home</p></a>
+                                                        </li>
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix">
+                                                                <p class="fontSize">Brands</p>                                                           
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu" style="width: 100%; display: none; max-height: 350px; overflow-y: scroll;">
+                                                                <div class="content">
+                                                                   
+
+                                                                    <div class="row">
+                                                                        {% if NavBrands %}
+                                                                        {% for b in NavBrands %}
+                                                                        <div class="col-md-3">
+                                                                            <a href="{{ b.get_absolute_url }}" class="title-submenu">
+                                                                                <img src="{{ b.image.url }}" height="20px" width="30px" />{{ b.name|title }}
+                                                                            </a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                        {% endif %}
+                                               
+                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix">
+                                                                <p class="fontSize">Categories</p>                                                          
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu" style="width: 100%; display: none;">
+                                                                <div class="content">
+                                                                   
+
+                                                                    <div class="row">
+                                                                        <!-- <div class="col-md-3">
+                                                                            <a href="#" class="title-submenu">Automotive</a>
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 hover-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li><a href="#"  class="main-menu">Car Alarms and Security</a></li>
+                                                                                            <li><a href="#"  class="main-menu">Car Audio &amp; Speakers</a></li>
+                                                                                            <li><a href="#"  class="main-menu">Gadgets &amp; Auto Parts</a></li>
+                                                                                            <li><a href="#"  class="main-menu">More Car Accessories</a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        {% if Navcategories %}
+                                                                        {% for c in Navcategories %}
+                                                                        <div class="col-md-3">
+                                                                            <a href="{{ c.get_absolute_url }}" class="title-submenu">{{ c.name|title }}</a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                        {% endif %}
+                                               
+                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="#" class="clearfix">
+                                                                <p class="fontSize">Blogs</p>                                                          
+                                                      
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu">
+                                                                <div class="content" style="display: flex;">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <ul class="row-list">
+                                                                                                
+                                                                                {% if allBlogTags %}
+                                                                                {% for c in allBlogTags %}
+                                                                                <li><a class="subcategory_item" href="{{ c.get_absolute_url }}">{{ c.tag|title }}</a></li>
+                                                                                {% endfor %}
+                                                                                {% endif %}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </li>
+
+
+
+
+                                                        <li class="with-sub-menu hover">
+                                                            <p class="close-menu"></p>
+                                                            <a href="{% url 'shop:aboutUs' %}" class="clearfix">
+                                                                <p class="fontSize">Who Are We?</p>
+                                                                <b class="caret"></b>
+                                                            </a>
+                                                            <!-- <div class="sub-menu" style="width: 40%; ">
+                                                                <div class="content" >
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <ul class="row-list">
+                                                                                <li><a class="subcategory_item" href="faq.html">FAQ</a></li>
+                                                                                
+                                                                                <li><a class="subcategory_item" href="sitemap.html">Site Map</a></li>
+                                                                                <li><a class="subcategory_item" href="contact.html">Contact us</a></li>
+                                                                                <li><a class="subcategory_item" href="banner-effect.html">Banner Effect</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <ul class="row-list">
+                                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
+                                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                        <!-- </li> -->
+
+
+                                                        
+                                                        <li class="">
+                                                            <p class="close-menu"></p>
+                                                            <a href="{% url 'shop:contact' %}" class="clearfix">
+                                                                <p class="fontSize">Contact Us</p>
+                                             
+                                                            </a>
+                                                
+                                                        </li>
+                                                        <!-- <li class="">
+                                                            <p class="close-menu"></p>
+                                                            <a href="blog-page.html" class="clearfix">
+                                                                <strong>Blog</strong>
+                                                                <span class="label"></span>
+                                                            </a>
+                                                        </li> -->
+                                                        
+                                                        
+                                                    </ul>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+
+
+
+
+                        <!--
+                            Search Navbar
+                        -->
+
+
+
+
+
+
+
+
+                        <style>
+                            @media (min-width: 800px) {
+                                .searchForm {
+                                    font-size: 30px;
+                                    font-weight: 300;
+                                    display: block;
+                                   
+                                    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+                                    /* transform: scale(1, 1.2); */
+                                    /* transform: scaleY(1.3); */
+                                    /* text-transform: capitalize; */
+                        
+                                    transform: scaleY(1.3);
+                            
+                                }
+
+                                 
+                            }
+                        .basicAutocomplete ul {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete li {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete label {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete select {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete textarea {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete fieldset {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete legend {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete datalist {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete output {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete option {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete optgroup {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        .basicAutocomplete.ui li {
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        select.ui-autocomplete{
+                            color: darkgreen;
+                            background-color: rgb(68, 227, 255);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                        ul.ui-autocomplete{
+                            color: darkgreen;
+                            background-color: rgb(190, 255, 68);
+                            text-decoration: darkred;
+                            font-size: 40px;
+                        }
+                    
+
+                    
+  
+
+                         </style>
+
+
+
+                        <div class="search-header-w">
+                            <div class="ico-search"><i class="fa fa-search" style="padding-top: 8px;"></i></div>                                
+                              
+                            <div id="sosearchpro" class="sosearchpro-wrapper so-search ">
+                            
+                                <div id="search0" class="search input-group form-group">
+                                    <!-- <div class="ui-widget"> -->
+                                    <form method="get" action="{% url 'shop:navbarSearch' %}" class="searchForm">
+
+                                    <input class="basicAutocomplete search input-group form-control" id="searchFree" autocomplete="off" 
+                                    placeholder="Part name Or number" name="productSearchAllTypes" required="true" 
+                                    style="color: rgb(102, 102, 102); font-size: 14; background-color: rgb(255, 255, 255); outline: none;">
+                                
+                                        <button type="submit" class="button-search btn btn-primary" name="submit_search"><i class="fa fa-search"></i></button>
+                                    </form>
+                                <!-- </div> -->
+                                    </div>
+                                    <!-- <input type="hidden" name="route" value="product/search" /> -->
+                            </div>
+                        </div>   
+                        
+                        
+
+                    </div>
+                </div>
+
+
+                {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                <div class="shopping_cart" id="cartNAvBar">
+                    <div id="cart" class="btn-shopping-cart">
+                        <a href="javascript:void(0)" data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <div class="shopcart">
+                                <span class="icon-c">
+                                    <i class="fa fa-shopping-basket"></i>
+                                </span>
+                                <div class="shopcart-inner">
+                                    <p class="text-shopping-cart">
+                                        My cart
+                                    </p>
+
+                                    <span class="total-shopping-cart cart-total-full">
+                                    <span class="items_cart">{{ total_items }}</span><span class="items_cart2"> item(s) EGP"{{ cart.get_total_price|floatformat }}"</span><span class="items_carts">EGP {{ cart.get_total_price }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <ul class="dropdown-menu pull-right shoppingcart-box" role="menu" style="max-height: 350px; overflow-y: scroll;">
+                            <li>
+                                <table class="table table-striped" style="font-size: xx-small;">
+                                    <tbody>
+                                        {% if cart %}
+                                        {% for item in cart %}
+                                        {% with product=item.product  %}
+                                        <tr>
+                                            <td class="text-center" style="width:70px">
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <img src="{{ product.image.url }}" style="width:70px" alt="{{ product.name|title }}" title="Yutculpa ullamco" class="preview">
+                                                </a>
+                                            </td>
+                                            <td class="text-left"> <a class="cart_product_name" href="product.html">{{ product.name|title }}</a> 
+                                            </td>
+                                            <td class="text-center">x{{ item.quantity }}</td>
+                                            <td class="text-center">EGP {{ item.total_price }}</td>
+                                            <!-- <td class="text-right">
+                                                <a href="{{ product.get_absolute_url }}" class="fa fa-edit"></a>
+                                            </td> -->
+                                            <td class="text-right">
+                                                <!-- <a onclick="cart.remove('2');" class="fa fa-times fa-delete"></a> -->
+                                                <a href="{% url 'cart:cart_remove' product.id %}" class="fa fa-times fa-delete"></a>
+                                            </td>
+                                        </tr>
+                                        {% endwith %}
+                                        {% endfor %}  
+                                        {% endif %}
+                                     
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <div>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <!-- <tr>
+                                                <td class="text-left"><strong>Sub-Total</strong>
+                                                </td>
+                                                <td class="text-right">$140.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left"><strong>Eco Tax (-2.00)</strong>
+                                                </td>
+                                                <td class="text-right">$2.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left"><strong>VAT (20%)</strong>
+                                                </td>
+                                                <td class="text-right">$20.00</td>
+                                            </tr> -->
+                                            <tr>
+                                                <td class="text-left"><strong>Total</strong>
+                                                </td>
+                                                <td class="text-right">EGP {{ cart.get_total_price|floatformat }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-right"> <a class="btn view-cart" href="{% url 'cart:cart_detail' %}#cart_detail"><i class="fa fa-shopping-cart"></i>View Cart</a>&nbsp;&nbsp;&nbsp; <a class="btn btn-mega checkout-cart" href="{% url 'orders:order_create' %}"><i class="fa fa-share"></i>Checkout</a> 
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+
+
+                        </div></div>
+                        {% else %}
+                        <div class="shopping_cart" id="cartNAvBar">
+                            <div id="cart" class="btn-shopping-cart">
+                                <a href="javascript:void(0)" data-loading-text="Loading... " class="btn-group top_cart dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+
+
+
+                        <div class="shopcart">
+                            <span class="icon-c">
+                                <i class="fa fa-shopping-basket"></i>
+                            </span>
+                            <div class="shopcart-inner">
+                                <p class="text-shopping-cart">
+                                    My cart
+                                </p>
+
+                                <span class="total-shopping-cart cart-total-full">
+                                <span class="items_cart">(Empty)</span><span class="items_cart2"> </span><span class="items_carts"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        </a>
+           
+                        </div>
+                    </div> 
+                    {% endif %}
+                    {% endwith %}
+
+
+
+                
+            </div>
+            
+        </div>
+
+    </header>
+
+
+
+<script>
+    // get the highest z-index in the page and apply higher to your attr:
+    $(document).ready(function() {
+ 
+ var highest_z_index = 0;
+ var current_z_index = 0;
+
+ // Loop through each div and get the highest z-index
+ $('div').each(function() {
+
+   current_z_index = parseInt($(this).css("z-index"));
+
+   if(current_z_index > highest_z_index) {
+     highest_z_index = current_z_index+1;
+   }
+ });
+
+ // Apply a higher z-index to my menu element
+ $('#header').css('z-index', highest_z_index);
+
+
+ $('#searchFree').autoComplete({
+     resolverSettings: {
+         url: '{% url "shop:ajax_productSearchAllTypes_name" %}'
+        },
+        minLength: 2,
+        // noResultsText: "لا يوجد نتائج مطابقة",
+        events:{
+            select: function(event, ui){
+
+            }
+        
+        },
+        // select: function( event, ui ) {
+            
+            //         } 
+        });
+        
+        // $('ui-autocomplete.ui-menu').css('width', '50px');
+
+
+
+
+
+});
+
+
+
+
+</script>
+
+

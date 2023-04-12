@@ -1,0 +1,160 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block content %}
+
+
+
+	<!-- Main Container  -->
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="{% url 'shop:home' %}"><i class="fa fa-home"></i></a></li>
+			<li>Contact us</li>			
+		</ul>
+		
+		<div class="row">
+			<div id="content" class="col-sm-12">
+				<div class="page-title">
+					<h2>Contact Us</h2>
+				</div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.6429149916776!2d30.93929791511315!3d29.960948181912773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDU3JzM5LjQiTiAzMMKwNTYnMjkuNCJF!5e0!3m2!1sen!2seg!4v1602588305550!5m2!1sen!2seg" width="100%" height="350" frameborder="0" style="border:0;" allowfullscreen></iframe>				
+				<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.8442639328655!2d-71.10008329902021!3d42.34584359264178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e379f63dc43ccb%3A0xa15d5aa87d0f0c12!2s4+Yawkey+Way%2C+Boston%2C+MA+02215!5e0!3m2!1sen!2s!4v1475081210943" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                <br>
+                <div class="info-contact clearfix">
+					<div class="col-lg-4 col-sm-4 col-xs-12 info-store">
+						<div class="row">
+							<div class="name-store">
+								<h3>Our Office</h3>
+							</div>
+							<address>
+								<div class="address clearfix form-group">
+									<div class="icon">
+										<i class="fa fa-home"></i>
+									</div>
+									<div class="text">{{ contact_information.physical_address1|capfirst }}</div>
+								</div>
+								<div class="phone form-group">
+									<div class="icon">
+										<i class="fa fa-phone"></i>
+									</div>
+									<div class="text">Phone : {{ contact_information.phone1 }}, {{ contact_information.phone2 }}</div>
+								</div>
+								<div class="comment">             
+                                    <b>Kindly for enquiring for any part, Just include in your requirement the following information:</b><br>
+                                    - Car brand <br>
+                                    - Car model <br>
+                                    - Manfacture Year <br>
+                                    - Engine Capacity <br>
+                                    <b>And if available:</b> <br>
+                                    - part number <br>
+                                    - VIN number <br>
+								</div>
+							</address>
+						</div>
+                    </div>
+                    
+
+
+<!-- 
+                    [16:18, 10/9/2020] +20 106 997 5420: Car brand,
+                    Car model
+                    Year
+                    Engine capacity
+                    Mandatory fields
+                    [16:19, 10/9/2020] +20 106 997 5420: Optional
+                    Part NO
+                    VIN no -->
+
+
+
+
+
+					<div class="col-lg-8 col-sm-8 col-xs-12 contact-form">
+                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            {% csrf_token %}
+							<fieldset>
+                                {% if messages %}
+                                    <div class="w3-margin">
+                                    <ul class="messages w3-yellow">
+                                        {% for message in messages %}
+                                        <li class="w3-margin">{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                    {% endif %}
+								<legend>Contact Form</legend>
+								<div class="form-group required">
+							<label class="col-sm-2 control-label" for="input-name">Your Name</label>
+							<div class="col-sm-10">
+                                <!-- <input type="text" name="name" value="" id="input-name" class="form-control"> -->
+                                {% render_field form.name class="form-control" type="text" %}
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-email">E-Mail Address</label>
+								<div class="col-sm-10">
+                                    <!-- <input type="text" name="email" value="" id="input-email" class="form-control"> -->
+                                    {% render_field form.email class="form-control" type="email" %}
+									</div>
+								</div>
+								<div class="form-group required">
+									<label class="col-sm-2 control-label" for="input-enquiry">Enquiry</label>
+									<div class="col-sm-10">
+                                        <!-- <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea> -->
+                                        {% render_field form.enquiry class="form-control" type="text" %}
+                                        
+									</div>
+                                </div>
+
+                                <div class="g-recaptcha form-group w3-margin" data-sitekey="6LfE570ZAAAAAHtB83TiCPq3nfuusnwExnVs8scu"></div>
+                                <!-- <div class="g-recaptcha form-group w3-margin" data-sitekey="6LcPdXcUAAAAAIHNHWd84NJ4PDSrhWZC1nJ9vmVC"></div> -->
+                        
+                            </fieldset>
+                            <br>
+							<div class="buttons">
+								<div class="pull-right">
+									<button class="btn btn-default buttonGray" type="submit">
+										<span>Submit</span>
+									</button>
+								</div>
+                            </div> 
+                            <br>
+                        </form>
+                        <br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //Main Container -->
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

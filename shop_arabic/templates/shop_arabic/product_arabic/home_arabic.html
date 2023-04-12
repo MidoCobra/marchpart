@@ -1,0 +1,889 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% load static %}
+{% load ratings %}
+{% load widget_tweaks %}
+{% block title %}
+مارش بارت
+{% endblock %}
+
+{% block content %}
+<style>
+
+    .star-ratings-rating-average, 
+    .star-ratings-rating-count,
+    .star-ratings-rating-user {
+        display: none;
+    }
+
+    .OnlyBlockHome{
+        display: block;
+    }
+    .OnlyNoneHome{
+        display: none;
+    }
+    </style> 
+<!-- Main Container  -->
+<div class="w3-hide-large w3-hide-medium" style="padding-top: 15px;"></div>
+<div class="main-container">
+    <div id="content">
+        <div class="slider-container"> 
+            <div class="module sohomepage-slider ">
+                <div class="yt-content-slider"  data-rtl="yes" data-autoplay="yes" data-autoheight="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="1" data-items_column0="1" data-items_column1="1" data-items_column2="1"  data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="yes" data-hoverpause="yes">
+                    {% if homeAdds %}  {% for adds in homeAdds %}
+                    <div class="yt-content-slide">
+                        <a href="{{ adds.link_arabic }}"><img src="{{ adds.banner_image.url }}" alt="slider1" class="img-responsive"></a>
+                    </div>
+                    {% endfor %} {% endif %}
+                </div>
+                
+                <div class="loadeding"></div>
+            </div>            
+        </div>
+        <div class="content-main-w">
+            
+                            <div class="row-brands">
+                                <div class="slider-brands container">           
+                                    <div class="yt-content-slider contentslider" data-rtl="no" data-loop="yes" data-autoplay="yes" data-autoheight="no" data-autowidth="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="6" data-items_column0="6" data-items_column1="5" data-items_column2="3" data-items_column3="2" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-hoverpause="yes">
+                                        {% if brand %}
+                                        {% for b in brand %}
+                                        <div class="item"><a href="{{ b.get_absolute_url_arabic }}"><img src="{{ b.image.url }}" alt="{{b.name_arabic}}"></a></div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    
+                                </div>
+                            </div>
+            <div class="container">
+
+
+                <!-- So Advanced search -->
+                <!--
+                    key word for image background 'box-advanced-search'  in home5.css
+                -->
+                <div class="box-advanced-search">
+                    <div class="so_advanced_search">
+                        <div class="sas_wrap">
+                            <div class="sas_inner">
+                                <div class="heading-title"><h2 class="fontDroidArabicKufi">ابحث بنوع سيارتك</h2></div>
+                                <div class="sas_inner-box-search">
+                                    <form method="GET" action="{% url 'shop_arabic:search_arabic' %}">
+                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="search_brand_arabic" id="so_make0" class="form-control" required="true">
+                                                <option >اختر النوع</option>
+                                                {% if brands %} {% for x in brands %}
+                                                <option>{{ x.name_arabic }}</option>
+                                                {% endfor %}  {% endif %}
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="modelSearch" class="form-control" id="mySelect_arabic" required="true">
+                                                <option value=""></option>
+                                               
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="manfactureSearch" id="so_year0" class="form-control">
+                                                <option value="">اختر سنة الصنع</option>
+                                                {% if manYear %} {% for x in manYear %}
+                                                <option>{{ x.manfacture_year }}</option>
+                                                {% endfor %}  {% endif %}
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="engineSearch" id="so_engine0" class="form-control">
+                                                <option value="">اختر سعة الموتور</option>
+                                                {% if enginecc %} {% for x in enginecc %}
+                                                <option>{{ x.eng_capacity }}</option>
+                                                {% endfor %}  {% endif %}
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-button">
+                                            <button type="submit" id="sas_search_button0">ابحث عن الجزء المطلوب</button>
+                                        </div>
+                                    </div>  
+                                </form>            
+                                </div>
+                            </div>   
+                        </div>
+                    </div> 
+                </div>
+                <script>
+                    if(performance.navigation.type == 2){
+   location.reload(true);
+};
+                    $(document).ready(function(){
+                        // handle csrf_token for django post request:
+                        function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+                    $("#so_make0").on('change',function (e) {
+                        e.preventDefault();
+                        // $('#mySelect').val()="";
+        
+        // get the nickname
+        // var search_brand = $(this).val();
+        updateModels();
+        // GET AJAX request
+        console.log('initial ajax');
+        function updateModels(){
+        $.ajax({
+            type: 'POST',
+            headers: {'X-CSRFToken': csrftoken},
+            url: "{% url 'shop_arabic:home_arabic' %}",
+            data: {
+                search_brand_arabic: $('#so_make0').val()
+                // search_brand: $('#so_make0').val()
+            },
+            success: function (data) {
+            //   $().prepend(alert(data.modelQueySet))
+            $('#mySelect_arabic').empty();
+            $('#mySelect_arabic').append($("<option></option>").text("اختر الموديل"))
+              $.each(data.modelQuerySet, function(key, value) {    
+     $('#mySelect_arabic').append($("<option></option>").attr("value", value).text(value)); 
+     console.log('successful ajax call');
+});
+           
+                // if not valid user, alert the user
+                // $( "#so_model0" ).load(window.location.href + " #so_model0" );
+                // $('#so_model0').load(document.URL +  ' #so_model0');
+                // $("#so_model0").load(location.href + " #so_model0");
+               
+                
+                // if(response["valid"]){
+                    // alert("You cannot create a friend with same nick name");
+                    // var nickName = $("#id_nick_name");
+                    // nickName.val("")
+                    // nickName.focus()
+                // }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+    })
+    
+});
+
+       
+                </script>
+                <!-- end So Advanced search -->
+
+
+
+
+
+
+
+
+                <!-- So categories -->
+                <div id="so_categories_51" class="so-categories module theme3 slider-cates5">                    
+                    <div class="modcontent">
+                        <div class="cat-wrap theme3">
+                            {% if categories %} {% for c in categories %}
+                            <div class="content-box">
+                                <div class="image-cat">
+                                    <a href="{% url 'shop_arabic:all_product_list_by_category_arabic' category_slug=c.slug %}#products">
+                                        <img src="{{ c.image.url }}" alt="image" /></a>                                
+                                </div>                        
+                                <div class="cat-title">
+                                    <a href="#">{{ c.name_arabic }}</a>
+                                </div>                        
+                            </div>
+                            {% endfor %}  {% endif %}
+                          
+                        </div>
+                    </div>
+                </div>
+                <!-- end So categories -->
+
+
+                <div class="module listingtab-layout5">
+                    <div class="pre_text">
+                        أفضل مبيعات هذا الإسبوع             
+                    </div>                 
+                    <h3 class="modtitle fontDroidArabicKufi"><span>الأكثر مبيعا</span></h3>
+                    <div class="modcontent">
+                        <div id="so_listing_tabs_4" class="so-listing-tabs first-load">
+                            <div class="loadeding"></div>
+                            <div class="ltabs-wrap">
+                                <div class="ltabs-tabs-container" data-delay="4" data-duration="0.6" data-effect="none" data-ajaxurl="" data-type_source="0" data-lg="6" data-md="4" data-sm="3" data-xs="2" data-margin="20" data-type_show="loadmore">
+                                    <!--Begin Tabs-->
+                                    <div class="ltabs-tabs-wrap"> 
+                                    <!-- <span class="ltabs-tab-selected">Brake Parts</span> <span class="ltabs-tab-arrow">▼</span> -->
+                                        <div class="item-sub-cat">
+                                            <ul class="ltabs-tabs cf">
+                                                <li class="ltabs-tab tab-sel" data-category-id="34" data-active-content=".items-category-34"> 
+                                                    </li>
+                                                <!-- <li class="ltabs-tab " data-category-id="32" data-active-content=".items-category-32"> <span class="ltabs-tab-label">Lighting & Electical</span> </li> -->
+                                                <!-- <li class="ltabs-tab " data-category-id="33" data-active-content=".items-category-33"> <span class="ltabs-tab-label">Shock & Suspension</span> </li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- End Tabs-->
+                                </div>
+                                <div class="wap-listing-tabs products-list grid">
+                                    <div class="ltabs-items-container">                                    
+                                        <!--Begin Items-->
+                                        <div class="ltabs-items ltabs-items-selected items-category-34" data-total="16">
+                                            <div class="ltabs-items-inner">
+
+                                                    {% if best_seller %}
+                                                    {% for bs in best_seller %}
+                                                    <div class="item">
+                                                    <div class="product-layout product-grid">                                               
+                                                    <div class="product-item-container item--static">
+                                                    
+                                                    <div class="left-block">
+                                                        <div class="product-image-container second_img">
+                                                            <a href="{{ bs.get_absolute_url_arabic }}" target="_self" title="{{ bs.name_arabic|title }}">
+                                                                <img src="{{ bs.image.url }}" class="img-1 img-responsive" alt="image1">
+                                                                <img src="{{ bs.image.url }}" class="img-2 img-responsive" alt="image2">
+                                                            </a>
+                                                        </div>
+                                                        <!-- <span class="label-product label-new">New </span> -->
+                                                        <!--quickview--> 
+                                                        <!-- <div class="so-quickview">
+                                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                        </div>                                                      -->
+                                                        <!--end quickview-->
+                                                    </div>
+                                                    
+                                                    <div class="right-block">
+                                                        <div class="button-group cartinfo--static">
+                                                            
+                                                            <!-- <button type="button" class="wishlist btn-button" title="Add to Wish List" onclick="wishlist.add('60');"><i class="fa fa-heart"></i></button> -->
+                                                           
+                                                            <!-- <form action="{% url 'cart:ajax_add_cart' bs.id %}" method="post" id="add_to_cart">
+                                                                {% csrf_token %}
+                                                                {% render_field form.quantity class="addToCart" type='submit' name="quantity" %}
+                                                                </form> -->
+                                                             
+                                                                <a href="{{ bs.get_absolute_url_arabic }}">
+                                                            <button type="" class="addToCart" title="استعراض المنتج">
+                                                                <span> استعراض المنتج</span>   
+                                                            </button></a>
+
+                                                            <!-- <button type="button" class="compare btn-button" title="Compare this Product " onclick="compare.add('60');"><i class="fa fa-refresh"></i></button>                                                     -->
+                                                        </div>
+                                                        <h4><a href="{{ bs.get_absolute_url_arabic }}" title="{{ bs.name_arabic|title }}" target="_self">{{ bs.name_arabic|title|truncatechars:25 }}</a></h4>
+                                                        <!-- <div class="rating">     -->
+                                                            {% ratings bs  icon_height=12 icon_width=12 read_only="True" %}
+                                                        <!-- </div> -->
+                                                        <div class="price">
+                                                            {% if bs.sale_price == 0 or bs.sale_price == None %}
+                                                          <span class="price">EGP {{ bs.price|floatformat }} </span>
+                                                          {% else %}
+                                                          <span class="price" style="font-size: 13px;">EGP {{ bs.sale_price|floatformat }} </span>
+                                                          <span class="price-old" style="font-size: 13px;">{{ bs.price|floatformat }} </span>
+                                                          {% endif %}
+                                                        </div>
+                                                    
+                                                    </div>                                            
+                                                    </div>                                            
+                                                    </div>
+                                                    
+                                                    
+                                                    </div>
+                                                   
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                          
+                                            </div>
+                                            <!-- <a href="{% url 'shop:home' %}">
+                                            <div class="ltabs-loadmore" data-active-content=".items-category-31" data-rl_start="12" data-rl_total="12" data-ajaxurl="" data-rl_load="8" data-moduleid="253">
+                                                <div class="ltabs-loadmore-btn loaded" data-label="See More" style="display: inline-block;">                                                    
+                                                    <i class="fa fa-plus"></i>
+                                                </div>
+                                            </div></a> -->
+                                        </div>
+                                        <!--End Items-->
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+           <!--
+                start banners
+            -->
+            <div class="row-banners">
+                <div class="banners banners1">
+                    {% if homeBanners %}  {% for b in homeBanners %}
+                    <div class="item item1">
+                        <a href="{{ b.product.get_absolute_url_arabic }}"><img src="{{ b.banner_image.url }}" alt="banner"></a>
+                    </div>
+                    {% endfor %} {% endif %}
+                   
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <!-- Col products simple-->
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="module product-simple">
+                            <h3 class="modtitle fontDroidArabicKufi">
+                                <span>وصل حديثا</span>
+                            </h3>
+                            <div class="modcontent">
+                                <div id="so_extra_slider_31" class="so-extraslider" >
+                                    <!-- Begin extraslider-inner -->
+                                    <div class="yt-content-slider extraslider-inner" data-rtl="yes" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="1" data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="yes" data-buttonpage="top">                                   
+                                        <div class="item">
+                                            {% if new_arrivals %}
+                                            {% for na in new_arrivals %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ na.get_absolute_url_arabic }}">
+                                                            <img src="{{ na.image.url }}" class="img-1 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                            <img src="{{ na.image2.url }}" class="img-2 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ na.get_absolute_url_arabic }}" title="Doenpuis consuat" target="_self">{{ na.name_arabic|title }}</a></div>
+                                                    <div class="rating">  
+                                                        {% ratings na  icon_height=14 icon_width=14 read_only="True" %}
+                                                    </div>
+                                                    <div class="price">
+                                                        {% if na.sale_price %}
+                                                        <span class="price-new">EGP {{ na.sale_price }}</span>
+                                                        <span class="price-old">{{ na.price }}</span>
+                                                        {% else %}
+                                                        <span class="price-new">EGP {{ na.price }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="item">
+                                            {% if new_arrivals2 %}
+                                            {% for na in new_arrivals2 %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ na.get_absolute_url_arabic }}">
+                                                            <img src="{{ na.image.url }}" class="img-1 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                            <img src="{{ na.image2.url }}" class="img-2 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ na.get_absolute_url_arabic }}" title="Doenpuis consuat" target="_self">{{ na.name_arabic|title }}</a></div>
+                                                    <div class="rating">  
+                                                        {% ratings na  icon_height=14 icon_width=14 read_only="True" %}
+                                                    </div>
+                                                    <div class="price">
+                                                        {% if na.sale_price %}
+                                                        <span class="price-new">EGP {{ na.sale_price }}</span>
+                                                        <span class="price-old">{{ na.price }}</span>
+                                                        {% else %}
+                                                        <span class="price-new">EGP {{ na.price }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        
+                                    </div>
+                                    <!--End extraslider-inner -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="module product-simple">
+                            <h3 class="modtitle fontDroidArabicKufi">
+                                <span>ترشيحاتنا</span>
+                            </h3>
+                            <div class="modcontent">
+                                <div id="so_extra_slider_31" class="so-extraslider" >
+                                    <!-- Begin extraslider-inner -->
+                                    <div class="yt-content-slider extraslider-inner" data-rtl="yes" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="1" data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="yes" data-buttonpage="top">                                   
+                                        <div class="item">
+                                            {% if seller_recommendation %} {% for r in seller_recommendation %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ r.get_absolute_url_arabic }}">
+                                                            <img src="{{ r.image.url }}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{{ r.image2.url }}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ r.get_absolute_url_arabic }}">{{ r.name_arabic|title }}</a></div>
+                                                    <div class="rating">    
+                                                        {% ratings r  icon_height=14 icon_width=14 read_only="True" %}     
+                                                    </div>
+                                                    <div class="price">
+                                                        {% if r.sale_price %}
+                                                        <span class="price-new">EGP {{ r.sale_price }}</span>
+                                                        <span class="price-old">{{ r.price }}</span>
+                                                        {% else %}
+                                                        <span class="price-new">EGP {{ r.price }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %} {% endif %}
+                                            
+                                        </div>
+                                        <div class="item">
+                                            {% if seller_recommendation2 %} {% for r in seller_recommendation2 %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ r.get_absolute_url_arabic }}">
+                                                            <img src="{{ r.image.url }}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{{ r.image2.url }}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ r.get_absolute_url_arabic }}">{{ r.name_arabic|title }}</a></div>
+                                                    <div class="rating">    
+                                                        {% ratings r  icon_height=14 icon_width=14 read_only="True" %}     
+                                                    </div>
+                                                    <div class="price">
+                                                        {% if r.sale_price %}
+                                                        <span class="price-new">EGP {{ r.sale_price }}</span>
+                                                        <span class="price-old">{{ r.price }}</span>
+                                                        {% else %}
+                                                        <span class="price-new">EGP {{ r.price }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %} {% endif %}
+                                        
+                                        </div>
+                                        
+                                    </div>
+                                    <!--End extraslider-inner -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 last-col">
+                        <div class="module product-simple">
+                            <h3 class="modtitle fontDroidArabicKufi">
+                                <span>أسعار مخفضة</span>
+                            </h3>
+                            <div class="modcontent">
+                                <div id="so_extra_slider_32" class="so-extraslider" >
+                                    <!-- Begin extraslider-inner -->
+                                    <div class="yt-content-slider extraslider-inner" data-rtl="yes" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="1" data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-loop="yes" data-buttonpage="top">
+                                        <div class="item">
+                                            {% if reduced_prices %}
+                                            {% for na in reduced_prices %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ na.get_absolute_url_arabic }}">
+                                                            <img src="{{ na.image.url }}" class="img-1 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                            <img src="{{ na.image2.url }}" class="img-2 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ na.get_absolute_url_arabic }}" title="" target="_self">{{ na.name_arabic|title }}</a></div>
+                                                    <div class="rating">    
+                                                        {% ratings na  icon_height=14 icon_width=14 read_only="True" %}
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="price">
+                                                            {% if na.sale_price %}
+                                                            <span class="price-new">EGP {{ na.sale_price }}</span>
+                                                            <span class="price-old">{{ na.price }}</span>
+                                                            {% else %}
+                                                            <span class="price-new">EGP {{ na.price }}</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="item">
+                                            {% if reduced_prices2 %}
+                                            {% for na in reduced_prices2 %}
+                                            <div class="product-item-container product-layout item-inner">
+                                                <div class="item-image">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="{{ na.get_absolute_url_arabic }}">
+                                                            <img src="{{ na.image.url }}" class="img-1 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                            <img src="{{ na.image2.url }}" class="img-2 img-responsive" alt="{{ na.name_arabic|title }}">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title"><a href="{{ na.get_absolute_url_arabic }}" title="" target="_self">{{ na.name_arabic|title }}</a></div>
+                                                    <div class="rating">    
+                                                        {% ratings na  icon_height=14 icon_width=14 read_only="True" %}
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="price">
+                                                            {% if na.sale_price %}
+                                                            <span class="price-new">EGP {{ na.sale_price }}</span>
+                                                            <span class="price-old">{{ na.price }}</span>
+                                                            {% else %}
+                                                            <span class="price-new">EGP {{ na.price }}</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        
+                                    </div>
+                                    <!--End extraslider-inner -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col products simple-->
+                </div>
+            </div>
+
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="container w3-hide-small">
+                <div class="module so-latest-blog blog-home">
+                    {% if blogs %}
+                    <div class="pre_text">مقالات</div>
+                    <h3 class="modtitle fontDroidArabicKufi"><span> أحدث المقالات</span></h3>
+                    <div class="modcontent clearfix">
+                        <div class="so-blog-external buttom-type1 button-type1">
+                            <div class="blog-external yt-content-slider contentslider" 
+                            data-rtl="no" data-loop="no" data-autoplay="yes"
+                             data-autoheight="no" data-autowidth="no" data-delay="4" 
+                             data-speed="0.6" data-margin="30" data-items_column00="3" 
+                             data-items_column0="3" data-items_column1="2" data-items_column2="2"
+                              data-items_column3="1" data-items_column4="1" data-arrows="no" 
+                              data-pagination="no" data-lazyload="yes" data-hoverpause="yes">
+
+                                 {% for b in blogs %}
+                                <div class="media">
+                                    <div class="item head-button">
+                                        <div class="media-left so-block">
+                                            <a class="imag" href="{{ b.get_absolute_url_arabic }}"><img src="{{ b.image.url }}" alt="image" /></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="media-content so-block">
+                                                <div class="infos"> <span class="media-date-added"> {{ b.created_at }}</span>  بقلم <span class="media-author">{{ b.author_arabic }}</span></div>
+                                                <h4 class="media-heading font-title head-item">
+                                                    <a href="{{ b.get_absolute_url_arabic }}" title="{{ b.title_arabic }}" target="_self">{{ b.title_arabic }}</a>
+                                                </h4>
+                                                <div class="readmore font-title">
+                                                    <a href="{{ b.get_absolute_url_arabic }}" target="_self"><span>اقرأ المزيد</span> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}  
+                           
+                           
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="container w3-hide-medium w3-hide-large">
+                <div class="module so-latest-blog blog-home">
+
+
+            <style>
+                .mySlides {display:none;}
+                </style>
+
+
+            <div class="w3-content w3-display-container">
+                <div class="pre_text">مقالات</div>
+                <h3 class="modtitle"><span> أحدث المقالات</span></h3>
+                {% for b in blogs %}
+                <!-- <img class="mySlides" src="{{ b.image.url }}" style="width:100%"> -->
+                <div class="media">
+                    <div class="item mySlides head-button">
+                        <div class="">
+                            <a class="imag" href="{{ b.get_absolute_url_arabic }}"><img src="{{ b.image.url }}" alt="image" /></a>
+                        </div>
+                        <div class="media-body">
+                            <div class="media-content so-block">
+                                <div class="infos"> <span class="media-date-added"> {{ b.created_at }}</span>  بقلم <span class="media-author">{{ b.author_arabic }}</span></div>
+                                <h4 class="media-heading font-title head-item">
+                                    <a href="{{ b.get_absolute_url_arabic }}" title="{{ b.title_arabic }}" target="_self">{{ b.title_arabic }}</a>
+                                </h4>
+                                <div class="readmore font-title">
+                                    <a href="{{ b.get_absolute_url_arabic }}" target="_self"><button class="btn w3-round w3-hover-red" style="background-color: black; color: white;">اقرأ المزيد</button> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(1)">&#10095;</button>
+              </div>
+           
+            <!-- <div class="w3-content w3-display-container">
+                <div class="owl-carousel owl-theme">
+                {% for b in blogs %}
+                <img class="item" src="{{ b.image.url }}" style="width:100%">
+                {% endfor %}  
+                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(1)">&#10095;</button>
+            </div> 
+            </div> -->
+              
+              <script>
+              var slideIndex = 1;
+              showDivs(slideIndex);
+              
+              function plusDivs(n) {
+                showDivs(slideIndex += n);
+              }
+              
+              function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = x.length}
+                for (i = 0; i < x.length; i++) {
+                  x[i].style.display = "none";  
+                }
+                x[slideIndex-1].style.display = "block";  
+              }
+
+              // owl carousel jQuery
+//               $( document ).ready(function() {
+//               $('.owl-carousel').owlCarousel({
+//     loop:true,
+//     margin:10,
+//     nav:true,
+//     responsive:{
+//         0:{
+//             items:1
+//         },
+//         600:{
+//             items:3
+//         },
+//         1000:{
+//             items:5
+//         }
+//     }
+// })
+//               }
+
+// End jQuery
+              </script>
+
+
+
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    Sponsored row
+-->
+<!-- <div class="container" style="padding:35px;">
+    <div class="w3-center">
+                 
+        <h3 class="w3-xxlarge" style="color: black;">
+            <span style="  height: 8;
+            width: 8;
+            background-color: rgb(248, 2, 2);
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;"></span>
+            <span><b>رعاتنا</b></span>
+            <span style="  height: 8;
+            width: 8;
+            background-color: rgb(248, 2, 2);
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;"></span>
+            </h3>
+    </div>                 
+        
+    <div class="row w3-center">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+         <img src="{% static 'image/logodark_only.png' %}" style="width: 120px; height:50px;" class="w3-margin">
+    </div>
+            </div> -->
+    
+    
+    <!--
+        End sponsers
+    -->
+
+
+
+
+
+
+
+
+
+
+            <div class="row-color">
+                <div class="block-services container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-margin1">
+                            <div class="icon-service">
+                                <div class="icon">
+                                    <!-- <i class="pe-7s-car">&nbsp;</i> -->
+                                    <img src="{% static 'image/free-shipping.png' %}" 
+                                    style="padding-right:4px; padding-bottom:2px;">
+                                </div>
+                                <div class="text fontDroidArabicKufi">
+                                    <h6 class="fontDroidArabicKufi">شحن مجانى</h6>
+                                    <p class="no-margin fontDroidArabicKufi">لأى طلب يتجاوز ال 1000 جنيه مصرى داخل القاهرة الكبرى</p>
+                                </div>
+                            </div>
+                        </div>        
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-margin1">
+                            <div class="icon-service">
+                                <div class="icon">
+                                    <!-- <i class="pe-7s-refresh-2">&nbsp;</i> -->
+                                    <img src="{% static 'image/return.png' %}" 
+                                    style="padding-left:5px; padding-top: 3px;" class="w3-circle">
+                                </div>
+                                <div class="text fontDroidArabicKufi">
+                                    <h6 class="fontDroidArabicKufi">14 يوم استرجاع</h6>
+                                    <p class="no-margin fontDroidArabicKufi">لديك 14 يوم استرجاع للمنتج بحالة الشراء</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-margin">
+                            <div class="icon-service">
+                                <div class="icon">
+                                    <!-- <i class="pe-7s-door-lock">&nbsp;</i> -->
+                                <img src="{% static 'image/safe-shopping.png' %}"
+                                style="padding-left:3px; padding-bottom: 3px;">
+                                </div>
+                                <div class="text fontDroidArabicKufi">
+                                    <h6 class="fontDroidArabicKufi">تسوق بأمان<br></h6>
+                                    <p class="no-margin">دفع آمن 100% من خلال الموقع</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="icon-service">
+                                <div class="icon">
+                                    <!-- <i class="pe-7s-users">&nbsp;</i> -->
+                                    <img src="{% static 'image/online-support.png' %}"
+                                    style="padding-bottom:10px; padding-left: 1px;">
+                                </div>
+                                <div class="text fontDroidArabicKufi">
+                                    <h6 class="fontDroidArabicKufi">دعم مباشر</h6>
+                                    <p class="no-margin">تواصل معنا أونلاين على مدار اليوم</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+<!-- //Main Container -->
+
+
+{% endblock %}
+
+
+
+
+
+
+
+   

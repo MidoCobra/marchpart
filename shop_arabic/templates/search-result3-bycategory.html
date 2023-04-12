@@ -1,0 +1,50 @@
+{% extends 'shop_arabic/base_arabic.html' %}
+{% block content %}
+
+							{% if results3 %}
+                            {% for r in results3 %}
+							<tr>
+								<td class="text-center">
+									<a  href="{{ r.get_absolute_url_arabic }}"><img width="70px" src="{{ r.image.url }}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop">
+									</a>
+								</td>
+								<td class="text-left"><a href="{{ r.get_absolute_url_arabic }}">{{ r.name_arabic|title }}</a>
+								</td>
+								<td class="text-left">
+								{% if r.model.all %}
+								{% for m in r.model.all %}
+								
+									<a href="{{ m.get_absolute_url_arabic }}">   {{ m.name_arabic }} | </a> 
+								
+								 {% endfor %} 
+								 {% else %}
+								 مناسب لمختلف الموديلات
+								 {% endif %}
+								</td> 
+								<td class="text-right">متوافر</td>
+								<td class="text-right">
+									<div class="price">
+										{% if r.sale_price %}
+										<span class="price-new">EGP {{ r.price }}</span>
+										<span class="price-old">{{ r.sale_price}}</span>
+										{% else %}
+										<span class="price-new">EGP {{ r.price }}</span>
+										{% endif %}
+									</div>
+                                </td>
+                                
+								<!-- <td class="text-right">
+									<button class="btn btn-primary"
+									title="" data-toggle="tooltip"
+									onclick="cart.add('48');"
+									type="button" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i>
+									</button>
+									<a class="btn btn-danger" title="" data-toggle="tooltip" href="" data-original-title="Remove"><i class="fa fa-times"></i></a>
+								</td> -->
+                            </tr>
+							{% endfor %}
+
+                            {% endif %}
+                            
+
+{% endblock %}

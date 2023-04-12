@@ -1,0 +1,100 @@
+{% extends language %}
+
+{% block title %}
+Payment{% endblock %}
+
+{% block content %}
+<style>
+  .hideLanguageTab {
+          display: none;
+      }
+  </style>
+<div class="container contaiver-fluid">
+<div class="jumbotron jumbotron-fluid">
+
+<div class="container w3-margin">
+  {% if order %}
+
+  {% if language == "shop/base.html" %}
+  <h3 style="color: red;"><b>Final Summary</b></h3>
+{% for item in order.items.all %}
+
+{{ item.quantity }}X <b>{{ item.product.name }} </b>
+{% if item.product.sale_price %}  ({{ item.product.sale_price }} EGP)
+{% else %} ({{ item.product.price }}) 
+{% endif %}
+<br>
+Cost: {{ item.get_cost }} EGP <br>
+
+{% endfor %}
+
+<br>
+<b>Total Cost:</b> EGP {{ total_fees }}<br>
+{% if total_fees <= 1000 %}({{ order.get_total_cost }}
+ + Shipping Fees: {{ ship_fees }})  {% else %} (Free Shipping){% endif %} 
+
+{% else %}
+<div class="w3-right">
+<h3 style="color: red;"><b>الملخص النهائى</b></h3>
+{% for item in order.items.all %}
+
+X{{ item.quantity }} <b>{{ item.product.name_arabic }} </b>
+{% if item.product.sale_price %}  ({{ item.product.sale_price }} جنيه مصرى)
+{% else %} ({{ item.product.price }}) 
+{% endif %}
+<br>
+الإجمالى: {{ item.get_cost }} جنيه مصرى <br>
+
+{% endfor %}
+
+<br>
+<b>إجمالى المطلوب دفعه:</b> جنيه مصرى {{ total_fees }}<br>
+{% if total_fees <= 1000 %}
+ ({{ order.get_total_cost }} + مصاريف الشحن: {{ ship_fees }} )
+ {% else %}
+ (الشحن مجانا)
+ {% endif %}
+
+ <br>
+ {% if calculate_discount %}
+<b>المبلغ المخصوم:</b> جنيه مصرى {{ calculate_discount }}
+ {% endif %}
+ </div>
+ {% endif %}
+
+
+
+{% endif %}
+</div>
+
+
+  {% if wallet != "None" %}
+  <!---------------
+    Wallet Payments
+  ----------------->
+  <form action ="{% url 'orders:WalletVodafone' payment_key %}" method="post">
+    {% csrf_token %}
+     <div class="form-group">
+      <label>Please Enter Your Wallet Phone Number:</label>
+      <input type="text" class="form-control" name="mobile" placeholder="رقم محمول الحافظة الخاصة بك">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  
+  </form>
+
+{% endif %}
+  {% if wallet == "None" %}
+
+  <!---------------------
+    Credit Card Payments
+  ----------------------->
+  <div class="container d-inline-flex p-2">
+<iframe src="https://accept.paymobsolutions.com/api/acceptance/iframes/{{65707}}?payment_token={{ payment_key }}" title="credit card input" width="100%" height="100%"></iframe>
+</div>
+
+
+{% endif %}
+</div>
+</div>
+{% endblock %}
+

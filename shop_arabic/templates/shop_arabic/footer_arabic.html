@@ -1,0 +1,152 @@
+    {% load static %}
+    <!-- Footer Container -->
+    <!--
+        keyword for image typefooter-5 in footer5.css
+    -->
+    <footer class="footer-container typefooter-5">
+        <!-- Footer middle Container -->
+        <div class="container">
+            <div class="row footer-middle">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-style">
+                    <div class="box-footer box-infos">
+                        <div class="module">
+                            <h3 class="modtitle fontDroidArabicKufi">تواصل معنا</h3>
+                            <div class="modcontent">
+                                <ul class="list-icon">
+                                    <li><span class="icon pe-7s-map-marker"></span>{{ contact_information.physical_address1_arabic|capfirst }}</li>
+                                    <li><span class="icon pe-7s-call"></span> <a href="#">{{ contact_information.phone1 }} - {{ contact_information.phone2 }}</a></li>
+                                    <li><span class="icon pe-7s-mail"></span><a href="mailto:{{ contact_information.email1 }}">{{ contact_information.email1 }}</a></li>
+                                    <li><span class="icon pe-7s-alarm"></span>{{ contact_information.working_hours_arabic }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-style">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 col-style">
+                            <div class="box-information box-footer">
+                                <div class="module clearfix">
+                                    <h3 class="modtitle fontDroidArabicKufi">معلومات</h3>
+                                    <div class="modcontent">
+                                        <ul class="menu">
+                                            <li><a href="{% url 'shop_arabic:aboutUs_arabic' %}">من نحن</a></li>
+                                            <!-- <li><a href="#">FAQ</a></li> -->
+                                            <li><a href="{% url 'shop_arabic:contact_arabic' %}">الضمان و الخدمة</a></li>
+                                            <li><a href="{% static 'files/COMPANY PROFILE-2.pdf' %}">ملف الشركة</a></li>
+                                            <!-- <li><a href="#">Product Registration</a></li> -->
+                                            <li><a href="{% static 'files/termsAndConditionsArabic.pdf' %}" target="_blank">شروط الإستخدام و الخصوصية</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 col-style">
+                            <div class="box-account box-footer">
+                                <div class="module clearfix">
+                                    <h3 class="modtitle fontDroidArabicKufi">حسابى</h3>
+                                    <div class="modcontent">
+                                        <ul class="menu">
+                                            {% if user.is_authenticated %}
+                                            <li><a href="{% url 'wishlistView_arabic' request.user.id %}">قائمة الرغبات</a></li>
+                                            <li><a href="{% url 'userDashboard_arabic' request.user.id %}">تعديل البيانات</a></li>
+                                            <li><a href="{% url 'userInvoices_arabic' %}">متابعة الطلب</a></li>
+                                            {% else %} 
+<li>قم بالتسجيل</li>
+{% endif %}               
+                
+                                            <!-- <li><a href="#">Specials</a></li>
+                                            <li><a href="#">FAQs</a></li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 col-clear">
+                            <div class="box-service box-footer">
+                                <div class="module clearfix">
+                                    <h3 class="modtitle fontDroidArabicKufi">حمل التطبيق</h3>
+                                    <div class="modcontent">
+                                        <ul class="menu">
+                                            <!-- {% if Footercategories %}
+                                                {% for c in Footercategories %}
+                                                <li><a href="{{ c.get_absolute_url_arabic }}">{{ c.name_arabic|title }}</a></li>
+                                                {% endfor %}
+                                                {% endif %} -->
+                                            <a href="https://play.google.com/store/apps/details?id=com.marchpart.marchpart" target="blank"> 
+                                                   <img src="{% static 'image/android.png' %}" style="width: 150px;"> </a>
+                                            <a href="https://apps.apple.com/eg/app/march-part-%D9%85%D8%A7%D8%B1%D8%B4-%D8%A8%D8%A7%D8%B1%D8%AA/id1554151707">       <img src="{% static 'image/apple.png' %}" style="width: 150px;"> </a>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row-bottom" style="background-color:  #ff2d37;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 col-socials">
+                        <div class="socials-w fontDroidArabicKufi">
+                            <h3 class="fontDroidArabicKufi">تابعونا على</h3>
+                            <ul class="socials">
+                                <li class="facebook"><a href="{{ contact_information.facebook_link }}" target="_blank"><i class="fa fa-facebook" style="padding-top: 9px;"></i></a></li>
+                                <!-- <li class="twitter"><a href="https://twitter.com/smartaddons" target="_blank"><i class="fa fa-twitter" style="padding-top: 9px;"></i></a></li> -->
+                                <!-- <li class="google_plus"><a href="https://plus.google.com/u/0/+Smartaddons/posts" target="_blank"><i class="fa fa-google-plus" style="padding-top: 9px;"></i></a></li> -->
+                                <li class="pinterest"><a href="{{ contact_information.instagram_link }}" target="_blank"><i class="fa fa-instagram" style="padding-top: 9px;"></i></a></li>
+                                <!-- <li class="instagram"><a href="#" target="_blank"><i class="fa fa-instagram" style="padding-top: 9px;"></i></a></li> -->
+                                <li class="Youtube"><a href="{{ contact_information.youtube_link }}" target="_blank"><i class="fa fa-youtube-play" style="padding-top: 9px;"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                        <div class="module newsletter-footer1">
+                            <!-- <div class="newsletter">
+                                <h3 class="modtitle">Sign Up for Newsletter</h3>
+                                <div class="block_content">
+                                    <form method="post" id="signup" name="signup" class="form-group form-inline signup send-mail">
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <input type="email" placeholder="Your email address..." value="" class="form-control" id="txtemail" name="txtemail" size="55">
+                                            </div>
+                                            <div class="subcribe">
+                                                <button class="btn btn-primary btn-default font-title" type="submit" onclick="return subscribe_newsletter();" name="submit">
+                                                    <span>Subscribe</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>     
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer middle Container -->
+        <!-- Footer Bottom Container -->
+        <div class="footer-bottom">        
+            <div class="container">
+                <div class="row">
+                    <div class="copyright col-lg-8 col-md-8 col-sm-12 col-xs-12 fontDroidArabicKufi">
+                        <p>مارش بارت 2020 جميع الحقوق محفوظة ||
+                            برمجة الموقع من تنفيذ <a href="http://www.desertcameldev.com/" target="_blank">DesertCamelDevelopment</a> 
+                             <!-- Designed by <a href="http://www.opencartworks.com/" target="_blank">OpenCartWorks</a></p> -->
+                    </div>                 
+                    <!-- <div class="payment-w col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <img src="{% static 'image/catalog/demo/payment/payment.png' %}" alt="imgpayment">
+                    </div> -->
+                </div>
+            </div>            
+        </div>
+        <!-- /Footer Bottom Container -->
+        
+        
+            <!--Back To Top-->
+        <div class="back-to-top"><i class="fa fa-angle-up"></i></div>
+    </footer>
+    <!-- //end Footer Container -->
