@@ -12,19 +12,6 @@ from main.decorators import check_recaptcha
 from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 
 urlpatterns = [
-    # path('signup/', check_recaptcha(views.SignUp.as_view()), name='signup'),
-    # url(r'^login/$', auth_views.login, {'template_name': 'egypt/login.html'}, name='login'),
-    # url(r'^login/$', views.login.as_view(),{'authentication_form': LoginForm} , name='login'),
-    # url(r'^login/$', views.login , name='login'),
-    # path('login/', auth_views.LoginView.as_view()),
-    # next lines trying to change the reset password templates
-    # path(
-    #     "accounts/password_reset/",
-    #     auth_views.PasswordResetView.as_view(
-    #         template_name="password_reset_form.html"
-    #     ),  # try this for production too
-    #     # template_name='/home/mohamed/Ra3/users/templates/registration/password_reset_form.html'),  ## or use this For Production
-    # ),
     path(
         "accounts/password_reset/", views.password_reset_request, name="password_reset"
     ),
