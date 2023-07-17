@@ -55,24 +55,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
-    # def percentage(self):
-    #     return (self.score / app_settings.STAR_RATINGS_RANGE) * 100
-    # def save(self, *args, **kwargs):
-    #     if self.email == (''):
-    #         self.email == ('nomailexists' +  create_new_ref_number() + '@marchpart.com')
-    #         super().save(*args, **kwargs)
-    #     if CustomUser.objects.filter(email=self.email).exists():
-    #         x = CustomUser.objects.filter(email=self.email)
-            
-    #         print("A registeration with the same email already exists _______________________________________________________")
-    #         return JsonResponse(status=status.HTTP_406_NOT_ACCEPTABLE, data={'detail':'A registeration with the same email already exists'})
-    #         # raise ValidationError (_('Email Already exist'))
-    #         # return JsonResponse(status=status.HTTP_406_NOT_ACCEPTABLE, data={'detail':'A registeration with the same email already exists'})
-    #     else:
-            # super().save(*args, **kwargs)
-        # except IntegrityError as err:
-        #     if str(err) == "UNIQUE constraint failed":
-
 
 
 class Profile(models.Model):
