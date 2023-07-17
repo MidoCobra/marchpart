@@ -41,27 +41,11 @@ router.register(r"order-create", api.OrderCreateViewSet)
 router.register(r"orderItems-create", api.OrderItemsCreateViewSet)
 router.register(r"order-update", api.OrderUPdateViewSet, basename="orderUpdate")
 
-# router.register(r'users', api.UserViewSet)
-# router.register(r'groups', api.GroupViewSet)
 
-# router.register(
-#     r"^api/auth/users/activate/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$",
-#     api.UserActivationView,
-# )
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    # path(
-    #     "auth/users/activate/<user_id>&<timestamp>&<signature>",
-    #     api.UserActivationView,
-    # ),
-    # re_path(
-    #     r"^auth/users/activate/(?P<user_id>[\w-]+)/(?P<timestamp>[\w-]+)/(?P<signature>[\w-]+)$",
-    #     api.UserActivationView,
-    # ),
+
     path(
         "auth/users/activate/",
         api.UserActivationView,
@@ -74,8 +58,7 @@ urlpatterns = [
         "auth/send-password/",
         api.UserGETResetPasswordView,
     ),
-    # re_path(r'^order-update/$', api.OrderUPdateViewSet.as_view(), name="order-update")
-    # re_path(r'^products/$', api.ProductViewSet.as_view(), name="productsAPI"),
+
     path('searchByModel/<str:model>/<str:manfacture_date>/<str:engine_capacity>', api.SearchByModelAPI.as_view(), name="searchByModelAPI"),
     path('promoCode/<promoCode>', api.PromCodeViewSet, name="promocodeAPI"),
     path('deleteWish/<int:id>', api.wishlist_delete_rest_endpoint, name="wishlist_delete_rest_endpoint"),
