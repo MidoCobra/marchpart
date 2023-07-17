@@ -44,15 +44,7 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
-    # @property
-    # def delete_after_five_minutes(self):
-    #     time = self.created + datetime.timedelta(minutes=1)
-    #     if (datetime.datetime.now().strftime("%b %d %Y %I %M %p") - self.created.strftime("%b %d %Y %I %M %p")) > datetime.datetime(minutes=1):
-    #         e = Order.objects.get(pk=self.pk)
-    #         e.delete()
-    #         return True
-    #     else:
-    #         return False
+
 
 
 class OrderItem(models.Model):
