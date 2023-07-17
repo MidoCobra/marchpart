@@ -1,2 +1,2 @@
 # midocobra.github.io
-E-Commerce Web Application, with rest APIs for Mobile Applications
+E-Commerce Web Application, with APIs for Mobile Applications
