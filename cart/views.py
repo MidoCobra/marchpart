@@ -41,21 +41,11 @@ def AjaxAddCart(request, product_id):
         
 
         response_data = {}
-        # if form.is_valid():
-        #     cd = form.cleaned_data
-        #     cart.add(product=product, quantity=cd[quantity_cart], update_quantity=cd[update_cart]
-        # for x in cart:
-        #     cart_product = x['product']
 
         cart.add(product=product, quantity= int(quantity_cart), update_quantity= update_cart)
         cart.save()   
         return JsonResponse(response_data)
-        # return redirect('cart:cart_detail')
-        # else:
-        #     return HttpResponse(
-        #         json.dumps({"nothing to see": "this isn't happening"}),
-        #         content_type="application/json"
-        #     )
+    
 
 
 @require_POST
@@ -83,10 +73,7 @@ def cart_remove(request, product_id=None):
 def cart_detail(request):
     cart = Cart(request)
     categories = Category.objects.all()
-    # shipping =Shipping.objects.filter(name='shipping_cost')
-    # shipping =get_object_or_404(Shipping, name='shipping_cost')
-    # ship_cairo = shipping.shipping_cairo
-    # ship_other_cairo = shipping.shipping_eg_except_cairo    
+    
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     return render(request, 'cart/detail.html', {'cart': cart, 'categories':categories})
@@ -105,10 +92,7 @@ def cart_remove_arabic(request, product_id=None):
 def cart_detail_arabic(request):
     cart = Cart(request)
     categories = Category.objects.all()
-    # shipping =Shipping.objects.filter(name='shipping_cost')
-    # shipping =get_object_or_404(Shipping, name='shipping_cost')
-    # ship_cairo = shipping.shipping_cairo
-    # ship_other_cairo = shipping.shipping_eg_except_cairo    
+    
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     return render(request, 'cart/detail_arabic.html', {'cart': cart, 'categories':categories})
