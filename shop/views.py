@@ -37,10 +37,7 @@ from django.http import (
 
 
 
-# to restrict access to  functions:
 from django.contrib.auth.decorators import login_required
-
-# to restrict access to  base genric classes:
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 
@@ -129,22 +126,6 @@ def Home(request, category_slug=None):
             # 'modelQueySet': serializers.serialize("json", all_name)
         }
         return JsonResponse(data)
-        print(get_brand)
-        print(modelSearch)
-        # context = {
-        #     'get_brand': get_brand,
-        #     'modelSearch': modelSearch,
-        # }
-        # return render(request, 'shop/product/home.html', context)
-
-        # return JsonResponse(response_data)
-
-    # return JsonResponse(response_data)
-    # return render(request, 'shop/product/home.html', {'modelSearch': modelSearch})
-    # print(get_brand)
-    # print(modelSearch)
-    # modelSearch = Model.objects.filter(brand__name__iexact=get_brand)
-    #####################
     brand = Brand.objects.all()
 
     ##>>>>  For Search box <<<<##
@@ -215,21 +196,14 @@ def product_detail(request, id, slug):
     products = Product.objects.all().exclude(id=product.id)[:4]
     categories = Category.objects.all()
     category = product.category
-    # similar_products = (
-    #     Product.objects.filter(category=category, model__in=product.model)
-    #     .exclude(id=product.id)
-    #     .order_by("?")[:8]
-    # )
+
     form = CartAddProductForm()
     reviews = ReviewProduct.objects.filter(product=product).order_by("-pub_date")[:25]
     user = request.user
     user_review = ReviewProduct.objects.filter(
         user_name=user.username, product=product.id
     )
-    # i used this to get the model as instance for content_type in star ratings, and imported ContentType from django models
     content_type_instance = ContentType.objects.get_for_model(Product)
-    # object_id = Rating.objects.get(object_id=tour.id, content_type=content_type_instance)
-    # object_id = get_object_or_404(Rating,object_id=tour.id, content_type=content_type_instance)
     score = UserRating.objects.filter(reviewproduct__in=reviews).count()
     score1 = UserRating.objects.filter(reviewproduct__in=reviews, score=1).count()
     score2 = UserRating.objects.filter(reviewproduct__in=reviews, score=2).count()
@@ -372,12 +346,7 @@ def search(request):
         manfactureSearch = request.GET.get("manfactureSearch")
         partTypeSearch = request.GET.get("partTypeSearch")
         productSearch = request.GET.get("productSearch")
-        # if not engineSearch or not manfactureSearch:
-        #     results = Product.objects.filter(
-        #         model__name__iexact=modelSearch,
-        #         hidden=False,
-        #     )
-        # else:
+        
         if engineSearch:
             try:
                 results = Product.objects.filter(
@@ -398,15 +367,7 @@ def search(request):
                 )
         else:
             results = Product.objects.filter(engine_capacity__eng_capacity=0)
-            # page = request.GET.get("page", 1)
-            # paginator = Paginator(results, 30)
-            # try:
-            #     products_paginator = paginator.page(page)
-            # except PageNotAnInteger:
-            #     products_paginator = paginator.page(1)
-            # except EmptyPage:
-            #     products_paginator = paginator.page(paginator.num_pages)   
-
+      
         if manfactureSearch:
             results2 = Product.objects.filter(
                 model__name__iexact=modelSearch,
@@ -416,19 +377,9 @@ def search(request):
             )
         else:
             results2 = Product.objects.filter(engine_capacity__eng_capacity=0)
-            # page2 = request.GET.get("page2", 1)
-            # paginator2 = Paginator(results, 30)
-            # try:
-            #     products_paginator2 = paginator.page2(page2)
-            # except PageNotAnInteger:
-            #     products_paginator2 = paginator.page2(1)
-            # except EmptyPage:
-            #     products_paginator2 = paginator.page2(paginator.num_pages)   
-
+    
         results3 = Product.objects.filter(
             model__name__iexact=modelSearch,
-            # engine_capacity__isnull=True,
-            # manfacture_date__isnull=True,
             hidden=False,
         )
         page = request.GET.get("page", 1)
