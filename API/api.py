@@ -248,15 +248,6 @@ def UserGETResetPasswordView(request):
     return HttpResponse("nothing happened")
 
 
-# class UserActivationView(APIView):
-#     def get(self, request, uid, token):
-#         # protocol = "https://" if request.is_secure() else "http://"
-#         # web_url = protocol + request.get_host()
-#         post_url = "http://127.0.0.1:8000/djoser_auth/users/activation/"
-#         post_data = {"uid": uid, "token": token}
-#         result = requests.post(post_url, data=post_data)
-#         content = result.text
-#         return Response(content)
 
 
 class UserCreate(generics.CreateAPIView):
@@ -402,20 +393,6 @@ class BrandViewSetALL(mixins.ListModelMixin, viewsets.GenericViewSet):
     filterset_fields = ["name", "name_arabic", "slug", "id"]
     pagination_class = LargeResultsSetPagination
 
-    # remember that, whatever the valid variable name you provide in your header information in request, django convert it uppercase and prefix with 'HTTP_' 
-    # def list(self, request):
-    #     if request.META.get('HTTP_H') == 'en':
-    #         queryset = Brand.objects.all().order_by("name")
-    #         serializer = BrandSerializer(queryset, many=True)
-    #         return Response({'results':serializer.data})
-    #     elif request.META.get('HTTP_H') == 'ar':
-    #         queryset = Brand.objects.all().order_by("name_arabic")
-    #         serializer = BrandSerializer(queryset, many=True)
-    #         return Response({'results':serializer.data})
-    #     else:
-    #         queryset = Brand.objects.all().order_by("name")
-    #         serializer = BrandSerializer(queryset, many=True)
-    #         return Response({'results':serializer.data})
 
 
 class BrandViewSetALLِArabic(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -427,9 +404,6 @@ class BrandViewSetALLِArabic(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class EngineCapacityViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = EngineCapacity.objects.all().order_by("eng_capacity")
     serializer_class = EngineCapacitySerializer
@@ -438,9 +412,6 @@ class EngineCapacityViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class ManfactureDateViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = ManfactureDate.objects.all().order_by("manfacture_year")
     serializer_class = ManfactureDateSerializer
@@ -449,9 +420,6 @@ class ManfactureDateViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class CategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = Category.objects.all().order_by("name")
     serializer_class = CategorySerializer
@@ -462,9 +430,6 @@ class CategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 # class ProductViewSet(mixins.ListModelMixin, APIView):
 class ProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = Product.objects.all().order_by("name")
     serializer_class = ProductSerializer
@@ -494,18 +459,9 @@ class ProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             return qs.filter(seller_recommendation=False, hidden=False)[:12]
         return qs
 
-    # def list(self, request, *args, **kwargs):
-    #     # ret = super(ProductViewSet, self).list(request)
-    #     return (Response({
-    #         'key': 'list value',
-    #         }
-    #         ))
  
 
 class ReviewProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = ReviewProduct.objects.all().order_by("pub_date")
     serializer_class = ReviewProductSerializer
@@ -513,9 +469,6 @@ class ReviewProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class HomePage_addsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = HomePage_banners.objects.all()
     serializer_class = HomePage_addsSerializer
@@ -523,10 +476,6 @@ class HomePage_addsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class HomePage_bannersViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-
     queryset = HomePage_main_banners.objects.all()
     serializer_class = HomePage_bannersSerializer
     # permission_classes = [permissions.IsAuthenticated]
@@ -578,19 +527,12 @@ def customRating(request, product_id, score):
 
 
 class BlogViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = Blog.objects.all().order_by('-created_at')
     serializer_class = BlogSerializer
     permission_classes = [permissions.AllowAny,]
 
 class LastThreeBlogsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-
     queryset = Blog.objects.all().order_by('-created_at')[0:3]
     serializer_class = BlogSerializer
     permission_classes = [permissions.AllowAny,]
@@ -621,30 +563,6 @@ class OrderItemsCreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 
 
-
-
-
-
-
-
-
-
-# @api_view(["PUT"])
-# @permission_classes([permissions.IsAuthenticated])
-# # @authentication_classes((TokenAuthentication,))
-# def OrderUPdateView(request):
-#     order_id = request.PUT.get("order_id")
-#     order = Order.objects.get(id=order_id)
-#     serializer = OrderSerializer(order)
-#     fees = request.PUT.get("fees")
-#     serializer.fees= fees
-#     serializer.save()
-#     return Response(serializer.data)
-
-
-
-
-# class OrderUPdateViewSet(generics.CreateAPIView):
 class OrderUPdateViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = Order.objects.all()    
     serializer_class = OrderUpdateSerializer
@@ -696,43 +614,10 @@ class OrderUPdateViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
             return Response(serializer.data)
         else:
             return HttpResponse('nothing updated')
-    # def update(self, instance, validated_data):
-    #     instance.fees = validated_data.get('fees', instance.fees) 
-    #     return instance
-
-    # serializer_class = OrderSerializer('fees', partial=True)
-    # def get_queryset(self):
-    #     order_id = self.kwargs.get('order_id', '')
-    #     queryset = Order.objects.filter(user=self.request.user, id=order_id)
-    #     return queryset
-
-    # def perform_update(self, serializer):
-    #     instance.save()
-    #     send_email_confirmation(user=self.request.user, modified=instance)
-
-    # def partial_update(self, request, *args, **kwargs):
-    #     kwargs['partial'] = True
-    #     return self.update(request, *args, **kwargs)
-    # def update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     instance.name = request.data.get("fees")
-    #     instance.save()
-    #     serializer = self.get_serializer(instance)
-    #     # serializer.is_valid(raise_exception=True)
-    #     self.perform_update(serializer)
-
-    #     return Response(serializer.data)
-    # def partial_update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     instance.name = request.data.get("fees")
-    #     instance.save()        
-
-
-
 
 
 ########################################################################################################
-####################################  Customized SERIALIZERS ###############################################
+####################################  Customized SERIALIZERS ###########################################
 ########################################################################################################
 
 
@@ -742,9 +627,6 @@ class SearchAPI(mixins.ListModelMixin, viewsets.GenericViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ["name", "name_arabic","id", "=hidden", "category__name", "model__name", "model__brand__name"]
 
-
-# class SearchByModelAPI(mixins.ListModelMixin, viewsets.GenericViewSet):
-# class SearchByModelAPI(viewsets.ReadOnlyModelViewSet):
 class SearchByModelAPI(generics.ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
@@ -821,16 +703,6 @@ class SearchByModelAPI(generics.ListAPIView):
         
 
 
-
-
-
-
-
-
-
-
-
-
 class FilterProductsByCategory(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -900,10 +772,6 @@ def PromCodeViewSet(request, promoCode):
  
 
 class ShippingCostsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-
     queryset = ShippingCosts.objects.all()
     serializer_class = ShippingCostsSerializer
     pagination_class = LargeResultsSetPagination
@@ -921,18 +789,11 @@ class ShippingCostsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class OrderViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = Order.objects.all()
     serializer_class = OrderDetailsSerializer
     permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
-        """
-        This view should return a list of all the purchases
-        for the currently authenticated user.
-        """
         user = self.request.user
         return Order.objects.filter(user=user)
 
@@ -942,37 +803,15 @@ class OrderViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class OrderItemViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemViewSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = None
 
     def get_queryset(self):
-        """
-        This view should return a list of all the purchases
-        for the currently authenticated user.
-        """
         user = self.request.user
         get_order_id = self.request.query_params.get('order-id')
         order = Order.objects.get(id=get_order_id)
         return OrderItem.objects.filter(order__user=user, order_id=order.id)
 
 
-# class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-#     """
-#     API endpoint that allows users to be viewed or edited.
-#     """
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
-
-
-# class GroupViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
