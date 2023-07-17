@@ -431,40 +431,7 @@ def PayNow(request, invoice_num, wallet, language):
                 order.save()
         except:
             return HttpResponse("Plese select a city from Available cities ... (Before Payment Check) ")
-    """ get products prices from the product model """
-    # order_items = OrderItem.objects.filter(order=order)
-    # get_product = order_items.product.price
-    
 
-    # # fees = cart.get_total_price() + shipping_price
-    # price_difference = None
-    # fees = order.get_total_cost()
-
-    # # get_promo = order.promoCode
-    # # check_promos = PromoCodes.objects.filter(promo_code=get_promo)
-    # total_fees = None
-    # if fees <= 1000:
-    #     total_fees = fees + shipping_price
-    # else:
-    #     total_fees = fees
-
-    # if cart.get_total_price() != order.get_total_cost():
-    #     price_difference_message = (
-    #         "sorry Price Have Been Changed since Your Last Uncomplete order process"
-    #     )
-    #     price_difference = order.get_total_cost() - cart.get_total_price()
-
-
-    # total_fees = order.fees
-
-
-
-    # total_fees = order.get_total_cost() + int(shipping_price) ### old version before mobile app
-# Also Removed this after handling the total_fees in the try except in the same view
-    # if order.fees <= 1000:
-    #     total_fees = order.fees + int(shipping_price)
-    # else:
-    #     total_fees = order.fees
  
     ### Sainty check:
     print('Total Fees to be sent to paymob is:' + str(total_fees))
